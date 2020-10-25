@@ -1,0 +1,46 @@
+hr.solid {
+    border-top: 3px solid #bbb;
+    width: 91%;
+    left: -46px;
+    margin-bottom: 5px;
+    position: relative;
+}
+.vl {
+    border-left: 6px solid #bbb;
+    height: 1000px;
+    position: absolute;
+    top: 0;
+    left: 80%;
+}
+.workspacebox {
+    background-color: rgb(141, 215, 207);
+    width: 300px;
+    height: 250px;
+    font-family: verdana;
+    border: 3px solid darkgreen;
+    background-image: url("https://icon-library.com/images/moments_1197616.png");
+    background-position: center;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    padding: 5px;
+    margin: 20px;
+}
+.accounticon {
+    top: 5%;
+    position: absolute;
+    left: 84%;
+    display: inline-block;
+  }
+.settingsicon {
+    top: 260px;
+    position: absolute;
+    left: 87%;
+    display: inline-block;
+  }
+
+.addWorkspace{
+    top: 10px;
+    left: 72%;
+    position: absolute;
+    display: inline;
+}
