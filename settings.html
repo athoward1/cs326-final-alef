@@ -18,6 +18,7 @@
             <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-account" role="tab" aria-controls="v-pills-home" aria-selected="true">Account</a>
             <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
             <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-messages" aria-selected="false">Settings</a>
+            <a href="homepage.html" class="btn btn-outline-secondary btn-sm active" role="button" aria-pressed="true">Home</a>
           </div>
         </div>
         <div class="col-9">
@@ -73,12 +74,36 @@
                       <hr class="solid">
                       
                     <button type="submit" class="btn btn-primary">Save</button>
+                    <hr class = "solid">
                   </form>
 
 
             </div>
             <!--Profile TAB-->
-            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
+            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                <h3>Edit Profile</h3><br>
+                <small id="profileInfo" class="form-text text-muted">Profile Information</small>
+                <hr class ="solid">
+                <div class="form-group">
+                    <label for="userName">User Name</label>
+                    <input type="email" class="form-control" id="userName">
+                </div>
+                <div class="form-group">
+                    <label for="aboutMe">About</label>
+                    <small id="aboutMeHelp" class="form-text text-muted">A brief description of yourself shown on your profile</small>
+                    <textarea class="form-control" id="aboutMe" rows="3"></textarea>
+                </div>
+                <small id="images" class="form-text text-muted">Images</small>
+                <hr class = "solid">
+                <form>
+                    <div class="form-group">
+                      <label for="profileImage">Import an Image</label>
+                      <input type="file" class="form-control-file" id="profileImage">
+                    </div>
+                </form>
+                <button type="submit" class="btn btn-primary">Save</button>
+                <hr class = "solid">
+            </div>
             <!--SETTINGS TAB-->
             <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
           </div>
