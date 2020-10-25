@@ -11,51 +11,73 @@
   <body class = "container">
     <h1>Settings</h1>
 
-
+    <!--Bootstrap Tab-->
     <div class="row">
         <div class="col-3">
           <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-account" role="tab" aria-controls="v-pills-home" aria-selected="true">Account</a>
             <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
             <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-messages" aria-selected="false">Settings</a>
+            <br>
             <a href="homepage.html" class="btn btn-outline-secondary btn-sm active" role="button" aria-pressed="true">Home</a>
           </div>
         </div>
+
+        <!--Tab Content-->
         <div class="col-9">
           <div class="tab-content" id="v-pills-tabContent">
+
             <!--ACCOUNT TAB-->
             <div class="tab-pane fade show active" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab">
                 <h2>Edit your Account</h2><br>
                 <form>
+
+                    <!--User Name Form-->
                     <div class="form-group">
                         <label for="userName">User Name</label>
                         <input type="email" class="form-control" id="userName">
                     </div>
+
+                    <!--Email Form-->
+
                     <div class="form-group">
                       <label for="emailAddress">Email address</label>
                       <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp">
                       <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
+
                     <hr class="solid">
+
+                    <!--Password Form-->
                     <h4>Change Password</h4><br>
                     <div class="form-group">
                       <label for="currentPassword">Current Password</label>
                       <input type="password" class="form-control" id="currentPassword">
                     </div>
+
+                    <!--Confirm Password Form-->
                     <div class="form-group">
                         <label for="newPassword">New Password</label>
                         <input type="password" class="form-control" id="newPassword">
                     </div>
+
                     <hr class="solid">
+
                     <h4>Personal Information</h4>
+                    <br>
+                    <!--First Name Form-->
                     <div class="form-group">
                         <label for="firstName">First Name</label>
                         <input type="email" class="form-control" id="firstName">
                     </div>
+
+                    <!--Last Name Form-->
                     <div class="form-group">
                         <label for="lastName">Last Name</label>
                         <input type="email" class="form-control" id="lastName">
                     </div>
+
+                    <!--Country/Region Form-->
                     <div class="form-group">
                         <label for="region">Country/Region of Residence</label>
                         <select class="form-control" id="region">
@@ -69,6 +91,7 @@
                       </div>
                       <hr class="solid">
                       Delete Account
+                      <!--Delete Account Link-->
                       <small id="deleteHelp" class="form-text text-muted">Deleted accounts cannot be recovered. <a href="#">Delete Account</a></small>
                       
                       <hr class="solid">
@@ -76,25 +99,34 @@
                     <button type="submit" class="btn btn-primary">Save</button>
                     <hr class = "solid">
                   </form>
-
-
             </div>
+
             <!--Profile TAB-->
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 <h3>Edit Profile</h3><br>
                 <small id="profileInfo" class="form-text text-muted">Profile Information</small>
                 <hr class ="solid">
-                <div class="form-group">
-                    <label for="userName">User Name</label>
-                    <input type="email" class="form-control" id="userName">
-                </div>
-                <div class="form-group">
-                    <label for="aboutMe">About</label>
-                    <small id="aboutMeHelp" class="form-text text-muted">A brief description of yourself shown on your profile</small>
-                    <textarea class="form-control" id="aboutMe" rows="3"></textarea>
-                </div>
+
+                <!--User Name Form-->
+                <form>
+                    <div class="form-group">
+                        <label for="userName">User Name</label>
+                        <input type="email" class="form-control" id="userName">
+                    </div>
+                </form>
+
+                <!--About Me Form-->
+                <form>
+                    <div class="form-group">
+                        <label for="aboutMe">About</label>
+                        <small id="aboutMeHelp" class="form-text text-muted">A brief description of yourself shown on your profile</small>
+                        <textarea class="form-control" id="aboutMe" rows="3"></textarea>
+                    </div>
+                </form>
                 <small id="images" class="form-text text-muted">Images</small>
                 <hr class = "solid">
+
+                <!--Profile Image Form-->
                 <form>
                     <div class="form-group">
                       <label for="profileImage">Import an Image</label>
