@@ -12,9 +12,15 @@
         <script src = "main.js"></script>
     </head>
     <body class = "container">
-
         <!--HEADER-->
         <h1>Homepage</h1>
+        <br>
+        <!--Add Workspace Button-->
+        <a href = "#">
+            <div class = "addWorkspace">
+                <img src = "https://icon-library.net/images/blue-plus-icon/blue-plus-icon-29.jpg" id = "addButton" height="100px" width="100x">
+            </div>
+        </a>
 
         <!--Horizontal Line-->
         <hr class="solid">
@@ -44,9 +50,10 @@
                 <div class="vl"></div>
 
                 <!--ACCOUNT ICON-->
-                <span class="accounticon"><img src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" width="200px" height="200px"></span>
-
-                <!--SETTINGS ICON///DROPDOWN IS BROKEN-->
+                <a href = "settings.html">
+                    <span class="accounticon"><img src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" width="200px" height="200px"></span>
+                </a>
+                <!--SETTINGS ICON-->
                 <span class="settingsicon">
                   <div class="dropdown show">
                     <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -55,7 +62,7 @@
                   
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                       <a class="dropdown-item" href="settings.html#account">Account</a>
-                      <a class="dropdown-item" href="settings.html#profile">Profile</a>
+                      <a class="dropdown-item navlink" href="settings.html#v-pills-profile">Profile</a>
                       <a class="dropdown-item" href="settings.html#about">About</a>
                     </div>
                   </div>
