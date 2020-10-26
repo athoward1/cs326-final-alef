@@ -1,0 +1,81 @@
+.text-large{
+    font-size: 200%;
+}
+
+html, body { height: 100%; }
+
+.container-fluid{
+    min-height: 100%;
+	overflow: hidden;
+    
+}
+
+#task-bar {
+    max-width: 1%;
+    margin-bottom: -9999px;
+	padding-bottom: 9999px;
+}
+
+#chat{
+max-width: 30%;
+margin-bottom: -9999px;
+padding-bottom: 9999px;
+}
+
+#workspace {
+	margin-bottom: -9999px;
+	padding-bottom: 9999px;
+}
+
+#timeline{
+    min-height: 5%;
+}
+
+.body {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 0 20px;
+  }
+  
+  .container {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  
+  .darker {
+    border-color: #ccc;
+    background-color: #ddd;
+  }
+  
+  .container::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  .container img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+  }
+  
+  .container img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+  }
+  
+  .time-right {
+    float: right;
+    color: #aaa;
+  }
+  
+  .time-left {
+    float: left;
+    color: #999;
+  }
