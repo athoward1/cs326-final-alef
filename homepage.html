@@ -16,12 +16,11 @@
         <h1>Homepage</h1>
         <br>
         <!--Add Workspace Button-->
-        <a href = "#">
-            <div class = "addWorkspace">
+        
+        <div class = "addWorkspace">
                 <img src = "https://icon-library.net/images/blue-plus-icon/blue-plus-icon-29.jpg" id = "addButton" height="100px" width="100x">
-            </div>
-        </a>
-
+        </div>
+        
         <!--Horizontal Line-->
         <hr class="solid">
 
@@ -112,6 +111,32 @@
                 </div>
             </div>
         </div>
+
+        <div id="intro-modal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Create new workspace!</h5>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="title" class="col-form-label">Workspace name:</label>
+                            <input id="title" class="form-control" type="text"></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea id="description" class="form-control"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick=loadWorkspace()>Go!</button>
+                </div>
+              </div>
+            </div>
+          </div>
       
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
