@@ -31,6 +31,10 @@ padding-bottom: 9999px;
     min-height: 5%;
 }
 
+#task-button{
+    margin-left: -12px;
+}
+
 .body {
     margin: 0 auto;
     max-width: 800px;
