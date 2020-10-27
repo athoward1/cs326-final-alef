@@ -1,0 +1,45 @@
+html {
+    background: linear-gradient(white,var(--main-color));
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: local;
+}
+
+.container{
+    
+    margin-top: 3rem;
+    background-color:transparent;
+}
+
+.form-group{
+    margin-left: 2rem;
+}
+
+.form-control{
+    background-color: rgba(0, 0, 0, 0.336);
+    border-color: black;
+}
+
+.form-control:focus{
+    background-color: rgba(0, 0, 0, 0.336);
+}
+
+.nav{
+    margin-top: 4rem;
+}
+
+.nav-link{
+    margin-bottom: 1rem;
+    margin-right: 5px;
+}
+
+:root{
+    --main-color:rgba(13, 13, 133, 0.705);
+}
+
+h1{
+    text-align: center;
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
