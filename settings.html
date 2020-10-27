@@ -16,9 +16,9 @@
     <div class="row">
         <div class="col-3">
           <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-account" role="tab" aria-controls="v-pills-home" aria-selected="true">Account</a>
+            <a class="nav-link active" id="v-pills-account-tab" data-toggle="pill" href="#v-pills-account" role="tab" aria-controls="v-pills-home" aria-selected="true">Account</a>
             <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-messages" aria-selected="false">Settings</a>
+            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
             <br>
             <a href="homepage.html" class="btn btn-outline-secondary btn-sm active" role="button" aria-pressed="true">Home</a>
           </div>
@@ -143,12 +143,15 @@
             </div>
             <!--SETTINGS TAB-->
             <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                <form>
                   <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="checkDarkMode">
                     <label class="custom-control-label" for="checkDarkMode">Dark Mode</label>
                   </div>
+                </form>
                   <hr class="solid">
                   <button type="submit" class="btn btn-primary">Save</button>
+                
             </div>
           </div>
         </div>
