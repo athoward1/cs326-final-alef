@@ -83,3 +83,7 @@ padding-bottom: 9999px;
     float: left;
     color: #999;
   }
+
+  .gradient{
+    background: radial-gradient(white, rgba(13, 13, 133, 0.705));
+}
