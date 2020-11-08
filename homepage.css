@@ -12,6 +12,11 @@ hr.solid {
     top: 0;
     left: 80%;
 }
+.workspaceNameText{
+    font-size: 30px;
+    font-family: verdana;
+    font-style: bold;
+}
 .workspacebox {
     background-color: rgb(141, 215, 207);
     width: 300px;
