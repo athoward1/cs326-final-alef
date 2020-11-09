@@ -12,6 +12,9 @@ hr.solid {
     top: 0;
     left: 80%;
 }
+.cursorPointer{
+    cursor: pointer;
+}
 .workspaceNameText{
     font-size: 30px;
     font-family: verdana;
@@ -32,16 +35,19 @@ hr.solid {
     margin: 20px;
 }
 .accounticon {
-    top: 5%;
+    top: 10%;
     position: absolute;
     left: 84%;
-    display: inline-block;
   }
-.settingsicon {
-    top: 260px;
+.loginButton{
+    top: 5px;
     position: absolute;
-    left: 87%;
-    display: inline-block;
+    left: 88%;
+}
+.settingsicon {
+    top: 40%;
+    position: absolute;
+    left: 86.5%;
   }
 
 .addWorkspace{
@@ -73,3 +79,17 @@ hr.solid {
     position: absolute;
     left: 0px;
 }
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+  }
+.loginContainer{
+    padding: 16px;
+    width: 100%;
+}
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+  }
