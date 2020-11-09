@@ -11,15 +11,11 @@ window.addEventListener("load", async function() {
 
         let deleteBox = document.createElement("img");
         deleteBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png"
-        deleteBox.style.width = "50px";
-        deleteBox.style.height = "50px";
-        deleteBox.className = "cursorPointer";  
+        deleteBox.className = "deleteButton";  
 
         let editBox = document.createElement("img");
         editBox.src = "https://image.flaticon.com/icons/png/512/84/84380.png"
-        editBox.style.width = "20px";
-        editBox.style.height = "20px";
-        editBox.className = "cursorPointer";
+        editBox.className = "editBox";
         
         let boxName = document.createElement("span");
         boxName.innerHTML = "New Box";
@@ -50,13 +46,36 @@ window.addEventListener("load", async function() {
                 isOpen = false;
             }
         });
+        let editPicture = document.createElement("img");
+        editPicture.src = "https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png";
+        editPicture.className = "editPicture";
         
+        
+        addBox.style.backgroundImage = "url(https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png)"
+        
+        editPicture.addEventListener("click", ()=>{
+            let newimage = document.createElement("input");
+            newimage.placeholder = "Enter Image Url";
+            let saveimage = document.createElement("button");
+            saveimage.className = "btn btn-primary";
+            saveimage.innerHTML = "Save Image";
+            addBox.appendChild(newimage);
+            addBox.appendChild(saveimage);
+            
+            saveimage.addEventListener("click", ()=>{
+                addBox.style.backgroundImage = "url("+ newimage.value+ ")";
+                addBox.removeChild(saveimage);
+                addBox.removeChild(newimage);
+            });
+            
+        });
+
+        addBox.appendChild(editPicture);
         addBox.appendChild(deleteBox);
         addBox.appendChild(boxName);
         addBox.appendChild(editBox);
-        
+        addBox.appendChild(newimage);
 
     });
-    
     
 });

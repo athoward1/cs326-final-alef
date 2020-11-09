@@ -12,14 +12,7 @@ hr.solid {
     top: 0;
     left: 80%;
 }
-.cursorPointer{
-    cursor: pointer;
-}
-.workspaceNameText{
-    font-size: 30px;
-    font-family: verdana;
-    font-style: bold;
-}
+
 .workspacebox {
     background-color: rgb(141, 215, 207);
     width: 300px;
@@ -27,7 +20,6 @@ hr.solid {
     font-family: verdana;
     border-radius: 25px;
     border: 3px solid darkgreen;
-    background-image: url("https://icon-library.com/images/moments_1197616.png");
     background-position: center;
     background-size: 50%;
     background-repeat: no-repeat;
@@ -54,7 +46,7 @@ hr.solid {
     top: 10px;
     left: 72%;
     position: absolute;
-    display: inline;
+    cursor: pointer;
 }
 
 .headerfont{
@@ -92,4 +84,35 @@ input[type=text], input[type=password] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
-  }
+}
+
+.deleteButton{
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    position: relative;
+    left: -15%;
+}
+
+.editBox{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.editPicture{
+    width: 50px;
+    height: 50px;
+    position: relative;
+    top: 75%;
+    left: 80%;
+    cursor: pointer;
+}
+.workspaceNameText{
+    font-size: 30px;
+    font-family: verdana;
+    font-weight: bold;
+    position: relative;
+    left: -10%;
+}
