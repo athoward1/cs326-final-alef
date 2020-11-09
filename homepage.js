@@ -1,5 +1,20 @@
 "use strict";
 window.addEventListener("load", async function() {
+
+    document.getElementById("login").addEventListener("click", async() => {
+        const response = await fetch('./login', {
+            method: 'POST',
+            body: JSON.stringify({
+                username: document.getElementById("userName").value,
+                password: document.getElementById("password").value
+            })
+        });
+        if (!response.ok) {
+            console.error("Could not save the login information to the server");
+        }
+    });
+
+    
     let isOpen = true;
     document.getElementById('addButton').addEventListener('click',()=>{
         //add another workspace box in the first position and move every other box over one
@@ -78,4 +93,6 @@ window.addEventListener("load", async function() {
 
     });
     
+    
+
 });
