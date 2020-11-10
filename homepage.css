@@ -116,3 +116,9 @@ input[type=text], input[type=password] {
     position: relative;
     left: -10%;
 }
+
+.signoutBtn{
+    top: 55%;
+    left: 86.5%;
+    position: absolute;
+}
