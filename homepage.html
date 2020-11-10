@@ -8,49 +8,103 @@
 
         <link rel="stylesheet" href="homepage.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-        
-        <script src = "main.js"></script>
+        <script src = "homepage.js"></script>
     </head>
     <body class = "container">
         <!--HEADER-->
-        <h1>Homepage</h1>
+        <div class = "banner" ></div>
+        <div class = "headerfont">coLab</div>
         <br>
+        
+        <div class = "motto">Innovate Together</div>
         <!--Add Workspace Button-->
         
         <div class = "addWorkspace">
                 <img src = "https://icon-library.net/images/blue-plus-icon/blue-plus-icon-29.jpg" id = "addButton" height="100px" width="100x">
         </div>
         
+
         <!--Horizontal Line-->
         <hr class="solid">
 
         <!--ROW 1-->
-        <div class = "row">
+        <div class = "row" id = "row1">
                 <div class = "col-3.1">
-                    <!--BOX 1-->
-                    <div class="workspacebox" id = "workspace1">
-                        <p>Workspace</p>
-                    </div>
-                </div>
-                <div class = "col-3.1">
-                    <!--BOX 2-->
-                    <div class="workspacebox" id = "workspace2">
-                        <p>Workspace</p>
-                    </div>
-                </div> 
-                <div class = "col-3.1">
-                    <!--BOX 3-->
-                    <div class="workspacebox" id = "workspace3">
-                        <p>Workspace</p>
-                    </div>
-                </div>
-
+                <p id = "addHint">Click the plus sign to add a new workspace.</p>
                 <!--VERTICAL LINE-->
-                <div class="vl"></div>
+                <div class="verticalline"></div>
+
+                
+
+                <span class = "loginButton">
+                
+                <button type="button" id ="loginBtn" class="btn btn-light" data-toggle="modal" data-target="#loginModal">
+                    Login/Sign Up
+                </button>
+                </span>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="loginPage">Login/Sign Up</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a class = "nav-link active" data-toggle="tab" href="#loginTab"aria-controls="loginTab">Login</a></li>
+                                <li><a class = "nav-link" data-toggle="tab" href="#signupTab" aria-controls="signupTab">Sign Up</a></li>
+                            </ul>
+                            
+                            <div class = "tab-content">
+                                <div id = "loginTab" class = "tab-pane active">
+                                    <div class="imgcontainer">
+                                        <img src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" id = "profilePicture" width = "200px" height="200px">
+                                    </div>
+                                
+                                    
+                                    <div>
+                                        <label for ="userName"><b>Username</b></label>
+                                        <input type="text" id="userName" placeholder="Enter Username" required>
+                                        <label for ="password"><b>Password</b></label>
+                                        <input type="password" id="password" placeholder="Enter Password" required>
+                                    </div>
+                                    <label><input type = "checkbox" checked="checked" id="remember"> Remember me</label><br>
+                                    <button type="button" id = "login" class="btn btn-primary">Login</button>
+                                
+
+                                    <button type="button" class="btn btn-danger">Cancel</button>
+                                </div>    
+                                <div id ="signupTab" class="tab-pane fade">
+                                    <h3>Create an Account</h3>
+                                    <label for ="newuserName"><b>Username</b></label>
+                                    <input type="text" id="newuserName" placeholder="Enter Username" required>
+
+                                    <label for ="newpassword"><b>Password</b></label>
+                                    <input type="password" id="newpassword" placeholder="Enter Password" required>
+                                    <input type="password" id="newpassword1" placeholder="Re-Enter Password" required>
+                                    <small id="terms" class="form-text text-muted">By signing up you agree to our terms and privacy policy.</small>
+                                    <br>
+                                    <button type="button" id="createAccount" class="btn btn-success">Create Account</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                    </div>
+                    </div>
+                </div>
 
                 <!--ACCOUNT ICON-->
                 <a href = "settings.html">
-                    <span class="accounticon"><img src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" width="200px" height="200px"></span>
+                    
+                    <span class="accounticon"><img src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" id = "profilePicture" width="200px" height="200px"></span>
                 </a>
                 <!--SETTINGS ICON-->
                 <span class="settingsicon">
@@ -66,52 +120,16 @@
                     </div>
                   </div>
                 </span>
+                <button href="#" type="button" class="d-none btn signoutBtn" role="button" aria-pressed="true">Sign out</a>
+                
         </div>
 
         <!--ROW 2-->
         <div class = "row">
-            <div class = "col-3.1">
-                <!--BOX 1-->
-                <div class="workspacebox" id = "workspace4">
-                    <p>Workspace</p>
-                </div>
-            </div>
-            <div class = "col-3.1">
-                <!--BOX 2-->
-                <div class="workspacebox" id = "workspace5">
-                    <p>Workspace</p>
-                </div>
-            </div> 
-            <div class = "col-3.1">
-                <!--BOX 3-->
-                <div class="workspacebox" id = "workspace6">
-                    <p>Workspace</p>
-                </div>
-            </div>
-        </div>
         
         <!--ROW 3-->
         <div class = "row">
-            <div class = "col-3.1">
-                <!--BOX 1-->
-                <div class="workspacebox" id = "workspace7">
-                    <p>Workspace</p>
-                </div>
-            </div>
-            <div class = "col-3.1">
-                <!--BOX 2-->
-                <div class="workspacebox" id = "workspace8">
-                    <p>Workspace</p>
-                </div>
-            </div> 
-            <div class = "col-3.1">
-                <!--BOX 3-->
-                <div class="workspacebox" id = "workspace9">
-                    <p>Workspace</p>
-                </div>
-            </div>
-        </div>
-
+            
         <div id="intro-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
@@ -132,7 +150,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick=loadWorkspace()>Go!</button>
+                    <button type="button" id = "createWorkspace" class="btn btn-primary" data-dismiss="modal" onclick=loadWorkspace()>Go!</button>
                 </div>
               </div>
             </div>

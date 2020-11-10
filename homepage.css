@@ -5,20 +5,21 @@ hr.solid {
     margin-bottom: 5px;
     position: relative;
 }
-.vl {
+.verticalline {
     border-left: 6px solid #bbb;
     height: 1000px;
     position: absolute;
     top: 0;
     left: 80%;
 }
+
 .workspacebox {
     background-color: rgb(141, 215, 207);
     width: 300px;
     height: 250px;
     font-family: verdana;
+    border-radius: 25px;
     border: 3px solid darkgreen;
-    background-image: url("https://icon-library.com/images/moments_1197616.png");
     background-position: center;
     background-size: 50%;
     background-repeat: no-repeat;
@@ -26,21 +27,98 @@ hr.solid {
     margin: 20px;
 }
 .accounticon {
-    top: 5%;
+    top: 10%;
     position: absolute;
     left: 84%;
-    display: inline-block;
   }
-.settingsicon {
-    top: 260px;
+.loginButton{
+    top: 5px;
     position: absolute;
-    left: 87%;
-    display: inline-block;
+    left: 88%;
+}
+.settingsicon {
+    top: 40%;
+    position: absolute;
+    left: 86.5%;
   }
 
 .addWorkspace{
     top: 10px;
     left: 72%;
     position: absolute;
-    display: inline;
+    cursor: pointer;
+}
+
+.headerfont{
+    font-family: Verdana;
+    font-weight: bold;
+    font-size: 60px;
+    position: relative;
+    top: 5px;
+    left: 5%;
+}
+
+.motto{
+    position: absolute;
+    top: 85px;
+    left: 30%;
+}
+
+.banner {
+    background: radial-gradient(white, rgba(221, 223, 222, 0.705));
+    width: 1220px;
+    height: 141px;
+    position: absolute;
+    left: 0px;
+}
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+  }
+.loginContainer{
+    padding: 16px;
+    width: 100%;
+}
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+}
+
+.deleteButton{
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    position: relative;
+    left: -15%;
+}
+
+.editBox{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.editPicture{
+    width: 50px;
+    height: 50px;
+    position: relative;
+    top: 75%;
+    left: 80%;
+    cursor: pointer;
+}
+.workspaceNameText{
+    font-size: 30px;
+    font-family: verdana;
+    font-weight: bold;
+    position: relative;
+    left: -10%;
+}
+
+.signoutBtn{
+    top: 55%;
+    left: 86.5%;
+    position: absolute;
 }
