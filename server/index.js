@@ -33,7 +33,7 @@ createServer(async (req, res) => {
         });
     } else {
         
-        const filename = parsed.pathname === '/' ? "index.html" : parsed.pathname.replace('/', '');
+        const filename = parsed.pathname === '/' ? "homepage.html" : parsed.pathname.replace('/', '');
         const path = join("client/", filename);
         console.log("trying to serve " + path + "...");
         if (existsSync(path)) {
