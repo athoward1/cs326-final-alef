@@ -5,7 +5,8 @@
     "description": "a website for doing stuff",
     "devDependancies": {
         "eslint": "^7.11.0",
-        "http-server": "^0.12.3"
+        "http-server": "^0.12.3",
+        "express": "^4.17.1"
     },
     "eslintConfig": {
         "env": {
@@ -44,7 +45,8 @@
         "url": "git+https://github.com/athoward1/cs326-final-alef.git"
     },
     "dependencies": {
-        "pg-promise": "^10.7.3"
+        "pg-promise": "^10.7.3",
+        "express": "^4.17.1"
     },
     "engines": {
         "node": "14.x"
