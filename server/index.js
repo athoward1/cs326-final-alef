@@ -31,10 +31,55 @@ createServer(async (req, res) => {
                 } else res.end();
             });
         });
-    } else {
+    } 
+    else if (parsed.pathname === '/delete') {
+        let body = '';
+        req.on('data', data => body += data);
+        req.on('end', () => {
+            const data = JSON.parse(body);
+            database.loginInfo.pop({
+                username: data.username,
+                password: data.password
+            });
+            
+            writeFile("database.json", JSON.stringify(database), err => {
+                if (err) {
+                    console.err(err);
+                } else res.end();
+            });
+        });
+    }
+    else if (parsed.pathname === '/getLogin') {
+        let body = '';
+        req.on('data', data => body += data);
+        req.on('end', () => {
+            const data = JSON.parse(body);
+            database.loginInfo.pop({
+                username: data.username,
+                password: data.password
+            });
+        });
+    }
+    else if (parsed.pathname === '/edit') {
+        let body = '';
+        req.on('data', data => body += data);
+        req.on('end', () => {
+            const data = JSON.parse(body);
+            database.loginInfo.push({
+                username: data.username,
+                password: data.password
+            });
+            
+            writeFile("database.json", JSON.stringify(database), err => {
+                if (err) {
+                    console.err(err);
+                } else res.end();
+            });
+        });
+    }else {
         
         const filename = parsed.pathname === '/' ? "homepage.html" : parsed.pathname.replace('/', '');
-        const path = join("client/", filename);
+        const path = join(filename);
         console.log("trying to serve " + path + "...");
         if (existsSync(path)) {
             if (filename.endsWith("html")) {

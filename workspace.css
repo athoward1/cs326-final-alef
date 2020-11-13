@@ -6,7 +6,11 @@ html, body { height: 100%; }
 
 .container-fluid{
     min-height: 100%;
-	overflow: hidden;
+    overflow: hidden;
+    padding-right: 0;
+    padding-left: 0;
+    margin-right:100px;
+    margin-left: 0px;
     
 }
 
@@ -17,12 +21,13 @@ html, body { height: 100%; }
 }
 
 #chat{
-max-width: 30%;
-margin-bottom: -9999px;
-padding-bottom: 9999px;
+max-width: auto;
+margin-bottom: 0px;
+padding-bottom: 95%;
 }
 
 #workspace {
+  max-width: auto;
 	margin-bottom: -9999px;
 	padding-bottom: 9999px;
 }
