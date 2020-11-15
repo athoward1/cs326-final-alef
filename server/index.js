@@ -3,7 +3,6 @@
 import * as _pgp from "pg-promise";
 import * as _express from "express";
 
-
 const PORT = process.env.PORT || 8081;
 const express = _express["default"];
 
@@ -41,6 +40,15 @@ async function connectAndRun(task) {
     }
 }
 
+app.post("/newWorkspace", async (req, res) => {
+    await newWorkspace(req.body.userid, req.body.workspaceid, req.body.chatid, req.body.plannerid, req.body.taskid, req.body.timelineid, req.body.image_url);
+    res.send("FAKE workspace added.");
+});
+
+
+async function newWorkspace(userid,workspaceid,chatid,plannerid,taskid,timelineid,image_url){
+    return await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1, $2, $3, $4, $5, $6, $7);", [userid,workspaceid,chatid,plannerid,taskid,timelineid,image_url]));
+}
 
 
 

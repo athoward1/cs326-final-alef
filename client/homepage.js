@@ -1,4 +1,7 @@
 "use strict";
+
+import "..server/dataBaseUtils.js";     //  We can use this to contain all requests to the database.
+
 window.addEventListener("load", async function() {
     
     document.getElementById("login").addEventListener("click", async() => {
@@ -78,9 +81,25 @@ window.addEventListener("load", async function() {
             addBox.appendChild(saveimage);
             
             saveimage.addEventListener("click", ()=>{
-                addBox.style.backgroundImage = "url("+ newimage.value+ ")";
+                let image_url = "url("+ newimage.value+ ")";
+                addBox.style.backgroundImage = image_url;
                 addBox.removeChild(saveimage);
                 addBox.removeChild(newimage);
+
+
+                await newWorkspace("userid-to-be-gotten","workspaceid-to-be-gotten","chatid-to-be-gotten","plannerid-to-be-gotten","taskid-to-be-gotten","timelineid-to-be-gotten",image_url);
+
+                //  Example of adding to the database
+
+
+
+
+
+
+
+
+                //end
+
             });
             
         });
@@ -90,6 +109,9 @@ window.addEventListener("load", async function() {
         addBox.appendChild(boxName);
         addBox.appendChild(editBox);
         addBox.appendChild(newimage);
+
+
+
 
     });
     document.getElementById("createAccount").addEventListener("click", () =>{
