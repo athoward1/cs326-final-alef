@@ -22,7 +22,7 @@ window.addEventListener("load", async function() {
 
     
     let isOpen = true;
-    document.getElementById('addButton').addEventListener('click',()=>{
+    document.getElementById('addButton').addEventListener('click', async()=>{
         //add another workspace box in the first position and move every other box over one
         document.getElementById("addHint").style.display = "none";
         const addBox = document.createElement("div");
@@ -43,9 +43,17 @@ window.addEventListener("load", async function() {
         boxName.className = "workspaceNameText";
         boxName.style.fontWeight = "bold";
 
+        let useridtobegotten=5,workspaceidtobegotten=5,chatidtobegotten=5,planneridtobegotten=5,taskidtobegotten=5,timelineidtobegotten=5,image_url = 3;
+
+        await newWorkspace(useridtobegotten,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
+
+
+        //Make edits to database values
+
         deleteBox.addEventListener("click", ()=> {
             row1.removeChild(addBox);
         });
+
         editBox.addEventListener("click", () =>{
             
             if(isOpen){
@@ -88,9 +96,6 @@ window.addEventListener("load", async function() {
                 addBox.style.backgroundImage = image_url;
                 addBox.removeChild(saveimage);
                 addBox.removeChild(newimage);
-
-
-                await newWorkspace("userid-to-be-gotten","workspaceid-to-be-gotten","chatid-to-be-gotten","plannerid-to-be-gotten","taskid-to-be-gotten","timelineid-to-be-gotten",image_url);
 
             });
             
