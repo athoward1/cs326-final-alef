@@ -1,6 +1,9 @@
+//  import "..server/dataBaseUtils.js";     //  Might be helpful when requests get huge
+
+
+
 "use strict";
 
-import "..server/dataBaseUtils.js";     //  We can use this to contain all requests to the database.
 
 window.addEventListener("load", async function() {
     
@@ -89,17 +92,6 @@ window.addEventListener("load", async function() {
 
                 await newWorkspace("userid-to-be-gotten","workspaceid-to-be-gotten","chatid-to-be-gotten","plannerid-to-be-gotten","taskid-to-be-gotten","timelineid-to-be-gotten",image_url);
 
-                //  Example of adding to the database
-
-
-
-
-
-
-
-
-                //end
-
             });
             
         });
@@ -145,3 +137,29 @@ window.addEventListener("load", async function() {
     
 
 });
+
+
+//  Function to make POST request
+
+async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_timelineid,_image_url){
+    const response = await fetch('/newWorkspace', {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+                userid:_userid,
+                workspaceid:_workspaceid,
+                chatid:_chatid,
+                plannerid:_plannerid,
+                taskid:_taskid,
+                timelineid:_timelineid,
+                image_url:_image_url
+            })
+    });
+                
+            
+    if (!response.ok) {
+        console.error(`Could not add user ${userid}'s workspace to the database.`);
+    }
+}
