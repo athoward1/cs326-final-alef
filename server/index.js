@@ -37,9 +37,6 @@ async function connectAndRun(task) {
             connection.done();
         } catch(ignored) {
 
-<<<<<<< HEAD
-
->>>>>>> main
         }
     }
 }
