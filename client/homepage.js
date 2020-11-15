@@ -1,6 +1,6 @@
 "use strict";
 window.addEventListener("load", async function() {
-
+    
     document.getElementById("login").addEventListener("click", async() => {
         const response = await fetch('./login', {
             method: 'POST',
@@ -18,7 +18,7 @@ window.addEventListener("load", async function() {
     let isOpen = true;
     document.getElementById('addButton').addEventListener('click',()=>{
         //add another workspace box in the first position and move every other box over one
-        
+        document.getElementById("addHint").style.display = "none";
         const addBox = document.createElement("div");
         addBox.className = "workspacebox";
         document.getElementById("row1").appendChild(addBox);
@@ -91,6 +91,33 @@ window.addEventListener("load", async function() {
         addBox.appendChild(editBox);
         addBox.appendChild(newimage);
 
+    });
+    document.getElementById("createAccount").addEventListener("click", () =>{
+        localStorage.setItem("userName", document.getElementById("newuserName").value);
+        localStorage.setItem("password", document.getElementById("newpassword").value);
+        $("#loginModal").modal('hide');
+    });
+    document.getElementById("login").addEventListener("click", ()=>{
+        if(localStorage.getItem("userName") === document.getElementById("userName").value && localStorage.getItem("password") === document.getElementById("password").value){
+            alert("Success");
+            $("#loginModal").modal('hide');
+            document.getElementById("loginBtn").innerHTML = "Welcome, " + localStorage.getItem("userName");
+            document.getElementById("loginBtn").disabled = true;
+
+            let newBtn = document.createElement("button");
+            newBtn.className = "btn btn-secondary btn-lg signoutBtn";
+            newBtn.innerHTML = "Sign out"
+            newBtn.addEventListener("click", ()=>{
+                document.getElementById("loginBtn").innerHTML = "Login/Sign up";
+                document.getElementById("loginBtn").disabled = false;
+                newBtn.style.display = "none";
+            });
+            row1.appendChild(newBtn);
+
+        }else{
+            alert("Failure");
+        }
+        
     });
     
     
