@@ -83,7 +83,7 @@ window.addEventListener("load", async function() {
             addBox.appendChild(newimage);
             addBox.appendChild(saveimage);
             
-            saveimage.addEventListener("click", ()=>{
+            saveimage.addEventListener("click", async()=>{
                 let image_url = "url("+ newimage.value+ ")";
                 addBox.style.backgroundImage = image_url;
                 addBox.removeChild(saveimage);
