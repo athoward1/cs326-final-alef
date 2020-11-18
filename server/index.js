@@ -3,7 +3,9 @@
 import * as _pgp from "pg-promise";
 import * as _express from "express";
 import * as _crypto from "crypto";
-import { response } from "express";
+//import { response } from "express";
+import pkg from 'express';
+const { response } = pkg;
 
 const PORT = process.env.PORT || 8081;
 const HASH_KEY = process.env.HASH_KEY || 123456;
