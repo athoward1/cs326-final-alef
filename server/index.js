@@ -59,17 +59,6 @@ app.get("/localGet", async (req, res) => {
     res.send("Gotchu");
 });
 
-
-app.post("/newWorkspace", async (req, res) => {
-    await newWorkspace(req.body.userid, req.body.workspaceid, req.body.chatid, req.body.plannerid, req.body.taskid, req.body.timelineid, req.body.image_url);
-    res.send("FAKE workspace added.");
-});
-
-
-async function newWorkspace(userid,workspaceid,chatid,plannerid,taskid,timelineid,image_url){
-    return await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1, $2, $3, $4, $5, $6, $7);", [userid,workspaceid,chatid,plannerid,taskid,timelineid,image_url]));
-}
-
 app.use('/', express.static('./client'));
 
 app.listen(PORT, () => {
