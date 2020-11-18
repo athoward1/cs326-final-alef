@@ -113,9 +113,9 @@ window.addEventListener("load", async function() {
 
     });
     document.getElementById("createAccount").addEventListener("click", async() =>{
-        localStorage.setItem("userName", document.getElementById("newuserName").value);
-        localStorage.setItem("password", document.getElementById("newpassword").value);
-        $("#loginModal").modal('hide');
+        
+        
+        
         const response = await fetch('./createAccount', {
             method: 'POST',
             headers: {
@@ -126,10 +126,19 @@ window.addEventListener("load", async function() {
                 password: document.getElementById("newpassword").value
             })
         });
-        console.log(response);
-        console.log(response.body);
-
-        //  feedback
+        let json = await response.json();
+        if (json.result === "duplicate"){
+            alert("Username already in use");
+        }else{
+            if (json.result === "ok"){
+                localStorage.setItem("userName", document.getElementById("newuserName").value);
+                localStorage.setItem("password", document.getElementById("newpassword").value);
+                $("#loginModal").modal('hide');
+            }else{
+                alert("We shouldn't be here... json.result was only 'ok' or 'duplicate'...");   //  Shouldn't be an alert, we should have tooltips.
+            }
+        }
+                
     });
     document.getElementById("login").addEventListener("click", ()=>{
         if(localStorage.getItem("userName") === document.getElementById("userName").value && localStorage.getItem("password") === document.getElementById("password").value){

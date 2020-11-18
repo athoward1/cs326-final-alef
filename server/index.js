@@ -59,17 +59,6 @@ app.get("/localGet", async (req, res) => {
     res.send("Gotchu");
 });
 
-
-app.post("/newWorkspace", async (req, res) => {
-    await newWorkspace(req.body.userid, req.body.workspaceid, req.body.chatid, req.body.plannerid, req.body.taskid, req.body.timelineid, req.body.image_url);
-    res.send("FAKE workspace added.");
-});
-
-
-async function newWorkspace(userid,workspaceid,chatid,plannerid,taskid,timelineid,image_url){
-    return await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1, $2, $3, $4, $5, $6, $7);", [userid,workspaceid,chatid,plannerid,taskid,timelineid,image_url]));
-}
-
 app.use('/', express.static('./client'));
 
 app.listen(PORT, () => {
@@ -80,10 +69,9 @@ app.listen(PORT, () => {
 app.post("/createAccount", [checkDup, createAccount]);
 
 async function checkDup (req, res, next) {
-    console.log("checking duplicate username");
-    let duplicate = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE userid = 5"));
-    console.log("dup: "+ duplicate);
-    if(!duplicate){
+    console.log("Checking duplicate username");
+    let duplicate = await connectAndRun(db => db.any("SELECT * FROM logins WHERE username = ($1);", [req.body.username]));
+    if(duplicate.length > 0){
         res.send(JSON.stringify({result: "duplicate"}));
     }else{
         next();
@@ -91,10 +79,9 @@ async function checkDup (req, res, next) {
 }
 
 async function createAccount (req, res){
-    console.log("adding username");
-    let alreadyexists = await connectAndRun(db => db.post("INSERT INTO logins VALUES ($1, $2, $3);", [req.body.username,req.body.password,"salt?","hash?"]));
-    console.log(alreadyexists);
-    res.send("Okay!");
+    let alreadyexists = await connectAndRun(db => db.none("INSERT INTO logins VALUES ($1, $2, $3, $4);", [req.body.username,req.body.password,"salt?","hash?"]));
+    console.log(`Added user ${req.body.username} to the database`);
+    res.send(JSON.stringify({result: "ok"}));
     return alreadyexists;
 }
 
