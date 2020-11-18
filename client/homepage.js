@@ -126,9 +126,12 @@ window.addEventListener("load", async function() {
                 password: document.getElementById("newpassword").value
             })
         });
-        console.log(response);
-        console.log(response.body);
-
+        let json = await response.json();
+        console.log(json);
+        if (json.result === "duplicate"){
+            alert("Username already in use");
+        }
+            alert("Welcome to your Colab homepage!!!!!");   //  Shouldn't be an alert, we should have tooltips.
         //  feedback
     });
     document.getElementById("login").addEventListener("click", ()=>{
