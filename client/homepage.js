@@ -15,6 +15,7 @@ window.addEventListener("load", async function() {
                 password: document.getElementById("password").value
             })
         });
+        console.log(response);
         if (!response.ok) {
             console.error("Could not save the login information to the server");
         }
@@ -22,6 +23,7 @@ window.addEventListener("load", async function() {
 
     
     let isOpen = true;
+
     document.getElementById('addButton').addEventListener('click', async()=>{
         //add another workspace box in the first position and move every other box over one
         document.getElementById("addHint").style.display = "none";
@@ -49,6 +51,7 @@ window.addEventListener("load", async function() {
 
 
         //Make edits to database values
+
 
         deleteBox.addEventListener("click", ()=> {
             row1.removeChild(addBox);
@@ -108,13 +111,25 @@ window.addEventListener("load", async function() {
         addBox.appendChild(newimage);
 
 
-
-
     });
-    document.getElementById("createAccount").addEventListener("click", () =>{
+    document.getElementById("createAccount").addEventListener("click", async() =>{
         localStorage.setItem("userName", document.getElementById("newuserName").value);
         localStorage.setItem("password", document.getElementById("newpassword").value);
         $("#loginModal").modal('hide');
+        const response = await fetch('./createAccount', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                username: document.getElementById("newuserName").value,
+                password: document.getElementById("newpassword").value
+            })
+        });
+        console.log(response);
+        console.log(response.body);
+
+        //  feedback
     });
     document.getElementById("login").addEventListener("click", ()=>{
         if(localStorage.getItem("userName") === document.getElementById("userName").value && localStorage.getItem("password") === document.getElementById("password").value){
@@ -125,7 +140,7 @@ window.addEventListener("load", async function() {
 
             let newBtn = document.createElement("button");
             newBtn.className = "btn btn-secondary btn-lg signoutBtn";
-            newBtn.innerHTML = "Sign out"
+            newBtn.innerHTML = "Sign out";
             newBtn.addEventListener("click", ()=>{
                 document.getElementById("loginBtn").innerHTML = "Login/Sign up";
                 document.getElementById("loginBtn").disabled = false;
@@ -142,9 +157,6 @@ window.addEventListener("load", async function() {
     
 
 });
-
-
-//  Function to make POST request
 
 async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_timelineid,_image_url){
     const response = await fetch('/newWorkspace', {
