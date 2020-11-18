@@ -69,9 +69,8 @@ app.listen(PORT, () => {
 app.post("/createAccount", [checkDup, createAccount]);
 
 async function checkDup (req, res, next) {
-    console.log("checking duplicate username");
+    console.log("Checking duplicate username");
     let duplicate = await connectAndRun(db => db.any("SELECT * FROM logins WHERE username = ($1);", [req.body.username]));
-    console.log("   up: "+ duplicate);
     if(duplicate.length > 0){
         res.send(JSON.stringify({result: "duplicate"}));
     }else{
@@ -80,9 +79,8 @@ async function checkDup (req, res, next) {
 }
 
 async function createAccount (req, res){
-    console.log("adding username");
-    let alreadyexists = await connectAndRun(db => db.none("INSERT INTO logins VALUES ($1, $2, $3);", [req.body.username,req.body.password,"salt?","hash?"]));
-    console.log(alreadyexists);
+    let alreadyexists = await connectAndRun(db => db.none("INSERT INTO logins VALUES ($1, $2, $3, $4);", [req.body.username,req.body.password,"salt?","hash?"]));
+    console.log(`Added user ${req.body.username} to the database`);
     res.send(JSON.stringify({result: "ok"}));
     return alreadyexists;
 }

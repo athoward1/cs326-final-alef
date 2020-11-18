@@ -127,7 +127,6 @@ window.addEventListener("load", async function() {
             })
         });
         let json = await response.json();
-        console.log(json);
         if (json.result === "duplicate"){
             alert("Username already in use");
         }else{
@@ -139,11 +138,7 @@ window.addEventListener("load", async function() {
                 alert("We shouldn't be here... json.result was only 'ok' or 'duplicate'...");   //  Shouldn't be an alert, we should have tooltips.
             }
         }
-        
-        
-        
-        
-        //  feedback
+                
     });
     document.getElementById("login").addEventListener("click", ()=>{
         if(localStorage.getItem("userName") === document.getElementById("userName").value && localStorage.getItem("password") === document.getElementById("password").value){
