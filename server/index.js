@@ -83,7 +83,7 @@ async function createAccount (req, res){
     console.log("adding username");
     let alreadyexists = await connectAndRun(db => db.post("INSERT INTO logins VALUES ($1, $2, $3);", [req.body.username,req.body.password,"salt?","hash?"]));
     console.log(alreadyexists);
-    res.send("Okay!");
+    res.send(JSON.stringify({result: "ok"}));
     return alreadyexists;
 }
 
