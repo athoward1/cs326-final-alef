@@ -2,14 +2,15 @@
 
 import * as _pgp from "pg-promise";
 import * as _express from "express";
+import * as _crypto from "crypto";
+import { response } from "express";
 
 
 const PORT = process.env.PORT || 8081;
+const HASH_KEY = process.env.HASH_KEY || 123456;
+
 const express = _express["default"];
-
-const app = express();
-app.use(express.json());
-
+const crypto = _crypto["default"];
 const pgp = _pgp["default"]({
     connect(client) {
         console.log('Connected to database:', client.connectionParameters.database);
@@ -20,6 +21,8 @@ const pgp = _pgp["default"]({
     }
 });
 
+const app = express();
+app.use(express.json());
 
 const url = process.env.DATABASE_URL || "No database";
 const db = pgp(url);
@@ -37,23 +40,55 @@ async function connectAndRun(task) {
             connection.done();
         } catch(ignored) {
 
-<<<<<<< HEAD
-
->>>>>>> main
         }
     }
 }
-
-
-
 
 app.get("/localGet", async (req, res) => {
     console.log("GET recieved");
     res.send("Gotchu");
 });
 
-app.use('/', express.static('./client/'));
+
+app.post("/newWorkspace", async (req, res) => {
+    await newWorkspace(req.body.userid, req.body.workspaceid, req.body.chatid, req.body.plannerid, req.body.taskid, req.body.timelineid, req.body.image_url);
+    res.send("FAKE workspace added.");
+});
+
+
+async function newWorkspace(userid,workspaceid,chatid,plannerid,taskid,timelineid,image_url){
+    return await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1, $2, $3, $4, $5, $6, $7);", [userid,workspaceid,chatid,plannerid,taskid,timelineid,image_url]));
+}
+
+app.use('/', express.static('./client'));
 
 app.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}`)
 });
+
+
+app.post("/createAccount", [checkDup, createAccount]);
+
+async function checkDup (req, res, next) {
+    console.log("checking duplicate username");
+    let duplicate = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE userid = 5"));
+    console.log("dup: "+ duplicate);
+    if(!duplicate){
+        res.send(JSON.stringify({result: "duplicate"}));
+    }else{
+        next();
+    }
+}
+
+async function createAccount (req, res){
+    console.log("adding username");
+    let alreadyexists = await connectAndRun(db => db.post("INSERT INTO logins VALUES ($1, $2, $3);", [req.body.username,req.body.password,"salt?","hash?"]));
+    console.log(alreadyexists);
+    res.send("Okay!");
+    return alreadyexists;
+}
+
+let hasher = crypto.createHash("sha256");
+
+console.log(hasher.update("Username").digest("hex"));
+
