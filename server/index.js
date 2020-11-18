@@ -72,7 +72,7 @@ async function checkDup (req, res, next) {
     console.log("checking duplicate username");
     let duplicate = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE userid = 5"));
     console.log("dup: "+ duplicate);
-    if(!duplicate){
+    if(duplicate.length > 0){
         res.send(JSON.stringify({result: "duplicate"}));
     }else{
         next();
