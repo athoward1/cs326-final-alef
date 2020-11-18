@@ -7,19 +7,26 @@
 
 window.addEventListener("load", async function() {
     
+
+    /**
     document.getElementById("login").addEventListener("click", async() => {
         const response = await fetch('./login', {
-            method: 'POST',
+            method: 'GET',
             body: JSON.stringify({
                 username: document.getElementById("userName").value,
                 password: document.getElementById("password").value
             })
         });
-        console.log(response);
+        let json = await response.json();
+        if (json.result === "duplicate"){
+            
+        }
+
         if (!response.ok) {
             console.error("Could not save the login information to the server");
         }
     });
+    */
 
     
     let isOpen = true;
@@ -113,9 +120,9 @@ window.addEventListener("load", async function() {
 
     });
     document.getElementById("createAccount").addEventListener("click", async() =>{
-        
-        
-        
+    
+        //  Create Account
+
         const response = await fetch('./createAccount', {
             method: 'POST',
             headers: {
@@ -130,7 +137,7 @@ window.addEventListener("load", async function() {
         if (json.result === "duplicate"){
             alert("Username already in use");
         }else{
-            if (json.result === "ok"){
+            if (json.result === "User does not exist yet"){
                 localStorage.setItem("userName", document.getElementById("newuserName").value);
                 localStorage.setItem("password", document.getElementById("newpassword").value);
                 $("#loginModal").modal('hide');
@@ -140,13 +147,23 @@ window.addEventListener("load", async function() {
         }
                 
     });
-    document.getElementById("login").addEventListener("click", ()=>{
-        if(localStorage.getItem("userName") === document.getElementById("userName").value && localStorage.getItem("password") === document.getElementById("password").value){
+
+    //  Login
+
+    document.getElementById("login").addEventListener("click", async()=>{
+        const response = await fetch('./login', {
+            method: 'GET',
+            body: JSON.stringify({
+                username: document.getElementById("userName").value,
+                password: document.getElementById("password").value
+            })
+        });
+        let json = await response.json();
+        if (json.result === "duplicate"){
             alert("Success");
             $("#loginModal").modal('hide');
             document.getElementById("loginBtn").innerHTML = "Welcome, " + localStorage.getItem("userName");
             document.getElementById("loginBtn").disabled = true;
-
             let newBtn = document.createElement("button");
             newBtn.className = "btn btn-secondary btn-lg signoutBtn";
             newBtn.innerHTML = "Sign out";
@@ -156,10 +173,37 @@ window.addEventListener("load", async function() {
                 newBtn.style.display = "none";
             });
             row1.appendChild(newBtn);
-
-        }else{
-            alert("Failure");
         }
+        if (json.result === "User not yet exist"){
+            //send modal to Create Account Tab
+            console.log("User does not exist yet");
+            $("#loginModal").modal('hide');
+        }else{
+            if (json.result === "Wrong Password"){
+                //Wait some time
+                console.log("Wrong Password");
+
+            }
+            console.log("Huh? Error.");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
     });
     
@@ -183,7 +227,7 @@ async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_tim
                 image_url:_image_url
             })
     });
-                
+              
             
     if (!response.ok) {
         console.error(`Could not add user ${userid}'s workspace to the database.`);
