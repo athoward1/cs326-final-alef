@@ -1,4 +1,10 @@
+//  import "..server/dataBaseUtils.js";     //  Might be helpful when requests get huge
+
+
+
 "use strict";
+
+
 window.addEventListener("load", async function() {
     
     document.getElementById("login").addEventListener("click", async() => {
@@ -17,7 +23,8 @@ window.addEventListener("load", async function() {
 
     
     let isOpen = true;
-    document.getElementById('addButton').addEventListener('click',async()=>{
+
+    document.getElementById('addButton').addEventListener('click', async()=>{
         //add another workspace box in the first position and move every other box over one
         document.getElementById("addHint").style.display = "none";
         const addBox = document.createElement("div");
@@ -38,16 +45,18 @@ window.addEventListener("load", async function() {
         boxName.className = "workspaceNameText";
         boxName.style.fontWeight = "bold";
 
-
         let useridtobegotten=5,workspaceidtobegotten=5,chatidtobegotten=5,planneridtobegotten=5,taskidtobegotten=5,timelineidtobegotten=5,image_url = 3;
 
         await newWorkspace(useridtobegotten,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
-        console.log("new workspace added");
+
+
+        //Make edits to database values
 
 
         deleteBox.addEventListener("click", ()=> {
             row1.removeChild(addBox);
         });
+
         editBox.addEventListener("click", () =>{
             
             if(isOpen){
@@ -85,10 +94,12 @@ window.addEventListener("load", async function() {
             addBox.appendChild(newimage);
             addBox.appendChild(saveimage);
             
-            saveimage.addEventListener("click", ()=>{
-                addBox.style.backgroundImage = "url("+ newimage.value+ ")";
+            saveimage.addEventListener("click", async()=>{
+                let image_url = "url("+ newimage.value+ ")";
+                addBox.style.backgroundImage = image_url;
                 addBox.removeChild(saveimage);
                 addBox.removeChild(newimage);
+
             });
             
         });
@@ -98,7 +109,6 @@ window.addEventListener("load", async function() {
         addBox.appendChild(boxName);
         addBox.appendChild(editBox);
         addBox.appendChild(newimage);
-
 
 
     });
@@ -147,8 +157,6 @@ window.addEventListener("load", async function() {
     
 
 });
-
-
 
 async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_timelineid,_image_url){
     const response = await fetch('/newWorkspace', {
