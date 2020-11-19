@@ -121,6 +121,7 @@ async function checkPassword(req, res) {
     console.log("Req body username:" + req.body.username);
     //  See if username exits
     let entry = await connectAndRun(db => db.any("SELECT * FROM logins WHERE userid = ($1);", req.body.username));
+    entry = JSON.stringify(entry);
     if (entry.length === 0 || entry.length > 1){
         next();
         return; //  No such user || there are multiple in which case much is wrong
