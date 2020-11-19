@@ -174,7 +174,7 @@ window.addEventListener("load", async function() {
                 console.log("Wrong Password");
                 return;
             }else{
-                if (json.result === "Login Successful"){
+                if (json.result === "Login successful"){
                     //Logging in
                     logIn(userinput);
                     $("#loginModal").modal('hide');
