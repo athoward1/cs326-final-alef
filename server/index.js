@@ -117,6 +117,7 @@ app.post("/login", checkPassword, async (req, res) => {
 });
 
 async function checkPassword(req, res) {
+
     console.log("Req body username:" + req.body.username);
     //  See if username exits
     let username = await connectAndRun(db => db.any("SELECT * FROM logins WHERE username = ($1);", req.body.username));
@@ -126,13 +127,14 @@ async function checkPassword(req, res) {
     }
     //  Compare passwords
     
-    let hash = ["password","salt?","hash?"];//   mc.hash(req.body.password); // So right now, all usernames are matched because they all have the same hash "hash?"
-    let matched = await connectAndRun(db => db.any("SELECT * FROM logins WHERE username = ($1) AND salt = ($2) AND hash = ($3);", [req.body.username, hash[1], hash[2]]));
-    console.log("Matched:" + matched);
+    let hash = mc.hash(req.body.password);//   mc.hash(req.body.password); // So right now, all usernames are matched because they all have the same hash "hash?"
+    
+    let matched = await connectAndRun(db => db.any("SELECT * FROM logins WHERE userid = ($1) AND salt = ($2) AND hash = ($3);", [req.body.username, hash[1], hash[2]]));
+    
     if (matched.length === 0){
         res.send(JSON.stringify({result: "Wrong Password"}));
         console.log("Wrong Password");
-    }else{
+    }else{  //  matched.length > 0 ... but there should never be > 1 really
         res.send(JSON.stringify({result:"Login successful"}));
         console.log("Login Success");
     }
@@ -150,7 +152,10 @@ async function findUser (req, res, next) {
 }
 
 async function createAccount (req, res){
-    let alreadyexists = await connectAndRun(db => db.none("INSERT INTO logins VALUES ($1, $2, $3, $4);", [req.body.username,req.body.password,"salt?","hash?"]));
+    let hash = mc.hash(req.body.password);
+
+
+    let alreadyexists = await connectAndRun(db => db.none("INSERT INTO logins VALUES ($1, $2, $3);", [req.body.username, hash[1], hash[2]]));
     console.log(`Added user ${req.body.username} to the database`);
     res.send(JSON.stringify({result: "No such user"}));
     return alreadyexists;

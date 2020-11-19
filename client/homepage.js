@@ -169,6 +169,7 @@ window.addEventListener("load", async function() {
         }else{
             if (json.result === "Wrong Password"){
                 //Wait some time
+                await new Promise((r) => setTimeout(r, 1000)); // two second delay
                 console.log("Wrong Password");
                 return;
             }else{
