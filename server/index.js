@@ -7,6 +7,7 @@ import * as _passport from "passport";
 import * as _localStrategy from "passport-local";
 //import * as _crypto from "../miniCrypt";
 
+const passport = _passport["default"];
 const localStrategy = _localStrategy["default"].Strategy;   //What does this do?
 const expressSession = _expressSession["default"];
 const express = _express["default"];
@@ -25,26 +26,26 @@ const pgp = _pgp["default"]({
 const PORT = process.env.PORT || 8081;
 const HASH_KEY = process.env.HASH_KEY || 123456;
 
-//Express Config
-const app = express();
-app.use(express.json());
-app.use(expressSession(session));
-passport.use(strategy);
-app.use(passport.initialize());
-app.use(passport.session());
-
 // Session configuration
 
 const session = {
-    secret : process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
+    secret : process.env.HASH_KEY || '123456', // set this encryption key in Heroku config (never in GitHub)!
     resave : false,
     saveUninitialized: false
 };
 
+//Express Config
+const app = express();
+app.use(express.json());
+app.use(expressSession(session));
+/**
+passport.use(strategy);
+app.use(passport.initialize());
+app.use(passport.session());
+*/
+
 // Passport configuration
-
-​
-
+/**
 const strategy = new LocalStrategy(
     async (username, password, done) => {
 	if (!findUser(username)) {
@@ -62,7 +63,7 @@ const strategy = new LocalStrategy(
 	// should create a user object here, associated with a unique identifier
 	return done(null, username);
 });​
-
+*/
 //MiniCrypt Config
 //const mc = new minicrypt();
 
