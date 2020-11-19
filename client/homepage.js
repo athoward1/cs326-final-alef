@@ -6,33 +6,12 @@
 
 
 window.addEventListener("load", async function() {
-    
 
-    /**
-    document.getElementById("login").addEventListener("click", async() => {
-        const response = await fetch('./login', {
-            method: 'GET',
-            body: JSON.stringify({
-                username: document.getElementById("userName").value,
-                password: document.getElementById("password").value
-            })
-        });
-        let json = await response.json();
-        if (json.result === "duplicate"){
-            
-        }
 
-        if (!response.ok) {
-            console.error("Could not save the login information to the server");
-        }
-    });
-    */
-
-    
     let isOpen = true;
-
     document.getElementById('addButton').addEventListener('click', async()=>{
         //add another workspace box in the first position and move every other box over one
+
         document.getElementById("addHint").style.display = "none";
         const addBox = document.createElement("div");
         addBox.className = "workspacebox";
@@ -52,14 +31,14 @@ window.addEventListener("load", async function() {
         boxName.className = "workspaceNameText";
         boxName.style.fontWeight = "bold";
 
-        let useridtobegotten=5,workspaceidtobegotten=5,chatidtobegotten=5,planneridtobegotten=5,taskidtobegotten=5,timelineidtobegotten=5,image_url = 3;
-
-        await newWorkspace(useridtobegotten,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
+        //  POSTING FAKE DATA
 
 
-        //Make edits to database values
+        let currentUser = loggedIn();   //  "guest" or username saved in localStorage
+        let workspaceidtobegotten=5,chatidtobegotten=5,planneridtobegotten=5,taskidtobegotten=5,timelineidtobegotten=5,image_url = 3;
 
-
+        await newWorkspace(currentUser,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
+        
         deleteBox.addEventListener("click", ()=> {
             row1.removeChild(addBox);
         });
@@ -119,10 +98,10 @@ window.addEventListener("load", async function() {
 
 
     });
-    document.getElementById("createAccount").addEventListener("click", async() =>{
-    
-        //  Create Account
 
+    //  Create Account
+
+    document.getElementById("createAccount").addEventListener("click", async() =>{
         const response = await fetch('./createAccount', {
             method: 'POST',
             headers: {
@@ -185,30 +164,8 @@ window.addEventListener("load", async function() {
 
             }
             console.log("Huh? Error.");
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+        }  
     });
-    
-    
-
 });
 
 async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_timelineid,_image_url){
@@ -227,9 +184,19 @@ async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_tim
                 image_url:_image_url
             })
     });
-              
-            
+    let json = await response.json(); 
+    //POST response options?       
     if (!response.ok) {
         console.error(`Could not add user ${userid}'s workspace to the database.`);
+    }
+}
+
+function loggedIn(){
+    //localStorage?
+    let username = window.localStorage.getItem("userName");
+    if (username){
+        return username;
+    }else{
+        return "guest";
     }
 }

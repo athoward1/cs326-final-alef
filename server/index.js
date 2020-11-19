@@ -2,13 +2,13 @@
 
 import * as _pgp from "pg-promise";
 import * as _express from "express";
-import * as _crypto from "../miniCrypt";
+//import * as _crypto from "../miniCrypt";
 
 const PORT = process.env.PORT || 8081;
 const HASH_KEY = process.env.HASH_KEY || 123456;
 
 const express = _express["default"];
-const crypto = _crypto["default"];
+//const crypto = _crypto["default"];
 const pgp = _pgp["default"]({
     connect(client) {
         console.log('Connected to database:', client.connectionParameters.database);
@@ -24,7 +24,7 @@ const app = express();
 app.use(express.json());
 
 //MiniCrypt Config
-const mc = new minicrypt();
+//const mc = new minicrypt();
 
 //Database Config
 const url = process.env.DATABASE_URL || "No database";
@@ -49,14 +49,11 @@ async function connectAndRun(task) {
 
 //Routing
 app.post("/newWorkspace", async (req, res) => {
-    await newWorkspace(req.body.userid, req.body.workspaceid, req.body.chatid, req.body.plannerid, req.body.taskid, req.body.timelineid, req.body.image_url);
-    res.send("FAKE workspace added.");
+
+    let added = await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1, $2, $3, $4, $5, $6, $7);", [req.body.userid, req.body.workspaceid, req.body.chatid, req.body.plannerid, req.body.taskid, req.body.timelineid, req.body.image_url]));
+    res.send("Workspace added.");
+    return added;
 });
-
-
-async function newWorkspace(userid,workspaceid,chatid,plannerid,taskid,timelineid,image_url){
-    return await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1, $2, $3, $4, $5, $6, $7);", [userid,workspaceid,chatid,plannerid,taskid,timelineid,image_url]));
-}
 
 app.get("/localGet", async (req, res) => {
     console.log("GET recieved");
@@ -116,7 +113,5 @@ async function createAccount (req, res){
 
 //Hashing
 
-let hasher = crypto.createHash("sha256");
 
-console.log(hasher.update("Username").digest("hex"));
 
