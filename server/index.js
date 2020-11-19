@@ -120,17 +120,16 @@ async function checkPassword(req, res) {
 
     console.log("Req body username:" + req.body.username);
     //  See if username exits
-    let username = await connectAndRun(db => db.any("SELECT * FROM logins WHERE userid = ($1);", req.body.username));
-    if (username.length === 0){
+    let entry = await connectAndRun(db => db.any("SELECT * FROM logins WHERE userid = ($1);", req.body.username));
+    if (entry.length === 0 || entry.length > 1){
         next();
-        return; //  No such user
+        return; //  No such user || there are multiple in which case much is wrong
     }
     //  Compare passwords
-    console.log("entry with user that's trying to log in:   " + JSON.stringify(username));
     let hash = mc.hash(req.body.password);//   mc.hash(req.body.password); // So right now, all usernames are matched because they all have the same hash "hash?"
-    console.log("checking " + req.body.password + ", " + username[0][1] + ", " + hash[1]);
+    console.log("checking " + req.body.password + ", " + username.userid + ", " + hash[1]);
 
-    if (mc.check(req.body.password, username[1], hash[1])){
+    if (mc.check(req.body.password, username.salt, hash[1])){
         console.log("correct hash");
         res.send(JSON.stringify({result:"Login successful"}));
     }else{
@@ -138,12 +137,6 @@ async function checkPassword(req, res) {
         console.log("hash not matched Password");
 
     }    
-
-    if (matched.length === 0){
-    }else{  //  matched.length > 0 ... but there should never be > 1 really
-        console.log("Login Success");
-    }
-
 }
 
 async function findUser (req, res, next) {
