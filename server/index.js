@@ -122,7 +122,8 @@ async function checkPassword(req, res) {
         return;
     }
     //  Compare passwords
-    let hash = mc.hash(req.body.password);
+    
+    let hash = ["password","salt?","hash?"];//   mc.hash(req.body.password);
     let matched = await connectAndRun(db => db.any("SELECT * FROM logins WHERE username = ($1) AND salt = ($2) AND hash = ($3);", [req.body.username, hash[1], hash[2]]));
     console.log("Matched:" + matched);
     if (matched.length === 0){
