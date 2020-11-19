@@ -115,8 +115,6 @@ app.post("/createAccount", findUser, createAccount);
 app.post("/login", checkPassword);
 
 async function checkPassword(req, res) {
-
-    console.log("Req body username:" + req.body.username);
     //  See if username exits
     let entry = await connectAndRun(db => db.any("SELECT * FROM logins WHERE userid = ($1);", [req.body.username]));
     if (entry.length === 0){
@@ -124,14 +122,13 @@ async function checkPassword(req, res) {
         return; //  No such user || there are multiple in which case much is wrong
     }
     //  Compare passwords
-    //let hash = mc.hash(req.body.password);//   mc.hash(req.body.password); // So right now, all usernames are matched because they all have the same hash "hash?"
-    //console.log(entry[0].hash);
     if (mc.check(req.body.password, entry[0].salt, entry[0].hash)){
         console.log("correct hash");
         res.send(JSON.stringify({result:"Login successful"}));
     }else{
 
         //  Incorrect Password
+        await new Promise((r) => setTimeout(r, 1000));
         res.send(JSON.stringify({result: "Wrong Password"}));
         console.log("hash not matched Password");
 
