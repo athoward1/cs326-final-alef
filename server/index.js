@@ -110,7 +110,7 @@ app.listen(PORT, () => {
 
 app.post("/createAccount", [findUser, createAccount]);
 
-app.get("/login", [checkPassword, async (req, res) => {
+app.post("/login", [checkPassword, async (req, res) => {
     res.send(JSON.stringify({result: "No such user"}));
 }]);
 

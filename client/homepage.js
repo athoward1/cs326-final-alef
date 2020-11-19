@@ -135,7 +135,7 @@ window.addEventListener("load", async function() {
         let userinput = document.getElementById("userName").value;
         let passinput = document.getElementById("password").value;
         const response = await fetch('./login', {
-            method: 'GET',
+            method: 'POST',
             body: JSON.stringify({
                 username: userinput,
                 password: passinput
