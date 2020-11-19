@@ -132,6 +132,7 @@ window.addEventListener("load", async function() {
     //  Login
 
     document.getElementById("login").addEventListener("click", async()=>{
+        console.log("Here at login");
         let userinput = document.getElementById("userName").value;
         let passinput = document.getElementById("password").value;
         const response = await fetch('./login', {
@@ -141,6 +142,7 @@ window.addEventListener("load", async function() {
                 password: passinput
             })
         });
+
         let json = await response.json();
         if (json.result === "duplicate"){   //  Good!
             alert("Success");
@@ -166,7 +168,6 @@ window.addEventListener("load", async function() {
             if (json.result === "Wrong Password"){
                 //Wait some time
                 console.log("Wrong Password");
-
             }
             console.log("Huh? Error.");
         }  
