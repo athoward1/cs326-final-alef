@@ -126,7 +126,7 @@ async function checkPassword(req, res) {
         return; //  No such user
     }
     //  Compare passwords
-    console.log("entry with user that's trying to log in:   " + username[0]);
+    console.log("entry with user that's trying to log in:   " + JSON.stringify(username));
     let hash = mc.hash(req.body.password);//   mc.hash(req.body.password); // So right now, all usernames are matched because they all have the same hash "hash?"
     console.log("checking " + req.body.password + ", " + username[0][1] + ", " + hash[1]);
 
