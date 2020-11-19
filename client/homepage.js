@@ -102,7 +102,7 @@ window.addEventListener("load", async function() {
     //  Create Account
 
     document.getElementById("createAccount").addEventListener("click", async() =>{
-        const response = await fetch('./createAccount', {
+        const response = await fetch('/createAccount', {
             method: 'POST',
             headers: {
                 'Content-Type':'application/json'
@@ -135,8 +135,11 @@ window.addEventListener("load", async function() {
         console.log("Here at login");
         let userinput = document.getElementById("userName").value;
         let passinput = document.getElementById("password").value;
-        const response = await fetch('./login', {
+        const response = await fetch('/login', {
             method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
             body: JSON.stringify({
                 username: userinput,
                 password: passinput
@@ -175,7 +178,7 @@ window.addEventListener("load", async function() {
 });
 
 async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_timelineid,_image_url){
-    const response = await fetch('/newWorkspace', {
+    const response = await fetch('./newWorkspace', {
         method:'POST',
         headers:{
             'Content-Type':'application/json'
