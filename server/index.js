@@ -4,7 +4,6 @@ import * as _pgp from "pg-promise";
 import * as _express from "express";
 import * as _crypto from "../miniCrypt";
 
-
 const PORT = process.env.PORT || 8081;
 const HASH_KEY = process.env.HASH_KEY || 123456;
 
