@@ -115,6 +115,7 @@ app.post("/login", [checkPassword, async (req, res) => {
 }]);
 
 async function checkPassword(req, res) {
+    console.log(req.body.username);
     //  See if username exits
     let username = await connectAndRun(db => db.any("SELECT * FROM logins WHERE username = ($1);", req.body.username));
     if (username.length === 0){
