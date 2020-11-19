@@ -153,9 +153,7 @@ async function findUser (req, res, next) {
 
 async function createAccount (req, res){
     let hash = mc.hash(req.body.password);
-
-
-    let alreadyexists = await connectAndRun(db => db.none("INSERT INTO logins VALUES ($1, $2, $3);", [req.body.username, hash[1], hash[2]]));
+    let alreadyexists = await connectAndRun(db => db.none("INSERT INTO logins VALUES ($1, $2, $3);", [req.body.username, hash[0], hash[1]]));
     console.log(`Added user ${req.body.username} to the database`);
     res.send(JSON.stringify({result: "No such user"}));
     return alreadyexists;
