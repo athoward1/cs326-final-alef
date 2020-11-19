@@ -108,11 +108,11 @@ app.listen(PORT, () => {
 });
 
 
-app.post("/createAccount", [findUser, createAccount]);
+app.post("/createAccount", findUser, createAccount);
 
-app.post("/login", [checkPassword, async (req, res) => {
+app.post("/login", checkPassword, async (req, res) => {
     res.send(JSON.stringify({result: "No such user"}));
-}]);
+});
 
 async function checkPassword(req, res) {
     console.log(req.body.username);
