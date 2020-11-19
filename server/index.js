@@ -120,7 +120,7 @@ async function checkPassword(req, res) {
 
     console.log("Req body username:" + req.body.username);
     //  See if username exits
-    let username = await connectAndRun(db => db.any("SELECT * FROM logins WHERE username = ($1);", req.body.username));
+    let username = await connectAndRun(db => db.any("SELECT * FROM logins WHERE userid = ($1);", req.body.username));
     if (username.length === 0){
         next();
         return;
@@ -143,7 +143,7 @@ async function checkPassword(req, res) {
 
 async function findUser (req, res, next) {
     console.log("Checking for existing username");
-    let duplicate = await connectAndRun(db => db.any("SELECT * FROM logins WHERE username = ($1);", [req.body.username]));
+    let duplicate = await connectAndRun(db => db.any("SELECT * FROM logins WHERE userid = ($1);", [req.body.username]));
     if(duplicate.length > 0){
         res.send(JSON.stringify({result: "duplicate"}));
     }else{
