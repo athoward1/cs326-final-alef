@@ -132,7 +132,6 @@ window.addEventListener("load", async function() {
     //  Login
 
     document.getElementById("login").addEventListener("click", async()=>{
-        console.log("Here at login");
         let userinput = document.getElementById("userName").value;
         let passinput = document.getElementById("password").value;
         const response = await fetch('/login', {
@@ -165,7 +164,6 @@ window.addEventListener("load", async function() {
         }
         if (json.result === "No such user"){
             //Send modal to Create Account Tab
-            console.log("User does not exist yet");
             $("#loginModal").modal('hide');
             return;
         }else{

@@ -18,7 +18,8 @@ const crypto = _crypto["default"];
   @module miniCrypt
   @desc A tiny crypto lib for the 326 kids.
  */
-module.exports = (function() {
+
+let mc = function() {
   /**
     @constructor
     @arg {number} its - The number of iterations to be performed; higher iterations means more security but slower speed.
@@ -61,4 +62,6 @@ module.exports = (function() {
   };
 
   return MiniCrypt;
-}());
+}
+
+export default mc();

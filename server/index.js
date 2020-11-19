@@ -5,8 +5,9 @@ import * as _express from "express";
 import * as _expressSession from "express-session";
 import * as _passport from "passport";
 import * as _localStrategy from "passport-local";
-//import * as _crypto from "../miniCrypt";
+import * as _crypto from "../miniCrypt.js";
 
+const miniCrypt = _crypto["default"];
 const passport = _passport["default"];
 const localStrategy = _localStrategy["default"].Strategy;   //What does this do?
 const expressSession = _expressSession["default"];
@@ -65,7 +66,8 @@ const strategy = new LocalStrategy(
 });​
 */
 //MiniCrypt Config
-//const mc = new minicrypt();
+const mc = new miniCrypt();
+console.log(mc);
 
 //Database Config
 const url = process.env.DATABASE_URL || "No database";
