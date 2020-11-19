@@ -156,7 +156,7 @@ window.addEventListener("load", async function() {
             });
             row1.appendChild(newBtn);
         }
-        if (json.result === "User does not yet exist"){
+        if (json.result === "User does not exist yet"){
             //send modal to Create Account Tab
             console.log("User does not exist yet");
             $("#loginModal").modal('hide');
@@ -206,7 +206,7 @@ function loggedIn(){
 
 function logIn(username){
     //  set local storage
-    
+
     document.getElementById("loginBtn").innerHTML = "Welcome, " + username;
     document.getElementById("loginBtn").disabled = true;
     let newBtn = document.createElement("button");

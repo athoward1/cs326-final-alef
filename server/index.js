@@ -111,7 +111,7 @@ app.listen(PORT, () => {
 app.post("/createAccount", [findUser, createAccount]);
 
 app.get("/login", [checkPassword, async (req, res) => {
-    res.send(JSON.stringify({result: "User does not yet exist"}));
+    res.send(JSON.stringify({result: "User does not exist yet"}));
 }]);
 
 async function checkPassword(req, res) {
