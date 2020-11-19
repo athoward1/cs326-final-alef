@@ -40,7 +40,7 @@ window.addEventListener("load", async function() {
         await newWorkspace(currentUser,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
         
         deleteBox.addEventListener("click", ()=> {
-            row1.removeChild(addBox);
+            document.getElementById("row1").removeChild(addBox);
         });
 
         editBox.addEventListener("click", () =>{
@@ -119,6 +119,7 @@ window.addEventListener("load", async function() {
             if (json.result === "No such user"){
                 localStorage.setItem("userName", document.getElementById("newuserName").value);
                 localStorage.setItem("password", document.getElementById("newpassword").value);
+                logIn(document.getElementById("newuserName").value);
                 $("#loginModal").modal('hide');
             }else{
                 console.log(json.result);
@@ -155,7 +156,7 @@ window.addEventListener("load", async function() {
                 document.getElementById("loginBtn").disabled = false;
                 newBtn.style.display = "none";
             });
-            row1.appendChild(newBtn);
+            document.getElementById("row1").appendChild(newBtn);
         }
         if (json.result === "No such user"){
             //send modal to Create Account Tab
@@ -214,9 +215,9 @@ function logIn(username){
     newBtn.className = "btn btn-secondary btn-lg signoutBtn";
     newBtn.innerHTML = "Sign out";
     newBtn.addEventListener("click", ()=>{
-    document.getElementById("loginBtn").innerHTML = "Login/Sign up";
-    document.getElementById("loginBtn").disabled = false;
-    newBtn.style.display = "none";
-});
-row1.appendChild(newBtn);
+        document.getElementById("loginBtn").innerHTML = "Login/Sign up";
+        document.getElementById("loginBtn").disabled = false;
+        newBtn.style.display = "none";
+    });
+    document.getElementById("row1").appendChild(newBtn);
 }
