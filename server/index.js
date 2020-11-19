@@ -2,10 +2,7 @@
 
 import * as _pgp from "pg-promise";
 import * as _express from "express";
-import * as _crypto from "crypto";
-//import { response } from "express";
-import pkg from 'express';
-const { response } = pkg;
+import * as _crypto from "../miniCrypt";
 
 const PORT = process.env.PORT || 8081;
 const HASH_KEY = process.env.HASH_KEY || 123456;
@@ -22,9 +19,14 @@ const pgp = _pgp["default"]({
     }
 });
 
+//Express Config
 const app = express();
 app.use(express.json());
 
+//MiniCrypt Config
+const mc = new minicrypt();
+
+//Database Config
 const url = process.env.DATABASE_URL || "No database";
 const db = pgp(url);
 
@@ -45,7 +47,7 @@ async function connectAndRun(task) {
     }
 }
 
-
+//Routing
 app.post("/newWorkspace", async (req, res) => {
     await newWorkspace(req.body.userid, req.body.workspaceid, req.body.chatid, req.body.plannerid, req.body.taskid, req.body.timelineid, req.body.image_url);
     res.send("FAKE workspace added.");
@@ -68,10 +70,35 @@ app.listen(PORT, () => {
 });
 
 
-app.post("/createAccount", [checkDup, createAccount]);
+app.post("/createAccount", [findUser, createAccount]);
 
-async function checkDup (req, res, next) {
-    console.log("Checking duplicate username");
+app.get("/login", [checkPassword, async (req, res) => {
+    res.send(JSON.stringify({result: "User not yet exist"}));
+}]);
+
+async function checkPassword(req, res) {
+    //  See if username exits
+    let username = await connectAndRun(db => db.any("SELECT * FROM logins WHERE username = ($1);", req.body.username));
+    if (username.length === 0){
+        next();
+        return;
+    }
+    //  Compare passwords
+    let hash = mc.hash(req.body.password);
+    let matched = await connectAndRun(db => db.any("SELECT * FROM logins WHERE username = ($1) AND salt = ($2) AND hash = ($3);", [req.body.username, hash[1], hash[2]]));
+    console.log("Matched:" + matched);
+    if (matched.length === 0){
+        res.send(JSON.stringify({result: "Wrong Password"}));
+        console.log("Wrong Password");
+    }else{
+        res.send(JSON.stringify("Login successful"));
+        console.log("Login Success");
+    }
+
+}
+
+async function findUser (req, res, next) {
+    console.log("Checking for existing username");
     let duplicate = await connectAndRun(db => db.any("SELECT * FROM logins WHERE username = ($1);", [req.body.username]));
     if(duplicate.length > 0){
         res.send(JSON.stringify({result: "duplicate"}));
@@ -86,6 +113,8 @@ async function createAccount (req, res){
     res.send(JSON.stringify({result: "ok"}));
     return alreadyexists;
 }
+
+//Hashing
 
 let hasher = crypto.createHash("sha256");
 
