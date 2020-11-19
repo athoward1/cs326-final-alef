@@ -116,11 +116,12 @@ window.addEventListener("load", async function() {
         if (json.result === "duplicate"){
             alert("Username already in use");
         }else{
-            if (json.result === "User does not exist yet"){
+            if (json.result === "No such user"){
                 localStorage.setItem("userName", document.getElementById("newuserName").value);
                 localStorage.setItem("password", document.getElementById("newpassword").value);
                 $("#loginModal").modal('hide');
             }else{
+                console.log(json.result);
                 alert("We shouldn't be here... json.result was only 'ok' or 'duplicate'...");   //  Shouldn't be an alert, we should have tooltips.
             }
         }
@@ -156,7 +157,7 @@ window.addEventListener("load", async function() {
             });
             row1.appendChild(newBtn);
         }
-        if (json.result === "User does not exist yet"){
+        if (json.result === "No such user"){
             //send modal to Create Account Tab
             console.log("User does not exist yet");
             $("#loginModal").modal('hide');

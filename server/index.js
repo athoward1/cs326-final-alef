@@ -111,7 +111,7 @@ app.listen(PORT, () => {
 app.post("/createAccount", [findUser, createAccount]);
 
 app.get("/login", [checkPassword, async (req, res) => {
-    res.send(JSON.stringify({result: "User does not exist yet"}));
+    res.send(JSON.stringify({result: "No such user"}));
 }]);
 
 async function checkPassword(req, res) {
@@ -148,7 +148,7 @@ async function findUser (req, res, next) {
 async function createAccount (req, res){
     let alreadyexists = await connectAndRun(db => db.none("INSERT INTO logins VALUES ($1, $2, $3, $4);", [req.body.username,req.body.password,"salt?","hash?"]));
     console.log(`Added user ${req.body.username} to the database`);
-    res.send(JSON.stringify({result: "ok"}));
+    res.send(JSON.stringify({result: "No such user"}));
     return alreadyexists;
 }
 
