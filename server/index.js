@@ -129,7 +129,7 @@ async function checkPassword(req, res) {
     let hash = mc.hash(req.body.password);//   mc.hash(req.body.password); // So right now, all usernames are matched because they all have the same hash "hash?"
     //console.log("checking " + req.body.password + ", " + entry.userid + ", " + hash[1]);
 
-    if (mc.check(req.body.password, entry.salt, hash[1])){
+    if (mc.check(req.body.password, entry[0].salt, hash[1])){
         console.log("correct hash");
         res.send(JSON.stringify({result:"Login successful"}));
     }else{
