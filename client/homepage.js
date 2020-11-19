@@ -130,17 +130,20 @@ window.addEventListener("load", async function() {
     //  Login
 
     document.getElementById("login").addEventListener("click", async()=>{
+        let userinput = document.getElementById("userName").value;
+        let passinput = document.getElementById("password").value;
         const response = await fetch('./login', {
             method: 'GET',
             body: JSON.stringify({
-                username: document.getElementById("userName").value,
-                password: document.getElementById("password").value
+                username: userinput,
+                password: passinput
             })
         });
         let json = await response.json();
-        if (json.result === "duplicate"){
+        if (json.result === "duplicate"){   //  Good!
             alert("Success");
             $("#loginModal").modal('hide');
+            logIn(userinput, passinput);
             document.getElementById("loginBtn").innerHTML = "Welcome, " + localStorage.getItem("userName");
             document.getElementById("loginBtn").disabled = true;
             let newBtn = document.createElement("button");
@@ -153,7 +156,7 @@ window.addEventListener("load", async function() {
             });
             row1.appendChild(newBtn);
         }
-        if (json.result === "User not yet exist"){
+        if (json.result === "User does not yet exist"){
             //send modal to Create Account Tab
             console.log("User does not exist yet");
             $("#loginModal").modal('hide');
@@ -199,4 +202,20 @@ function loggedIn(){
     }else{
         return "guest";
     }
+}
+
+function logIn(username){
+    //  set local storage
+    
+    document.getElementById("loginBtn").innerHTML = "Welcome, " + username;
+    document.getElementById("loginBtn").disabled = true;
+    let newBtn = document.createElement("button");
+    newBtn.className = "btn btn-secondary btn-lg signoutBtn";
+    newBtn.innerHTML = "Sign out";
+    newBtn.addEventListener("click", ()=>{
+    document.getElementById("loginBtn").innerHTML = "Login/Sign up";
+    document.getElementById("loginBtn").disabled = false;
+    newBtn.style.display = "none";
+});
+row1.appendChild(newBtn);
 }
