@@ -164,13 +164,23 @@ window.addEventListener("load", async function() {
             document.getElementById("row1").appendChild(newBtn);
         }
         if (json.result === "No such user"){
-            //send modal to Create Account Tab
+            //Send modal to Create Account Tab
             console.log("User does not exist yet");
             $("#loginModal").modal('hide');
+            return;
         }else{
             if (json.result === "Wrong Password"){
                 //Wait some time
                 console.log("Wrong Password");
+                return;
+            }else{
+                if (json.result === "Login Successful"){
+                    //Logging in
+                    logIn(userinput);
+                    $("#loginModal").modal('hide');
+                    return;
+
+                }
             }
             console.log("Huh? Error.");
         }  
