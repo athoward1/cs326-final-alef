@@ -113,7 +113,6 @@ app.listen(PORT, () => {
 app.post("/createAccount", findUser, createAccount);
 
 app.post("/login", checkPassword, async (req, res) => {
-    res.send(JSON.stringify({result: "No such user"}));
 });
 
 async function checkPassword(req, res) {
@@ -123,12 +122,12 @@ async function checkPassword(req, res) {
     let entry = await connectAndRun(db => db.any("SELECT * FROM logins WHERE userid = ($1);", req.body.username));
     entry = JSON.stringify(entry);
     if (entry.length === 0 || entry.length > 1){
-        next();
+        res.send(JSON.stringify({result: "No such user"}));
         return; //  No such user || there are multiple in which case much is wrong
     }
     //  Compare passwords
     let hash = mc.hash(req.body.password);//   mc.hash(req.body.password); // So right now, all usernames are matched because they all have the same hash "hash?"
-    console.log("checking " + req.body.password + ", " + entry.userid + ", " + hash[1]);
+    //console.log("checking " + req.body.password + ", " + entry.userid + ", " + hash[1]);
 
     if (mc.check(req.body.password, entry.salt, hash[1])){
         console.log("correct hash");
