@@ -112,8 +112,7 @@ app.listen(PORT, () => {
 
 app.post("/createAccount", findUser, createAccount);
 
-app.post("/login", checkPassword, async (req, res) => {
-});
+app.post("/login", checkPassword);
 
 async function checkPassword(req, res) {
 
