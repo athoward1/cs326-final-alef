@@ -182,7 +182,7 @@ window.addEventListener("load", async function() {
 
                 }
             }
-            console.log("Huh? Error.");
+            console.log("Huh? Error." + json.result);
         }  
     });
 });
