@@ -131,7 +131,7 @@ async function checkPassword(req, res) {
         res.send(JSON.stringify({result: "Wrong Password"}));
         console.log("Wrong Password");
     }else{
-        res.send(JSON.stringify("Login successful"));
+        res.send(JSON.stringify({result:"Login successful"}));
         console.log("Login Success");
     }
 
