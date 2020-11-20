@@ -32,7 +32,7 @@ window.addEventListener("load", async function() {
     }else{
         console.log(user + " logged in");
         let src = await getProfPic(user);
-        document.getElementById("profilePicture").src = src;    //  This line is very busted. I don't know why.
+        document.getElementById("profilePicture").src = "url(" + src + ")";    //  This line is very busted. I don't know why.
     }
 
     document.getElementById('addButton').addEventListener('click', async()=>{
