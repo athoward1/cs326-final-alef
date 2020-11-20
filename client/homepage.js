@@ -10,7 +10,7 @@ window.addEventListener("load", async function() {
     let user = loggedIn();
     if (user === "Guest"){
         console.log("Guest logged in");
-        document.getElementById("profileImage").src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
+        document.getElementById("profilePicture").src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
     }else{
         console.log(user + " logged in");
         let src = await getProfPic(user);
