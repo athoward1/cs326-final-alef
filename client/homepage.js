@@ -2,6 +2,7 @@
 
 
 window.addEventListener("load", async function() {
+    
     let inviteClicked = true;
     let inviteCount = 1;
     document.getElementById("inviteButton").addEventListener("click", ()=>{
@@ -20,23 +21,26 @@ window.addEventListener("load", async function() {
         document.getElementById("row1").appendChild(inviteInput);
         document.getElementById("row1").appendChild(inviteButton);
         inviteButton.addEventListener("click", ()=>{
-            inviteClicked = true;
-            
-            document.getElementById("row1").removeChild(inviteInput);
-            document.getElementById("row1").removeChild(inviteButton);
-            document.getElementById(`invitedPerson${inviteCount}`).innerHTML = inviteInput.value;
-            inviteCount++;
+            if(inviteInput !== ""){
+                inviteClicked = true;
+                
+                document.getElementById("row1").removeChild(inviteInput);
+                document.getElementById("row1").removeChild(inviteButton);
+                document.getElementById(`invitedPerson${inviteCount}`).innerHTML = inviteInput.value;
+                inviteCount++;
+            }
         });
         }
     });
+    
     if (window.localStorage.length != 0){   //  We're coming back to this page
         logIn(window.localStorage.getItem("userName"));
     }
-
+    
     //Set Profile Picture
     let user = loggedIn();
     if (user === "Guest"){
-        document.getElementById("profileImage").src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
+        document.getElementById("profilePicture").src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
     }else{
         let src = await getProfPic(user);
         if (src){
@@ -44,11 +48,11 @@ window.addEventListener("load", async function() {
 
         }
     }
-
+    
     let isOpen = true;
     document.getElementById('addButton').addEventListener('click', async()=>{
         //add another workspace box in the first position and move every other box over one
-
+        
         document.getElementById("addHint").style.display = "none";
         const addBox = document.createElement("div");
         addBox.className = "workspacebox";
