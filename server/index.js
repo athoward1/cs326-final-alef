@@ -127,7 +127,7 @@ app.post("/login", checkPassword);
 
 async function getUserInfo(req, res){
     console.log("Finding info for user");
-    let entries = await connectAndRun(db => db.any("SELECT * FROM userinfo WHERE userid =($1);", [req.body.userid]));
+    let entries = await connectAndRun(db => db.any("SELECT * FROM userinfo WHERE username =($1);", [req.body.userid]));
     console.log(entries);
     res.send(JSON.stringify({result: entries}));
 }

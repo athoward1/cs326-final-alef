@@ -1,8 +1,6 @@
 "use strict";
 
-window.addEventListener("load", async function() {
-    console.log("hello");
-    
+window.addEventListener("load", async function() {    
     document.getElementById("change-password").addEventListener("click", async() => {
         //  Change password
         let user = localStorage.getItem("userName");
