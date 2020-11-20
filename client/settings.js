@@ -48,8 +48,9 @@ window.addEventListener("load", function() {
 
     });
 
-    //  Email to Settings
+    //  Field to Settings
     document.getElementById("email-button").addEventListener("click", async()=>{
+        console.log("Change email?");
         let new_email = document.getElementById("emailAddress").value;
         const response = await fetch('/updateSettings', {
             method: 'POST',
@@ -64,6 +65,8 @@ window.addEventListener("load", function() {
         let json = await response.json();
         if (json.result === "success"){
             console.log("Email Changed");
+        }else{
+            console.log("Email Not Changed");
         }
 
     });
