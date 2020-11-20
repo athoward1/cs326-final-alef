@@ -219,7 +219,7 @@ async function userNode(user, workspace, _shared){
         })
     });
     let json = await response.json();
-    let userinfo = [json.result.email, json.result.firstname, json.result.lastname, json.result.country];
+    let userinfo = [json.result.email, json.result.firstname, json.result.lastname, json.result.country];   //  make result[0]?
     userinfo.forEach((value) => {
         let moreUserInfoNode = document.createElement("span");
         moreUserInfoNode.innerText = value;

@@ -142,7 +142,7 @@ async function uninvite(req,res){
 
 async function getUserInfo(req, res){
     console.log("Finding info for user");
-    let entries = await connectAndRun(db => db.any("SELECT * FROM userinfo WHERE username =($1);", [req.body.userid]));
+    let entries = await connectAndRun(db => db.one("SELECT * FROM userinfo WHERE username =($1);", [req.body.userid]));
     res.send(JSON.stringify({result: entries}));
 }
 

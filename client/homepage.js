@@ -211,7 +211,7 @@ async function getProfPic(user){
         })
     });
     let json = await response.json();
-    let image_url = json.result[0].image_url;    //  GET image_url of user from userinfo table
+    let image_url = json.result.image_url;    //  GET image_url of user from userinfo table
     console.log(image_url);
     if (image_url.match(/\.(jpeg|jpg|gif|png)$/) != null){
         console.log("valid profile pic");
