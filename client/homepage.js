@@ -21,7 +21,7 @@ window.addEventListener("load", async function() {
     let result = json.result;
     console.log(result);
     for (let i in result){
-        displayWorkspaces(result[i].title, result[i].image_url);
+        displayWorkspaces(result[i].workspaceid, result[i].image_url);
     }
     
     //Set Profile Picture
