@@ -80,4 +80,39 @@ document.getElementById('confirmDate').addEventListener('click', async () => {
 
 });
 
+document.getElementById("sendChat").addEventListener( 'click', async () => {
+    const theDate = new Date();
+    const text = document.getElementById('textEnter').value;
+    const theEnter = document.getElementById('textEnter');
+    const sendBut = document.getElementById('sendChat');
+    const theChat = document.getElementById('chat');
+    const theDiv = document.createElement('div');
+    const theP = document.createElement('p');
+    const theImg = document.createElement('img');
+    const theSpan = document.createElement('span');
+    const theB = document.createElement('br');
+    
+    theDiv.classList.add('container');
+    theImg.classList.add('right');
+    theImg.setAttribute('src', 'sourceOfImg');
+    theImg.setAttribute('alt','avatar');
+    theImg.setAttribute('style','width:100%;')
+    theP.innerText = text;
+    theSpan.classList.add('time-left');
+    theSpan.innerHTML = theDate.toDateString();
+    theP.appendChild(theB);
+    theP.appendChild(theSpan);
+    theDiv.appendChild(theImg);
+    theDiv.appendChild(theP);
+    theChat.appendChild(theDiv);
+    theChat.appendChild(theEnter);
+    theChat.appendChild(sendBut);
+    theEnter.value  ='';
+    
+    
+    
+    
+});
+
+
 
