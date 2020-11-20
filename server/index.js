@@ -172,7 +172,7 @@ async function createSettings (req, res){
 
 async function updateSettings(req, res){        //  Shoudl work for all fields
     console.log(`Set setting ${req.body.field} to ${req.body.value}`);
-    await connectAndRun(db => db.none("UPDATE userinfo SET ($1) = ($2) WHERE userid = ($3);", [req.body.field, req.body.value, req.body.userid]));
+    await connectAndRun(db => db.none("UPDATE userinfo SET ($1) = ($2) WHERE username = ($3);", [req.body.field, req.body.value, req.body.userid]));
     res.send(JSON.stringify({result:"success"}));
 }
 
