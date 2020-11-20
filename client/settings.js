@@ -47,4 +47,25 @@ window.addEventListener("load", function() {
         }
 
     });
+
+    //  Email to Settings
+    document.getElementById("email-button").addEventListener("click", async()=>{
+        let new_email = document.getElementById("emailAddress").value;
+        const response = await fetch('/updateSettings', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                field: "email",
+                value: new_email
+            })
+        });
+        let json = response.json();
+        if (json.result === "success"){
+            console.log("Email Changed");
+        }
+
+    });
+
 });

@@ -33,10 +33,15 @@
                 <h2>Edit your Account</h2><br>
                 <form>
 
-                    <!--User Name Form-->
+                    <!--Email Form-->
+
                     <div class="form-group">
-                        <label for="userName">User Name</label>
-                        <input type="text" class="form-control w-50" id="userName">
+                      <label for="emailAddress">Email address</label>
+                      <input type="email" class="form-control w-50" id="emailAddress" aria-describedby="emailHelp" placeholder="name@example.com">
+                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                      <br>
+                      <button id = "email-button" type = "submit" class = "btn btn-primary">Update Email</button>
+
                     </div>
 
                     <!--Profile Image Form-->
@@ -45,19 +50,9 @@
                         <label for="profileImage">Import an Image</label>
                         <input type="file" class="form-control-file" id="profileImage">
                         <br>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button id="img-button" type="submit" class="btn btn-primary">Save</button>
                       </div>
-
                     </form>
-
-                    <!--Email Form-->
-
-                    <div class="form-group">
-                      <label for="emailAddress">Email address</label>
-                      <input type="email" class="form-control w-50" id="emailAddress" aria-describedby="emailHelp" placeholder="name@example.com">
-                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                    </div>
-
                     <hr>
 
                     <!--Password Form-->

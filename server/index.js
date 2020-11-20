@@ -114,6 +114,7 @@ app.post("/createAccount", findUser, createAccount);
 
 app.post("/createSettings", createSettings);
 
+app.post("/updateSettings", updateSettings);
 
 app.post("/login", checkPassword);
 
@@ -145,8 +146,6 @@ async function checkPassword(req, res) {
     }    
 }
 
-
-
 async function findUser (req, res, next) {
     console.log("Checking for existing username");
     let duplicate = await connectAndRun(db => db.any("SELECT * FROM logins WHERE userid = ($1);", [req.body.username]));
@@ -171,6 +170,11 @@ async function createSettings (req, res){
     res.send(JSON.stringify({result: "success"})); //  
 }
 
+async function updateSettings(req, res){        //  Shoudl work for all fields
+    await connectAndRun(db => db.none("UPDATE userinfo SET ($1) = ($2);", [req.body.field, req.body.value]));
+    console.log(`Set setting ${req.body.field} to ${req.body.value}`);
+    res.send(JSON.stringify({result:"success"}));
+}
 
 
 
