@@ -188,7 +188,7 @@ async function userNode(user, workspace, _shared){
     let node = document.createElement("div");
     node.classList = "wp-user";
     let userNameNode = document.createElement("span");
-    userNameNode.innerHTML = `<b>${user}</b>`;
+    userNameNode.innerHTML = `<b>${_shared}</b>`;
     node.appendChild(userNameNode);
     let response = await fetch("/getUserInfo", {
         method: 'POST',
