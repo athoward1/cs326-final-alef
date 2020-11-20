@@ -50,8 +50,6 @@ window.addEventListener("load", function() {
 
     //  Field to Settings
     document.getElementById("email-button").addEventListener("click", async()=>{
-        console.log("Change email?");
-        let _field = 'email';
         let new_email = document.getElementById("emailAddress").value;
         const response = await fetch('/updateSettings', {
             method: 'POST',
@@ -60,7 +58,6 @@ window.addEventListener("load", function() {
             },
             body: JSON.stringify({
                 userid: localStorage.getItem("userName"),
-                field: _field,
                 value: new_email
             })
         });

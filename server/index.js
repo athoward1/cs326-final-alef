@@ -114,7 +114,7 @@ app.post("/createAccount", findUser, createAccount);
 
 app.post("/createSettings", createSettings);
 
-app.post("/updateSettings", updateSettings);
+app.post("/updateEmail", updateSettings);
 
 app.post("/login", checkPassword);
 
@@ -170,9 +170,9 @@ async function createSettings (req, res){
     res.send(JSON.stringify({result: "success"})); //  
 }
 
-async function updateSettings(req, res){        //  Shoudl work for all fields
-    console.log(`Set setting ${req.body.field} to ${req.body.value}`);
-    await connectAndRun(db => db.none("UPDATE userinfo SET ($1) = ($2) WHERE username = ($3);", [req.body.field, req.body.value, req.body.userid]));
+async function updateEmail(req, res){        //  Shoudl work for all fields
+    console.log(`Set email of ${req.body.userid} to ${req.body.value}`);
+    await connectAndRun(db => db.none("UPDATE userinfo SET email = ($1) WHERE username = ($2);", [req.body.value, req.body.userid]));
     res.send(JSON.stringify({result:"success"}));
 }
 
