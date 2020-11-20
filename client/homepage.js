@@ -222,6 +222,7 @@ function logIn(username){
 }
 let isOpen = true;
 
+
 function displayWorkspaces(title, image_url){
     document.getElementById("addHint").style.display = "none";
     
@@ -283,16 +284,19 @@ function displayWorkspaces(title, image_url){
         
         saveimage.addEventListener("click", ()=>{
             let new_image_url = "url("+ newimage.value+ ")";
+            console.log(new_image_url);
             addBox.style.backgroundImage = new_image_url;
             addBox.removeChild(saveimage);
             addBox.removeChild(newimage);
         });
         
     });
-    addBox.style.backgroundImage = "url("+ image_url + ")";      
+    let image = "url("+ image_url + ")";
+    addBox.style.backgroundImage = image;
+    console.log(image);
+    
     addBox.appendChild(editPicture);
     addBox.appendChild(deleteBox);
     addBox.appendChild(boxName);
     addBox.appendChild(editBox);
-    addBox.appendChild(newimage);
 }
