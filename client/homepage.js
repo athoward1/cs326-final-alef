@@ -74,6 +74,7 @@ window.addEventListener("load", async function() {
       
         //  Add Workspace to table
         let currentUser = loggedIn();   //  "guest" or username saved in localStorage
+        console.log("Adding workspace for " + currentUser);
         let workspaceidtobegotten=5,chatidtobegotten=5,planneridtobegotten=5,taskidtobegotten=5,timelineidtobegotten=5,image_url = 3;
         await newWorkspace(currentUser,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
         //
@@ -108,7 +109,7 @@ window.addEventListener("load", async function() {
         editPicture.className = "editPicture";
         
         
-        addBox.style.backgroundImage = "url(https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png)"
+        addBox.style.backgroundImage = "url(https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png)";
         
         editPicture.addEventListener("click", ()=>{
             let newimage = document.createElement("input");
@@ -120,8 +121,8 @@ window.addEventListener("load", async function() {
             addBox.appendChild(saveimage);
             
             saveimage.addEventListener("click", async()=>{
-                let image_url = "url("+ newimage.value+ ")";
-                addBox.style.backgroundImage = image_url;
+                let new_image_url = "url("+ newimage.value+ ")";
+                addBox.style.backgroundImage = new_image_url;
                 addBox.removeChild(saveimage);
                 addBox.removeChild(newimage);
 
@@ -232,8 +233,7 @@ window.addEventListener("load", async function() {
 });
 
 async function getProfPic(user){
-    //  GET image_url of user from userinfo table
-
+    let image_url = "";    //  GET image_url of user from userinfo table
     if (image_url.match(/\.(jpeg|jpg|gif|png)$/) != null){
         return image_url;
     }else{
