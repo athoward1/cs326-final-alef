@@ -232,7 +232,7 @@ function logIn(username){
     newBtn.addEventListener("click", ()=>{
         document.getElementById("loginBtn").innerHTML = "Login/Sign up";
         document.getElementById("loginBtn").disabled = false;
-        window.localStorage = [];   //Empty local storage. Kinda sketchy
+        window.localStorage.clear();   //Empty local storage. Kinda sketchy
         newBtn.style.display = "none";
     });
     document.getElementById("row1").appendChild(newBtn);
