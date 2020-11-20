@@ -67,7 +67,6 @@ const strategy = new LocalStrategy(
 */
 //MiniCrypt Config
 const mc = new miniCrypt();
-console.log(mc);
 
 //Database Config
 const url = process.env.DATABASE_URL || "No database";
@@ -109,10 +108,17 @@ app.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}`)
 });
 
+app.post("/changePassword", deleteAccount, createAccount);
 
 app.post("/createAccount", findUser, createAccount);
 
 app.post("/login", checkPassword);
+
+async function deleteAccount(req,res){
+    await connectAndRun(db => db.none("DELETE * FROM logins WHERE userid = ($1);", [req.body.username]));   //there better be exactly one
+
+    
+}
 
 async function checkPassword(req, res) {
     //  See if username exits
@@ -135,6 +141,8 @@ async function checkPassword(req, res) {
     }    
 }
 
+
+
 async function findUser (req, res, next) {
     console.log("Checking for existing username");
     let duplicate = await connectAndRun(db => db.any("SELECT * FROM logins WHERE userid = ($1);", [req.body.username]));
@@ -149,7 +157,7 @@ async function createAccount (req, res){
     let hash = mc.hash(req.body.password);
     let alreadyexists = await connectAndRun(db => db.none("INSERT INTO logins VALUES ($1, $2, $3);", [req.body.username, hash[0], hash[1]]));
     console.log(`Added user ${req.body.username} to the database`);
-    res.send(JSON.stringify({result: "No such user"}));
+    res.send(JSON.stringify({result: "No such user"})); //  
     return alreadyexists;
 }
 

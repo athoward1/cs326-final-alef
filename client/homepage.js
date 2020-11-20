@@ -1,7 +1,3 @@
-//  import "..server/dataBaseUtils.js";     //  Might be helpful when requests get huge
-
-
-
 "use strict";
 
 
@@ -31,14 +27,12 @@ window.addEventListener("load", async function() {
         boxName.className = "workspaceNameText";
         boxName.style.fontWeight = "bold";
 
-        //  POSTING FAKE DATA
-
-
+        //  Add Workspace to table
         let currentUser = loggedIn();   //  "guest" or username saved in localStorage
         let workspaceidtobegotten=5,chatidtobegotten=5,planneridtobegotten=5,taskidtobegotten=5,timelineidtobegotten=5,image_url = 3;
-
         await newWorkspace(currentUser,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
-        
+        //
+
         deleteBox.addEventListener("click", ()=> {
             document.getElementById("row1").removeChild(addBox);
         });
@@ -126,6 +120,7 @@ window.addEventListener("load", async function() {
                 alert("We shouldn't be here... json.result was only 'ok' or 'duplicate'...");   //  Shouldn't be an alert, we should have tooltips.
             }
         }
+        //Make new settings entry
                 
     });
 
@@ -146,29 +141,13 @@ window.addEventListener("load", async function() {
         });
 
         let json = await response.json();
-        if (json.result === "duplicate"){   //  Good!
-            alert("Success");
-            $("#loginModal").modal('hide');
-            logIn(userinput, passinput);
-            document.getElementById("loginBtn").innerHTML = "Welcome, " + localStorage.getItem("userName");
-            document.getElementById("loginBtn").disabled = true;
-            let newBtn = document.createElement("button");
-            newBtn.className = "btn btn-secondary btn-lg signoutBtn";
-            newBtn.innerHTML = "Sign out";
-            newBtn.addEventListener("click", ()=>{
-                document.getElementById("loginBtn").innerHTML = "Login/Sign up";
-                document.getElementById("loginBtn").disabled = false;
-                newBtn.style.display = "none";
-            });
-            document.getElementById("row1").appendChild(newBtn);
-        }
         if (json.result === "No such user"){
             //Send modal to Create Account Tab
             $("#loginModal").modal('hide');
             return;
         }else{
             if (json.result === "Wrong Password"){
-                //Wait some time
+                //  Wrong password - stay on modal
                 await new Promise((r) => setTimeout(r, 1000)); // two second delay
                 console.log("Wrong Password");
                 return;
@@ -215,7 +194,7 @@ function loggedIn(){
     if (username){
         return username;
     }else{
-        return "guest";
+        return "Guest";
     }
 }
 
