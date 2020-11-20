@@ -11,6 +11,14 @@ html {
     background-color:transparent;
 }
 
+.wp-attribute{
+    margin-left: 2rem;
+}
+
+.wp-title{
+    display:inline;
+}
+
 .form-group{
     margin-left: 2rem;
 }
