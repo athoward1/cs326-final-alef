@@ -217,7 +217,8 @@ function logIn(username){
 let isOpen = true;
 async function displayWorkspaces(title, image_url){
     document.getElementById("addHint").style.display = "none";
-    
+    let user = localStorage.getItem("userName");
+
     const addBox = document.createElement("div");
     addBox.className = "workspacebox";
     addBox.setAttribute = ("id", "box1");
@@ -228,7 +229,6 @@ async function displayWorkspaces(title, image_url){
     deleteBox.className = "deleteButton";  
     deleteBox.addEventListener("click", async()=> {
         document.getElementById("row1").removeChild(addBox);
-        let user = localStorage.getItem("userName");
         let workspace = title;
         await fetch("/uninviteAll", {
             method:'POST',
@@ -266,15 +266,28 @@ async function displayWorkspaces(title, image_url){
 
             addBox.appendChild(newName);
             addBox.appendChild(saveName);
-            saveName.addEventListener("click", ()=>{
+            saveName.addEventListener("click", async()=>{
                 boxName.innerHTML = newName.value;
                 addBox.appendChild(boxName);
                 addBox.removeChild(newName);
                 addBox.removeChild(saveName);
                 addBox.appendChild(editBox);
                 isOpen = true;
+                //Update workspace title
                 
-
+                await fetch("/updateWorkspaceTitle", {
+                    method:'POST',
+                    headers: {
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({
+                        userid: user,
+                        workspaceid: newName.value
+                    })
+                });
+                
+                
+                
 
 
 

@@ -125,11 +125,19 @@ app.post("/getUserInfo", getUserInfo);
 app.post("/uninvite", uninvite);
 app.post("/uninviteAll", uninviteAll);
 app.post("/deleteWorkspace", deleteWorkspace);
+app.post("/updateWorkspaceTitle", updateWorkspaceTitle);
 
 app.post("/changeProfPic", updateProfPic);
 
 app.post("/login", checkPassword);
 
+
+async function updateWorkspaceTitle(req, res){
+    console.log("Updateing workspace title");
+    await connectAndRun(db => db.none("UPDATE workspaces SET workspaceid = ($1) WHERE userid = ($2)", [req.body.workspaceid, req.body.userid]));
+    res.send("success");
+
+}
 
 async function deleteWorkspace(req,res){
     console.log("deleting workspace");
