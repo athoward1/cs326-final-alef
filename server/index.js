@@ -123,8 +123,15 @@ app.post("/getWorkspaceInfo", workspacesUnderUser);
 app.post("/shared", getShared);
 app.post("/getUserInfo", getUserInfo);
 app.post("/uninvite", uninvite);
+app.post("/changeProfPic", updateProfPic);
 
 app.post("/login", checkPassword);
+
+async function updateProfPic(req, res){
+    console.log("changing profile pic");
+    await connectAndRun(db => db.none("UPDATE userinfo SET image_url = ($1) WHERE username = ($2);", [req.body.image_url, req.body.username]));
+
+}
 
 async function uninvite(req,res){
     console.log("uninviting");
@@ -135,22 +142,19 @@ async function uninvite(req,res){
 
 async function getUserInfo(req, res){
     console.log("Finding info for user");
-    let entries = await connectAndRun(db => db.any("SELECT * FROM userinfo WHERE username =($1);", [req.body.userid]));
-    console.log(entries);
+    let entries = await connectAndRun(db => db.one("SELECT * FROM userinfo WHERE username =($1);", [req.body.userid]));
     res.send(JSON.stringify({result: entries}));
 }
 
 async function getShared(req, res){
     console.log("Finding shared with users");
     let entries = await connectAndRun(db => db.any("SELECT * FROM workspaceinfo WHERE userid =($1) AND title = ($2);", [req.body.userid, req.body.title]));
-    console.log(entries);
     res.send(JSON.stringify({result: entries}));
 }
 
 async function workspacesUnderUser(req, res){
     console.log("Selecting workspaces under user");
     let wsps = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE userid =($1);", [req.body.userid]));
-    console.log(wsps);
     res.send(JSON.stringify({result: wsps}));
 }
 

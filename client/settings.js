@@ -1,6 +1,25 @@
 "use strict";
 
-window.addEventListener("load", async function() {    
+window.addEventListener("load", async function() {   
+    
+    document.getElementById("img-button").addEventListener("click", async() => {
+        let user = localStorage.getItem("userName");
+        let img = document.getElementById("profileImage").value;
+        const response = await fetch('/changeProfPic', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                username: user,
+                image_url: img
+            })
+        });
+        if (!response.ok){
+            console.log("Uh oh?");
+        }
+    });
+
     document.getElementById("change-password").addEventListener("click", async() => {
         //  Change password
         let user = localStorage.getItem("userName");
@@ -200,7 +219,7 @@ async function userNode(user, workspace, _shared){
         })
     });
     let json = await response.json();
-    let userinfo = [json.result.email, json.result.firstname, json.result.lastname, json.result.country];
+    let userinfo = [json.result.email, json.result.firstname, json.result.lastname, json.result.country];   //  make result[0]?
     userinfo.forEach((value) => {
         let moreUserInfoNode = document.createElement("span");
         moreUserInfoNode.innerText = value;
@@ -224,7 +243,7 @@ async function userNode(user, workspace, _shared){
             })
         });
     });
-    
+
     node.appendChild(disinvite);
 
 
