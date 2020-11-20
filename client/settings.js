@@ -153,11 +153,10 @@ window.addEventListener("load", async function() {
     let result = json.result;
     for (let i in result){
         let newNode = document.createElement("div");
-        newNode.innerHTML = `<h4 class="wp-title">${result[i].workspaceid}</h4><span class = "wp-attributes">
-            <span>Image URL: ${result[i].image_url}</span>
-            <span>More Info: more info</span>
-            </span>
+        newNode.innerHTML = `<img class="wp-img" src=${result[i].image_url}></img><h4 class="wp-title">${result[i].workspaceid}</h4>
+        <div>USER</div>
         <hr class ="solid">`;
+        //newNode add users
         newNodes[i] = newNode;
     }
     console.log(newNodes);

@@ -11,19 +11,16 @@ html {
     background-color:transparent;
 }
 
-.wp-attributes{
-    display: table;
-    table-layout: fixed;
-    width: 100%;
+.wp-img{
+    display:inline;
+    border-color: black;
 }
 
-.wp-attributes span{
-    display:table-cell;
-    text-align: center;
-}
+
+
+
 
 .wp-title{
-    display:inline;
     margin-bottom: 0;
 }
 
