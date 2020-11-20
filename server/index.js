@@ -134,14 +134,14 @@ app.post("/changeProfPic", updateProfPic);
 app.post("/login", checkPassword);
 
 async function updateWorkspaceImage(req, res){
-    console.log("Updating workspace title");
+    console.log("Updating workspace image");
     await connectAndRun(db => db.none("UPDATE workspaces SET image_url = ($1) WHERE userid = ($2) AND workspaceid = ($3)", [req.body.image_url, req.body.userid, req.body.workspaceid]));
     res.send("success");
 }
 
 async function updateWorkspaceTitle(req, res){
     console.log("Updating workspace title");
-    await connectAndRun(db => db.none("UPDATE workspaces SET workspaceid = ($1) WHERE userid = ($2) AND workspaceid = ($3)", [req.body.title, req.body.userid, req.body.workspaceid]));
+    await connectAndRun(db => db.none("UPDATE workspaces SET workspaceid = ($1) WHERE userid = ($2)", [req.body.title, req.body.userid, req.body.workspaceid]));
     res.send("success");
 }
 
