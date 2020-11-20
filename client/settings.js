@@ -61,7 +61,7 @@ window.addEventListener("load", function() {
                 value: new_email
             })
         });
-        let json = response.json();
+        let json = await response.json();
         if (json.result === "success"){
             console.log("Email Changed");
         }
