@@ -144,9 +144,9 @@ window.addEventListener("load", async function() {
         headers: {
             'Content-Type':'application/json'
         },
-        body:{
+        body: JSON.stringify({
             userid: _userid
-        }
+        })
     });
     let newNodes = [];
     let json = await response.json();
