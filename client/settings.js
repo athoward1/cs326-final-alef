@@ -168,7 +168,8 @@ window.addEventListener("load", async function() {
         let json2 = await response2.json();
         let result2 = json2.result;
         for (let j in result2){
-            newNode.appendChild(userNode(result2[j].shared));
+            let userLine = await userNode(result2[j].shared);
+            newNode.appendChild(userLine);
         }
 
 
@@ -185,7 +186,7 @@ window.addEventListener("load", async function() {
     }
 });
 
-function userNode(user){
+async function userNode(user){
     let node = document.createElement("div");
     node.classList = "wp-user";
     let userNameNode = document.createElement("span");
