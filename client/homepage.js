@@ -43,6 +43,7 @@ window.addEventListener("load", async function() {
       
         //  Add Workspace to table
         let currentUser = loggedIn();   //  "guest" or username saved in localStorage
+        console.log("Adding workspace for " + currentUser);
         let workspaceidtobegotten=5,chatidtobegotten=5,planneridtobegotten=5,taskidtobegotten=5,timelineidtobegotten=5,image_url = 3;
         await newWorkspace(currentUser,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
         //
@@ -77,7 +78,7 @@ window.addEventListener("load", async function() {
         editPicture.className = "editPicture";
         
         
-        addBox.style.backgroundImage = "url(https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png)"
+        addBox.style.backgroundImage = "url(https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png)";
         
         editPicture.addEventListener("click", ()=>{
             let newimage = document.createElement("input");

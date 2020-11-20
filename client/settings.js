@@ -136,4 +136,29 @@ window.addEventListener("load", async function() {
         }
     }); //  end personal-button
     
+    //  Your Workspaces. First fetch all workspaces under this username
+
+    let _userid = localStorage.getItem("userName");
+    let response = await fetch('/getWorkspaceInfo', {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body:{
+            userid = _userid
+        }
+    });
+    let newNodes = [];
+    let json = await response.json();
+    let result = json.result;
+    for (let i in result){
+        console.log("Workspace: "+result[i]);
+        let newNode = document.createElement("div");
+        newNode.innerHTML = `<h4>${result[i].title}<span id = "wp-attribute">${result[i].image_url}</span></h4>`;
+        newNodes += newNode;
+    }
+    console.log(newNodes);
+    for (let i in newNodes){
+        document.getElementById("v-pills-workspace").appendChild(newNodes[i]);
+    }
 });
