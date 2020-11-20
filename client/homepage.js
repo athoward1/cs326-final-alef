@@ -311,7 +311,7 @@ async function displayWorkspaces(title, image_url){
         addBox.appendChild(newimage);
         addBox.appendChild(saveimage);
         
-        saveimage.addEventListener("click", ()=>{
+        saveimage.addEventListener("click", async()=>{
             let new_image_url = "url("+ newimage.value+ ")";
             addBox.style.backgroundImage = new_image_url;
             addBox.removeChild(saveimage);
