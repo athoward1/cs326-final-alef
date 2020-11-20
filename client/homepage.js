@@ -227,7 +227,7 @@ async function displayWorkspaces(title, image_url){
     let deleteBox = document.createElement("img");
     deleteBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png";
     deleteBox.className = "deleteButton";  
-    deleteBox.addEventListener("click", ()=> {
+    deleteBox.addEventListener("click", async()=> {
         document.getElementById("row1").removeChild(addBox);
         let user = localStorage.getItem("userName");
         let workspace = title;
