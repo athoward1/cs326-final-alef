@@ -1,17 +1,22 @@
 hr.solid {
-    border-top: 3px solid #bbb;
-    width: 91%;
-    left: -46px;
-    margin-bottom: 5px;
+    border-top: 5px solid #bbb;
+    width: 110%;
+    left: -18.5%;
+    margin-bottom: 2%;
     position: relative;
 }
 .verticalline {
     border-left: 6px solid #bbb;
-    height: 1000px;
+    height: 100%;
     position: absolute;
     top: 0;
     left: 80%;
 }
+hr.linePosition {
+    position: absolute;
+    top: 25%;
+    left: -30%;
+  }
 
 .workspacebox {
     background-color: rgb(141, 215, 207);
@@ -32,9 +37,11 @@ hr.solid {
     left: 84%;
   }
 .loginButton{
-    top: 5px;
+    top: 3%;
     position: absolute;
-    left: 88%;
+    left: 85%;
+    width: 15%;
+    text-align: center;
 }
 .settingsicon {
     top: 40%;
@@ -43,7 +50,7 @@ hr.solid {
   }
 
 .addWorkspace{
-    top: 10px;
+    top: 13%;
     left: 72%;
     position: absolute;
     cursor: pointer;
@@ -52,22 +59,25 @@ hr.solid {
 .headerfont{
     font-family: Verdana;
     font-weight: bold;
-    font-size: 60px;
+    font-size: 600%;
     position: relative;
-    top: 5px;
-    left: 5%;
+    top: 3%;
+    left: 0%;
+    margin-bottom: 4%;
 }
+
 
 .motto{
     position: absolute;
-    top: 85px;
-    left: 30%;
+    top: 20%;
+    left: 32%;
+    font-size: 150%;
 }
 
 .banner {
     background: radial-gradient(white, rgba(221, 223, 222, 0.705));
-    width: 1220px;
-    height: 141px;
+    width: 80%;
+    height: 28%;
     position: absolute;
     left: 0px;
 }
@@ -121,4 +131,34 @@ input[type=text], input[type=password] {
     top: 55%;
     left: 86.5%;
     position: absolute;
+}
+
+.inviteButton{
+    position: absolute;
+    top: 20%;
+    left: 3%;
+}
+
+.formPosition{
+    position: absolute;
+    top: 20%;
+    left: 3%;
+}
+.inviteSave{
+    position: absolute;
+    top: 25%;
+    left: 3%;
+}
+
+.inviteTable{
+    position: absolute;
+    top: 60%;
+    left: 86%;
+}
+td{
+    text-align: center;
+}
+
+#addHint{
+    font-size: 150%;
 }
