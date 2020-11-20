@@ -130,7 +130,7 @@ app.post("/login", checkPassword);
 async function updateProfPic(req, res){
     console.log("changing profile pic");
     await connectAndRun(db => db.none("UPDATE userinfo SET image_url = ($1) WHERE username = ($2);", [req.body.image_url, req.body.username]));
-
+    res.send("success");
 }
 
 async function uninvite(req,res){
