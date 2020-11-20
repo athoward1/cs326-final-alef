@@ -11,8 +11,15 @@ html {
     background-color:transparent;
 }
 
-.wp-attribute{
-    margin-left: 2rem;
+.wp-attributes{
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.wp-attributes span{
+    display:table-cell;
+    text-align: center;
 }
 
 .wp-title{
