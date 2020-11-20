@@ -179,8 +179,8 @@ window.addEventListener("load", async function() {
     console.log(newNodes);
     for (let i in newNodes){
         document.getElementById("v-pills-workspace").appendChild(newNodes[i]);
-        document.getElementById("v-pills-workspace").appendChild(
-            document.createElement("div").innerHTML = '<hr class ="solid">');
+        let breakNode = document.createElement("div").innerHTML = '<hr class ="solid">';    //try hr
+        document.getElementById("v-pills-workspace").appendChild(breakNode);
     }
 });
 
