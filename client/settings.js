@@ -145,7 +145,7 @@ window.addEventListener("load", async function() {
             'Content-Type':'application/json'
         },
         body:{
-            userid = _userid
+            userid: _userid
         }
     });
     let newNodes = [];
