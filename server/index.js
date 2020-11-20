@@ -114,7 +114,7 @@ app.post("/createAccount", findUser, createAccount);
 
 app.post("/createSettings", createSettings);
 
-app.post("/updateEmail", updateSettings);
+app.post("/updateEmail", updateEmail);
 
 app.post("/login", checkPassword);
 
