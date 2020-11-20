@@ -13,7 +13,8 @@ window.addEventListener("load", async function() {
         document.getElementById("profileImage").src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
     }else{
         console.log(user + " logged in");
-        document.getElementById("profilePicture").src = await getProfPic(user);
+        let src = await getProfPic(user);
+        document.getElementById("profilePicture").src = src;
     }
 
     let isOpen = true;
