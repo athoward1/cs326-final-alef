@@ -126,7 +126,7 @@ window.addEventListener("load", async function() {
                         username: userinput
                     })
                 });
-                let json2 = response2.json();
+                let json2 = await response2.json();
                 if (json2.result === "success"){
                     //settings info added
                 }else{

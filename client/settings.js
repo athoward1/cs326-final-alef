@@ -33,9 +33,9 @@ window.addEventListener("load", function() {
                     password: passinput
                 })
             });
-            let json2 = response2.json();
+            let json2 = await response2.json();
             if (json2.result === "No such user"){
-                console.log("PAssword changed to " + passinput);
+                console.log("PAssword changed to " + passinput); 
                 //Password Changed
             }else{
                 console.log("New account not created or some failure");
