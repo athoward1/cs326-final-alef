@@ -153,7 +153,7 @@ window.addEventListener("load", async function() {
         }
     }); //  end personal-button
     
-    //  Your Workspaces. First fetch all workspaces under this username
+    //  Your Workspaces. Fetch all workspaces under this username
 
     let _userid = localStorage.getItem("userName");
     let response = await fetch('/getWorkspaceInfo', {
@@ -170,8 +170,12 @@ window.addEventListener("load", async function() {
     let result = json.result;
     for (let i in result){
         let newNode = document.createElement("div");
-        let img = "url(" + result[i].image_url + ")";
-        newNode.innerHTML = `<img class="wp-img" src=${img}></img><h4 class="wp-title">${result[i].workspaceid}</h4>`;
+        newNode.classList = "wp-img";
+        newNode.src = "url(" + result[i].image_url + ")";
+        let titleNode = document.createElement("h4");
+        titleNode.classList = "wp-title";
+        titleNode.innerText = result[i].workspaceid;
+        newNode.appendChild(titleNode);
         
         //fetch this workspace's users, in order to append them to workspace node
         let response2 = await fetch("/shared", {
