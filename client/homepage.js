@@ -90,8 +90,8 @@ window.addEventListener("load", async function() {
             addBox.appendChild(saveimage);
             
             saveimage.addEventListener("click", async()=>{
-                let image_url = "url("+ newimage.value+ ")";
-                addBox.style.backgroundImage = image_url;
+                let new_image_url = "url("+ newimage.value+ ")";
+                addBox.style.backgroundImage = new_image_url;
                 addBox.removeChild(saveimage);
                 addBox.removeChild(newimage);
 
@@ -201,8 +201,7 @@ window.addEventListener("load", async function() {
 });
 
 async function getProfPic(user){
-    //  GET image_url of user from userinfo table
-
+    let image_url = "";    //  GET image_url of user from userinfo table
     if (image_url.match(/\.(jpeg|jpg|gif|png)$/) != null){
         return image_url;
     }else{
