@@ -9,9 +9,11 @@ window.addEventListener("load", async function() {
     //Set Profile Picture
     let user = loggedIn();
     if (user === "Guest"){
+        console.log("Guest logged in");
         document.getElementById("profileImage").src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
     }else{
-        document.getElementById("profileImage").src = await getProfPic(user);
+        console.log(user + " logged in");
+        document.getElementById("profilePicture").src = await getProfPic(user);
     }
 
     let isOpen = true;
