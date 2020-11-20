@@ -282,7 +282,8 @@ async function displayWorkspaces(title, image_url){
                     },
                     body: JSON.stringify({
                         userid: user,
-                        workspaceid: newName.value
+                        workspaceid: title,
+                        newworkspaceid: newName.value
                     })
                 });
 
