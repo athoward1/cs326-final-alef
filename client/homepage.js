@@ -11,11 +11,7 @@ window.addEventListener("load", async function() {
     if (user === "Guest"){
         document.getElementById("profileImage").src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
     }else{
-        let src = await getProfPic(user);
-        if (src){
-            //set image to src if src is a valid url (check this in getPRofPic)
-
-        }
+        document.getElementById("profileImage").src = await getProfPic(user);
     }
 
     let isOpen = true;
