@@ -115,7 +115,7 @@ app.post("/createAccount", findUser, createAccount);
 app.post("/login", checkPassword);
 
 async function deleteAccount(req,res, next){
-    await connectAndRun(db => db.none("DELETE * FROM logins WHERE userid = ($1);", [req.body.username]));   //there better be exactly one
+    await connectAndRun(db => db.none("DELETE FROM logins WHERE userid = ($1);", [req.body.username]));   //there better be exactly one
     next();
     
 }
