@@ -170,7 +170,8 @@ window.addEventListener("load", async function() {
     let result = json.result;
     for (let i in result){
         let newNode = document.createElement("div");
-        newNode.innerHTML = `<img class="wp-img" src=${result[i].image_url}></img><h4 class="wp-title">${result[i].workspaceid}</h4>`;
+        img = "url(" + result[i].image_url + ")";
+        newNode.innerHTML = `<img class="wp-img" src=${img}></img><h4 class="wp-title">${result[i].workspaceid}</h4>`;
         
         //fetch this workspace's users, in order to append them to workspace node
         let response2 = await fetch("/shared", {
