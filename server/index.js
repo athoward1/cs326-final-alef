@@ -127,7 +127,8 @@ app.post("/uninvite", uninvite);
 app.post("/login", checkPassword);
 
 async function uninvite(req,res){
-    await connectAndRun(db => db.any("DELETE FROM workspaceinfo WHERE userid = ($1) AND title = ($2) AND shared = ($3)", [ŗeq.body.userid, req.body.title, req.body.shared]));
+    console.log("uninviting");
+    await connectAndRun(db => db.any("DELETE FROM workspaceinfo WHERE userid = ($1) AND title = ($2) AND shared = ($3)", [req.body.userid, req.body.title, req.body.shared]));
     console.log("Uninvited " + req.body.shared);
     res.send("success");
 }

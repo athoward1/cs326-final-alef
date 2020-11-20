@@ -224,6 +224,7 @@ async function userNode(user, workspace, _shared){
             })
         });
     });
+    
     node.appendChild(disinvite);
 
 
