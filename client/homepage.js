@@ -1,7 +1,3 @@
-//  import "..server/dataBaseUtils.js";     //  Might be helpful when requests get huge
-
-
-
 "use strict";
 
 
@@ -20,9 +16,7 @@ window.addEventListener("load", async function() {
         inviteButton.className = "btn btn-success inviteSave";
         inviteButton.innerHTML = "Save";
         inviteButton.id = "inviteButton";
-
-        //newDiv.appendChild(inviteInput);
-        //newDiv.appendChild(inviteButton);
+        
         document.getElementById("row1").appendChild(inviteInput);
         document.getElementById("row1").appendChild(inviteButton);
         inviteButton.addEventListener("click", ()=>{
@@ -35,6 +29,9 @@ window.addEventListener("load", async function() {
         });
         }
     });
+    if (window.localStorage.length != 0){   //  We're coming back to this page
+        logIn(window.localStorage.getItem("userName"));
+    }
 
     let isOpen = true;
     document.getElementById('addButton').addEventListener('click', async()=>{
@@ -58,6 +55,13 @@ window.addEventListener("load", async function() {
         boxName.innerHTML = "New Box";
         boxName.className = "workspaceNameText";
         boxName.style.fontWeight = "bold";
+      
+        //  Add Workspace to table
+        let currentUser = loggedIn();   //  "guest" or username saved in localStorage
+        let workspaceidtobegotten=5,chatidtobegotten=5,planneridtobegotten=5,taskidtobegotten=5,timelineidtobegotten=5,image_url = 3;
+        await newWorkspace(currentUser,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
+        //
+
         deleteBox.addEventListener("click", ()=> {
             document.getElementById("row1").removeChild(addBox);
         });
@@ -115,27 +119,19 @@ window.addEventListener("load", async function() {
         addBox.appendChild(editBox);
         addBox.appendChild(newimage);
 
-        //  POSTING FAKE DATA
-
-
-        let currentUser = loggedIn();   //  "guest" or username saved in localStorage
-        let workspaceidtobegotten=5,chatidtobegotten=5,planneridtobegotten=5,taskidtobegotten=5,timelineidtobegotten=5,image_url = 3;
-
-        await newWorkspace(currentUser,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
-
-
     });
 
     //  Create Account
 
     document.getElementById("createAccount").addEventListener("click", async() =>{
+        let userinput = document.getElementById("newuserName").value;
         const response = await fetch('/createAccount', {
             method: 'POST',
             headers: {
                 'Content-Type':'application/json'
             },
             body: JSON.stringify({
-                username: document.getElementById("newuserName").value,
+                username: userinput,
                 password: document.getElementById("newpassword").value
             })
         });
@@ -143,17 +139,36 @@ window.addEventListener("load", async function() {
         if (json.result === "duplicate"){
             alert("Username already in use");
         }else{
-            if (json.result === "No such user"){
+            if (json.result === "No such user"){    //  User created, update localStorage and hide modal
                 localStorage.setItem("userName", document.getElementById("newuserName").value);
                 localStorage.setItem("password", document.getElementById("newpassword").value);
                 logIn(document.getElementById("newuserName").value);
                 $("#loginModal").modal('hide');
+                //Make new settings entry
+                const response2 = await fetch('/createSettings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: userinput
+                    })
+                });
+                let json2 = await response2.json();
+                if (json2.result === "success"){
+                    //settings info added
+                }else{
+                    //settings info not added
+                }
+
+
             }else{
                 console.log(json.result);
                 alert("We shouldn't be here... json.result was only 'ok' or 'duplicate'...");   //  Shouldn't be an alert, we should have tooltips.
             }
         }
-                
+
+
     });
 
     //  Login
@@ -173,35 +188,21 @@ window.addEventListener("load", async function() {
         });
 
         let json = await response.json();
-        if (json.result === "duplicate"){   //  Good!
-            alert("Success");
-            $("#loginModal").modal('hide');
-            logIn(userinput, passinput);
-            document.getElementById("loginBtn").innerHTML = "Welcome, " + localStorage.getItem("userName");
-            document.getElementById("loginBtn").disabled = true;
-            let newBtn = document.createElement("button");
-            newBtn.className = "btn btn-secondary btn-lg signoutBtn";
-            newBtn.innerHTML = "Sign out";
-            newBtn.addEventListener("click", ()=>{
-                document.getElementById("loginBtn").innerHTML = "Login/Sign up";
-                document.getElementById("loginBtn").disabled = false;
-                newBtn.style.display = "none";
-            });
-            document.getElementById("row1").appendChild(newBtn);
-        }
         if (json.result === "No such user"){
             //Send modal to Create Account Tab
             $("#loginModal").modal('hide');
             return;
         }else{
             if (json.result === "Wrong Password"){
-                //Wait some time
+                //  Wrong password - stay on modal
                 await new Promise((r) => setTimeout(r, 1000)); // two second delay
                 console.log("Wrong Password");
                 return;
             }else{
                 if (json.result === "Login successful"){
-                    //Logging in
+                    //Correct Password, logging in
+                    localStorage.setItem("userName", userinput);
+                    localStorage.setItem("password", passinput);
                     logIn(userinput);
                     $("#loginModal").modal('hide');
                     return;
@@ -243,7 +244,7 @@ function loggedIn(){
     if (username){
         return username;
     }else{
-        return "guest";
+        return "Guest";
     }
 }
 
@@ -258,6 +259,7 @@ function logIn(username){
     newBtn.addEventListener("click", ()=>{
         document.getElementById("loginBtn").innerHTML = "Login/Sign up";
         document.getElementById("loginBtn").disabled = false;
+        window.localStorage.clear();   //Empty local storage. Kinda sketchy
         newBtn.style.display = "none";
     });
     document.getElementById("row1").appendChild(newBtn);

@@ -67,7 +67,6 @@ const strategy = new LocalStrategy(
 */
 //MiniCrypt Config
 const mc = new miniCrypt();
-console.log(mc);
 
 //Database Config
 const url = process.env.DATABASE_URL || "No database";
@@ -109,10 +108,21 @@ app.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}`)
 });
 
+app.post("/changePassword", deleteAccount, createAccount);
 
 app.post("/createAccount", findUser, createAccount);
 
+app.post("/createSettings", createSettings);
+
+
 app.post("/login", checkPassword);
+
+async function deleteAccount(req,res, next){
+    await connectAndRun(db => db.none("DELETE FROM logins WHERE userid = ($1);", [req.body.username]));   //there better be exactly one
+    console.log("Deleted account");
+    next();
+    
+}
 
 async function checkPassword(req, res) {
     //  See if username exits
@@ -135,6 +145,8 @@ async function checkPassword(req, res) {
     }    
 }
 
+
+
 async function findUser (req, res, next) {
     console.log("Checking for existing username");
     let duplicate = await connectAndRun(db => db.any("SELECT * FROM logins WHERE userid = ($1);", [req.body.username]));
@@ -147,13 +159,18 @@ async function findUser (req, res, next) {
 
 async function createAccount (req, res){
     let hash = mc.hash(req.body.password);
-    let alreadyexists = await connectAndRun(db => db.none("INSERT INTO logins VALUES ($1, $2, $3);", [req.body.username, hash[0], hash[1]]));
+    await connectAndRun(db => db.none("INSERT INTO logins VALUES ($1, $2, $3);", [req.body.username, hash[0], hash[1]]));
     console.log(`Added user ${req.body.username} to the database`);
-    res.send(JSON.stringify({result: "No such user"}));
-    return alreadyexists;
+    res.send(JSON.stringify({result: "No such user"})); 
 }
 
-//Hashing
+
+async function createSettings (req, res){
+    await connectAndRun(db => db.none("INSERT INTO userinfo VALUES ($1, $2, $3, $4, $5, $6);", [req.body.username, "image_url", "email", "firstname", "lastname", "country"]));
+    console.log(`Added settings for ${req.body.username} to the database`);
+    res.send(JSON.stringify({result: "success"})); //  
+}
+
 
 
 
