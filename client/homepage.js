@@ -2,7 +2,9 @@
 
 
 window.addEventListener("load", async function() {
-
+    if (window.localStorage.length != 0){   //  We're coming back to this page
+        logIn(window.localStorage.getItem("userName"));
+    }
 
     let isOpen = true;
     document.getElementById('addButton').addEventListener('click', async()=>{
