@@ -179,8 +179,8 @@ window.addEventListener("load", async function() {
     console.log(newNodes);
     for (let i in newNodes){
         document.getElementById("v-pills-workspace").appendChild(newNodes[i]);
-        let breakNode = document.createElement("div");
-        breakNode.innerHTML = '<hr class ="solid">';    //try hr
+        let breakNode = document.createElement("div");  //try hr
+        breakNode.innerHTML = '<hr class ="solid">';    
         document.getElementById("v-pills-workspace").appendChild(breakNode);
     }
 });
@@ -188,18 +188,26 @@ window.addEventListener("load", async function() {
 function userNode(user){
     let node = document.createElement("div");
     node.classList = "wp-user";
-    let userInfoNode = document.createElement("span");
+    let userNameNode = document.createElement("span");
     userInfoNode.innerText = user;
-    node.appendChild(userInfoNode);
-    //fetch shared user's info
-
-    let moreUserInfoNode = document.createElement("span");
-    moreUserInfoNode.innerText = user;
-    node.appendChild(moreUserInfoNode);
-
-    
-    
-    
+    node.appendChild(userNameNode);
+    let response = await fetch("/getUserInfo", {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+            userid: user
+        })
+    });
+    let json = await response.json();
+    let userinfo = [json.result.email, json.result.firstname, json.result.lastname, json.result.country];
+    userinfo.forEach((value) => {
+        let moreUserInfoNode = document.createElement("span");
+        moreUserInfoNode.innerText = value;
+        node.appendChild(moreUserInfoNode);
+    });
+        
 
     return node;
 }
