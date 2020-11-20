@@ -92,15 +92,6 @@ window.addEventListener("load", async function() {
         addBox.appendChild(editBox);
         addBox.appendChild(newimage);
 
-        //  POSTING FAKE DATA
-
-
-        let currentUser = loggedIn();   //  "guest" or username saved in localStorage
-        let workspaceidtobegotten=5,chatidtobegotten=5,planneridtobegotten=5,taskidtobegotten=5,timelineidtobegotten=5,image_url = 3;
-
-        await newWorkspace(currentUser,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
-
-
     });
 
     //  Create Account
