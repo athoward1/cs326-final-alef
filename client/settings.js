@@ -51,7 +51,7 @@ window.addEventListener("load", function() {
     //  Field to Settings
     document.getElementById("email-button").addEventListener("click", async()=>{
         let new_email = document.getElementById("emailAddress").value;
-        const response = await fetch('/updateSettings', {
+        const response = await fetch('/updateEmail', {
             method: 'POST',
             headers: {
                 'Content-Type':'application/json'
