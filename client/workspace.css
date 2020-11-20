@@ -150,3 +150,23 @@ padding-bottom: 9999px;
   top: 50%;
   left: 50%;
 }
+
+.buttonPlacement1{
+  position: absolute;
+  top: -18px;
+  left: -3px;
+}
+.buttonPlacement2{
+  position: absolute;
+  top: 15px;
+  left: -16px;
+}
+.buttonPlacement3{
+  position: absolute;
+  top: 50px;
+  left: -16px;
+}
+
+.backButton{
+  position: absolute;
+}

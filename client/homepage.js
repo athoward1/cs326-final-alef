@@ -28,7 +28,7 @@ window.addEventListener("load", async function() {
         boxName.innerHTML = "New Box";
         boxName.className = "workspaceNameText";
         boxName.style.fontWeight = "bold";
-
+      
         //  Add Workspace to table
         let currentUser = loggedIn();   //  "guest" or username saved in localStorage
         let workspaceidtobegotten=5,chatidtobegotten=5,planneridtobegotten=5,taskidtobegotten=5,timelineidtobegotten=5,image_url = 3;
@@ -91,6 +91,14 @@ window.addEventListener("load", async function() {
         addBox.appendChild(boxName);
         addBox.appendChild(editBox);
         addBox.appendChild(newimage);
+
+        //  POSTING FAKE DATA
+
+
+        let currentUser = loggedIn();   //  "guest" or username saved in localStorage
+        let workspaceidtobegotten=5,chatidtobegotten=5,planneridtobegotten=5,taskidtobegotten=5,timelineidtobegotten=5,image_url = 3;
+
+        await newWorkspace(currentUser,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
 
 
     });
