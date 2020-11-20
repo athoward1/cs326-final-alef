@@ -58,7 +58,8 @@ window.addEventListener("load", function() {
                 'Content-Type':'application/json'
             },
             body: JSON.stringify({
-                field: "email",
+                userid: localStorage.getItem("userName"),
+                field: 'email',
                 value: new_email
             })
         });
@@ -67,6 +68,9 @@ window.addEventListener("load", function() {
             console.log("Email Changed");
         }else{
             console.log("Email Not Changed");
+        }
+        if (!response.ok){
+            console.log("something's wrong");
         }
 
     });
