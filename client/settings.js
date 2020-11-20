@@ -35,7 +35,10 @@ window.addEventListener("load", function() {
             });
             let json2 = response2.json();
             if (json2.result === "No such user"){
+                console.log("PAssword changed to " + passinput);
                 //Password Changed
+            }else{
+                console.log("New account not created or some failure");
             }
             if (!response.ok){
                 console.log("I dont know what happened");
