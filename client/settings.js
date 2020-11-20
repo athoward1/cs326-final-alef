@@ -29,7 +29,7 @@ window.addEventListener("load", function() {
                     'Content-Type':'application/json'
                 },
                 body: JSON.stringify({
-                    username: userinput,
+                    username: document.getElementById("newPassword").value,
                     password: passinput
                 })
             });
