@@ -152,6 +152,7 @@ window.addEventListener("load", async function() {
     for (let i in result){
         let newNode = document.createElement("div");
         newNode.innerHTML = `<img class="wp-img" src=${result[i].image_url}></img><h4 class="wp-title">${result[i].workspaceid}</h4>`;
+        
         //fetch this workspace's users, in order to append them to workspace node
         let response2 = await fetch("/shared", {
             method: 'POST',
@@ -188,7 +189,7 @@ async function userNode(user){
     let node = document.createElement("div");
     node.classList = "wp-user";
     let userNameNode = document.createElement("span");
-    userNameNode.innerText = user;
+    userNameNode.innerHTML = `<b>${user}</b>`;
     node.appendChild(userNameNode);
     let response = await fetch("/getUserInfo", {
         method: 'POST',
@@ -206,7 +207,11 @@ async function userNode(user){
         moreUserInfoNode.innerText = value;
         node.appendChild(moreUserInfoNode);
     });
-        
+    let disinvite = document.createElement("button");
+    disinvite.innerText = "Uninvite";
+    disinvite.addEventListener("click", ()=>{
+        disinvite.parentElement.remove();
+    });
 
     return node;
 }
