@@ -16,8 +16,8 @@
     <div class="row">
         <div class="col-3">
           <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="v-pills-account-tab" data-toggle="pill" href="#v-pills-account" role="tab" aria-controls="v-pills-home" aria-selected="true">Profile</a>
-            <a class="nav-link" id="v-pills-workspace-tab" data-toggle="pill" href="#v-pills-workspace" role="tab" aria-controls="v-pills-workspace" aria-selected="false">Profile</a>
+            <a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Profile</a>
+            <a class="nav-link" id="v-pills-workspace-tab" data-toggle="pill" href="#v-pills-workspace" role="tab" aria-controls="v-pills-workspace" aria-selected="false">Workspaces</a>
             <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
             <br>
             <a href="index.html" class="btn btn-outline-secondary btn-sm active" role="button" aria-pressed="true">Home</a>
@@ -33,10 +33,15 @@
                 <h2>Edit your Account</h2><br>
                 <form>
 
-                    <!--User Name Form-->
+                    <!--Email Form-->
+
                     <div class="form-group">
-                        <label for="userName">User Name</label>
-                        <input type="text" class="form-control w-50" id="userName">
+                      <label for="emailAddress">Email address</label>
+                      <input type="email" class="form-control w-50" id="emailAddress" aria-describedby="emailHelp" placeholder="name@example.com">
+                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                      <br>
+                      <button id = "email-button" type = "submit" class = "btn btn-primary">Update Email</button>
+
                     </div>
 
                     <!--Profile Image Form-->
@@ -45,19 +50,9 @@
                         <label for="profileImage">Import an Image</label>
                         <input type="file" class="form-control-file" id="profileImage">
                         <br>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button id="img-button" type="submit" class="btn btn-primary">Save</button>
                       </div>
-
                     </form>
-
-                    <!--Email Form-->
-
-                    <div class="form-group">
-                      <label for="emailAddress">Email address</label>
-                      <input type="email" class="form-control w-50" id="emailAddress" aria-describedby="emailHelp" placeholder="name@example.com">
-                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                    </div>
-
                     <hr>
 
                     <!--Password Form-->
@@ -102,45 +97,29 @@
                           <option>Germany</option>
                           <option>Russia</option>
                         </select>
-                      </div>
-                      <hr class="solid">
-                      Delete Account
-                      <!--Delete Account Link-->
-                      <small id="deleteHelp" class="form-text">Deleted accounts cannot be recovered. <a href="#">Delete Account</a></small>
+                    </div>
                       
-                      <hr class="solid">
+                    <button id = "personal-button" type = "submit" class = "btn btn-primary">Update</button>
+
+                    <hr class="solid">
+
+
+                    Delete Account
+                    <!--Delete Account Link-->
+                    <small id="deleteHelp" class="form-text">Deleted accounts cannot be recovered. <a href="#">Delete Account</a></small>
+                      
+                    <hr class="solid">
                       
                     <button type="submit" class="btn btn-primary">Save</button>
                     <hr class = "solid">
                   </form>
             </div>
 
-            <!--Profile TAB-->
+            <!--Workspaces TAB-->
             <div class="tab-pane fade" id="v-pills-workspace" role="tabpanel" aria-labelledby="v-pills-workspace-tab">
-                <h2>Edit Profile</h2><br>
-                <small id="profileInfo" class="form-text text-muted">Profile Information</small>
+                <h2>Workspaces</h2><br>
                 <hr class ="solid">
-
-                <!--User Name Form-->
-                <form>
-                    <div class="form-group">
-                        <label for="userName">User Name</label>
-                        <input type="email" class="form-control w-50" id="userName">
-                        <br>
-                        <button type = "submit" class = "btn btn-primary></button>
-                    </div>
-                </form>
-
-                <!--About Me Form-->
-                <form>
-                    <div class="form-group">
-                        <label for="aboutMe">About</label>
-                        <small id="aboutMeHelp" class="form-text text-muted">A brief description of yourself shown on your profile</small>
-                        <textarea class="form-control w-75" id="aboutMe" rows="3"></textarea>
-                    </div>
-                </form>
-                <br>
-                <small id="images" class="form-text text-muted">Images</small>
+                To Be Added
                 <hr class = "solid">
             </div>
             <!--SETTINGS TAB-->

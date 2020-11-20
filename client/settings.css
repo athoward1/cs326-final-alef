@@ -16,6 +16,7 @@ html {
 }
 
 .form-control{
+    color: black;
     background-color: rgba(0, 0, 0, 0.336);
     border-color: black;
 }

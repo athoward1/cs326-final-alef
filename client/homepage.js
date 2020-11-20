@@ -33,6 +33,18 @@ window.addEventListener("load", async function() {
         logIn(window.localStorage.getItem("userName"));
     }
 
+    //Set Profile Picture
+    let user = loggedIn();
+    if (user === "Guest"){
+        document.getElementById("profileImage").src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
+    }else{
+        let src = await getProfPic(user);
+        if (src){
+            //set image to src if src is a valid url (check this in getPRofPic)
+
+        }
+    }
+
     let isOpen = true;
     document.getElementById('addButton').addEventListener('click', async()=>{
         //add another workspace box in the first position and move every other box over one
@@ -214,6 +226,17 @@ window.addEventListener("load", async function() {
     });
     
 });
+
+async function getProfPic(user){
+    //  GET image_url of user from userinfo table
+
+    if (image_url.match(/\.(jpeg|jpg|gif|png)$/) != null){
+        return image_url;
+    }else{
+        return false;
+    }
+
+}
 
 async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_timelineid,_image_url){
     const response = await fetch('./newWorkspace', {
