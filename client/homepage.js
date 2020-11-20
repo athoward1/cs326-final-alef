@@ -175,8 +175,8 @@ window.addEventListener("load", async function() {
             }else{
                 if (json.result === "Login successful"){
                     //Correct Password, logging in
-                    localStorage.setItem("userName", document.getElementById("newuserName").value);
-                    localStorage.setItem("password", document.getElementById("newpassword").value);
+                    localStorage.setItem("userName", userinput);
+                    localStorage.setItem("password", passinput);
                     logIn(userinput);
                     $("#loginModal").modal('hide');
                     return;
