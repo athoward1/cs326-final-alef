@@ -73,4 +73,69 @@ window.addEventListener("load", function() {
 
     });
 
+    document.getElementById("personal-button").addEventListener("click", async()=>{
+        let firstName = document.getElementById("firstName").value;
+        const response = await fetch('/updateFirstName', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                userid: localStorage.getItem("userName"),
+                value: firstName
+            })
+        });
+        let json = await response.json();
+        if (json.result === "success"){
+            console.log("firstName Changed");
+        }else{
+            console.log("fistName Not Changed");
+        }
+        if (!response.ok){
+            console.log("something's wrong");
+        }
+        
+    });
+    let lastName = document.getElementById("lastName").value;
+    const response2 = await fetch('/updateLastName', {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+            userid: localStorage.getItem("userName"),
+            value: lastName
+        })
+    });
+    let json2 = await response2.json();
+    if (json2.result === "success"){
+        console.log("lastName Changed");
+    }else{
+        console.log("lastName Not Changed");
+    }
+    if (!response2.ok){
+        console.log("something's wrong");
+    }
+    let region = document.getElementById("region").value;
+    const response3 = await fetch('/updateRegion', {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+            userid: localStorage.getItem("userName"),
+            value: region
+        })
+    });
+    let json3 = await response3.json();
+    if (json3.result === "success"){
+        console.log("region Changed");
+    }else{
+        console.log("region Not Changed");
+    }
+    if (!response3.ok){
+        console.log("something's wrong");
+    }
+    
+    
 });

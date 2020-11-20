@@ -115,6 +115,11 @@ app.post("/createAccount", findUser, createAccount);
 app.post("/createSettings", createSettings);
 
 app.post("/updateEmail", updateEmail);
+app.post("/updateFirstName", updateFirstName);
+app.post("/updateLastName", updateLastName);
+app.post("/updateRegion", updateRegion);
+
+
 
 app.post("/login", checkPassword);
 
@@ -170,11 +175,26 @@ async function createSettings (req, res){
     res.send(JSON.stringify({result: "success"})); //  
 }
 
-async function updateEmail(req, res){        //  Shoudl work for all fields
+async function updateEmail(req, res){
     console.log(`Set email of ${req.body.userid} to ${req.body.value}`);
     await connectAndRun(db => db.none("UPDATE userinfo SET email = ($1) WHERE username = ($2);", [req.body.value, req.body.userid]));
     res.send(JSON.stringify({result:"success"}));
 }
 
+async function updateFirstName(req, res){
+    console.log(`Set firstname of ${req.body.userid} to ${req.body.value}`);
+    await connectAndRun(db => db.none("UPDATE userinfo SET firstname = ($1) WHERE username = ($2);", [req.body.value, req.body.userid]));
+    res.send(JSON.stringify({result:"success"}));
+}
 
+async function updateLastName(req, res){
+    console.log(`Set lastname of ${req.body.userid} to ${req.body.value}`);
+    await connectAndRun(db => db.none("UPDATE userinfo SET lastname = ($1) WHERE username = ($2);", [req.body.value, req.body.userid]));
+    res.send(JSON.stringify({result:"success"}));
+}
 
+async function updateRegion(req, res){
+    console.log(`Set region of ${req.body.userid} to ${req.body.value}`);
+    await connectAndRun(db => db.none("UPDATE userinfo SET region = ($1) WHERE username = ($2);", [req.body.value, req.body.userid]));
+    res.send(JSON.stringify({result:"success"}));
+}
