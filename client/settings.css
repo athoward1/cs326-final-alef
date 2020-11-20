@@ -16,12 +16,20 @@ html {
     border-color: black;
 }
 
+.wp-user{
+    margin-top: 5px;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
 
-
-
+.wp-user span{
+    display: table-cell
+}
 
 .wp-title{
-    margin-bottom: 0;
+    display: inline;
+    margin-left: 3rem;
 }
 
 .form-group{

@@ -153,14 +153,47 @@ window.addEventListener("load", async function() {
     let result = json.result;
     for (let i in result){
         let newNode = document.createElement("div");
-        newNode.innerHTML = `<img class="wp-img" src=${result[i].image_url}></img><h4 class="wp-title">${result[i].workspaceid}</h4>
-        <div>USER</div>
-        <hr class ="solid">`;
-        //newNode add users
+        newNode.innerHTML = `<img class="wp-img" src=${result[i].image_url}></img><h4 class="wp-title">${result[i].workspaceid}</h4>`;
+        //fetch this workspace's users, in order to append them to workspace node
+        let response2 = await fetch("/shared", {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                userid: _userid,
+                title: result[i].workspaceid
+            })
+        });
+        let json2 = await response2.json();
+        let result2 = json2.result;
+        for (let j in result2){
+            newNode.appendChild(userNode(result2[j].shared));
+        }
+
+
+
         newNodes[i] = newNode;
     }
+
     console.log(newNodes);
     for (let i in newNodes){
         document.getElementById("v-pills-workspace").appendChild(newNodes[i]);
+        document.getElementById("v-pills-workspace").appendChild(
+            document.createElement("div").innerHTML = '<hr class ="solid">');
     }
 });
+
+function userNode(user){
+    let node = document.createElement("div");
+    node.classList = "wp-user";
+    node.appendChild(document.createElement("span").innerText = user);
+    //fetch shared user's info
+    
+    node.appendChild(document.createElement("span").innerText = "more");
+    node.appendChild(document.createElement("span").innerText = "more");
+    node.appendChild(document.createElement("span").innerText = "more");
+    node.appendChild(document.createElement("span").innerText = "more");
+
+    return node;
+}

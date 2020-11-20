@@ -120,8 +120,16 @@ app.post("/updateLastName", updateLastName);
 app.post("/updateRegion", updateRegion);
 
 app.post("/getWorkspaceInfo", workspacesUnderUser);
+app.post("/shared", getShared);
 
 app.post("/login", checkPassword);
+
+async function getShared(req, res){
+    console.log("Finding shared with users");
+    let entries = await connectAndRun(db => db.any("SELECT * FROM workspaceinfo WHERE userid =($1) AND title = ($2);", [req.body.userid, req.body.title]));
+    console.log(entries);
+    res.send(JSON.stringify({result: entries}));
+}
 
 async function workspacesUnderUser(req, res){
     console.log("Selecting workspaces under user");
