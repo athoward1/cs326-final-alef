@@ -122,3 +122,29 @@ input[type=text], input[type=password] {
     left: 86.5%;
     position: absolute;
 }
+
+.inviteButton{
+    position: absolute;
+    top: 12%;
+    left: 3%;
+}
+
+.formPosition{
+    position: absolute;
+    top: 20%;
+    left: 3%;
+}
+.inviteSave{
+    position: absolute;
+    top: 25%;
+    left: 3%;
+}
+
+.inviteTable{
+    position: absolute;
+    top: 60%;
+    left: 86%;
+}
+td{
+    text-align: center;
+}

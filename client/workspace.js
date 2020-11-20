@@ -39,7 +39,7 @@ window.addEventListener("load", async function() {
     });
 
     document.getElementById("saveImg").addEventListener("click", () =>{    
-        if(document.getElementById("imageForm").value !== ""){    
+        if(document.getElementById("imageForm").value !== ""){ 
             let imageDiv = document.createElement("div");
             imageDiv.id = "image";
             let image_url = "url("+ document.getElementById("imageForm").value+ ")";
@@ -77,7 +77,7 @@ window.addEventListener("load", async function() {
           // get the mouse cursor position at startup:
           pos3 = e.clientX;
           pos4 = e.clientY;
-          document.onmouseup = closeDragElement;
+          document.onmouseup = closeDragElement();
           // call a function whenever the cursor moves:
           document.onmousemove = elementDrag;
         }

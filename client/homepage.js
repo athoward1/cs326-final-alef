@@ -6,7 +6,35 @@
 
 
 window.addEventListener("load", async function() {
+    let inviteClicked = true;
+    let inviteCount = 1;
+    document.getElementById("inviteButton").addEventListener("click", ()=>{
+        if(inviteClicked){
+        inviteClicked = false;
+        
+        let inviteInput = document.createElement("input");
+        inviteInput.className = "formPosition";
+        inviteInput.id = "inviteInput";
+        inviteInput.placeholder = "Username of Person";
+        let inviteButton = document.createElement("button");
+        inviteButton.className = "btn btn-success inviteSave";
+        inviteButton.innerHTML = "Save";
+        inviteButton.id = "inviteButton";
 
+        //newDiv.appendChild(inviteInput);
+        //newDiv.appendChild(inviteButton);
+        document.getElementById("row1").appendChild(inviteInput);
+        document.getElementById("row1").appendChild(inviteButton);
+        inviteButton.addEventListener("click", ()=>{
+            inviteClicked = true;
+            
+            document.getElementById("row1").removeChild(inviteInput);
+            document.getElementById("row1").removeChild(inviteButton);
+            document.getElementById(`invitedPerson${inviteCount}`).innerHTML = inviteInput.value;
+            inviteCount++;
+        });
+        }
+    });
 
     let isOpen = true;
     document.getElementById('addButton').addEventListener('click', async()=>{
@@ -183,6 +211,7 @@ window.addEventListener("load", async function() {
             console.log("Huh? Error." + json.result);
         }  
     });
+    
 });
 
 async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_timelineid,_image_url){
