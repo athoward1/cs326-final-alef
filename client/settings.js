@@ -3,6 +3,7 @@
 window.addEventListener("load", async function() {   
     
     document.getElementById("img-button").addEventListener("click", async() => {
+        let user = localStorage.getItem("userName");
         let img = document.getElementById("profileImage").value;
         const response = await fetch('/changeProfPic', {
             method: 'POST',
