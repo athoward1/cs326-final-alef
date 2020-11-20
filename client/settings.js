@@ -28,10 +28,11 @@ window.addEventListener("load", function() {
                     'Content-Type':'application/json'
                 },
                 body: JSON.stringify({
+                    username: userinput,
                     password: passinput
                 })
             });
-            
+
             if (!response.ok){
                 console.log("I dont know what happened");
             }
