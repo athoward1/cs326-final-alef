@@ -187,13 +187,18 @@ window.addEventListener("load", async function() {
 function userNode(user){
     let node = document.createElement("div");
     node.classList = "wp-user";
-    node.appendChild(document.createElement("span").innerText = user);
+    let userInfoNode = document.createElement("span");
+    userInfoNode.innerText = user;
+    node.appendChild(userInfoNode);
     //fetch shared user's info
+
+    let moreUserInfoNode = document.createElement("span");
+    moreUserInfoNode.innerText = user;
+    node.appendChild(moreUserInfoNode);
+
     
-    node.appendChild(document.createElement("span").innerText = "more");
-    node.appendChild(document.createElement("span").innerText = "more");
-    node.appendChild(document.createElement("span").innerText = "more");
-    node.appendChild(document.createElement("span").innerText = "more");
+    
+    
 
     return node;
 }
