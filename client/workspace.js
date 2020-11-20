@@ -28,12 +28,9 @@ window.addEventListener("load", async function() {
             stickyNote.appendChild(firstLine);
             stickyNote.appendChild(deleteBox);
             
-            
             deleteBox.addEventListener("click", ()=>{
                 row1.removeChild(stickyNote);
             });
-            document.getElementById("row1").appendChild(stickyNote);
-            dragElement(stickyNote);
             $("#newSticky").modal('hide');
         
     });
@@ -77,7 +74,7 @@ window.addEventListener("load", async function() {
           // get the mouse cursor position at startup:
           pos3 = e.clientX;
           pos4 = e.clientY;
-          document.onmouseup = closeDragElement();
+          document.onmouseup = closeDragElement;
           // call a function whenever the cursor moves:
           document.onmousemove = elementDrag;
         }
