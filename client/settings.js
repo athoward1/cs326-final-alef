@@ -1,8 +1,6 @@
 "use strict";
 
-window.addEventListener("load", async function() {
-    console.log("hello");
-    
+window.addEventListener("load", async function() {    
     document.getElementById("change-password").addEventListener("click", async() => {
         //  Change password
         let user = localStorage.getItem("userName");
@@ -154,6 +152,7 @@ window.addEventListener("load", async function() {
     for (let i in result){
         let newNode = document.createElement("div");
         newNode.innerHTML = `<img class="wp-img" src=${result[i].image_url}></img><h4 class="wp-title">${result[i].workspaceid}</h4>`;
+        
         //fetch this workspace's users, in order to append them to workspace node
         let response2 = await fetch("/shared", {
             method: 'POST',
@@ -168,7 +167,8 @@ window.addEventListener("load", async function() {
         let json2 = await response2.json();
         let result2 = json2.result;
         for (let j in result2){
-            newNode.appendChild(userNode(result2[j].shared));
+            let userLine = await userNode(_userid, result[i].workspaceid, result2[j].shared);
+            newNode.appendChild(userLine);
         }
 
 
@@ -176,24 +176,58 @@ window.addEventListener("load", async function() {
         newNodes[i] = newNode;
     }
 
-    console.log(newNodes);
     for (let i in newNodes){
         document.getElementById("v-pills-workspace").appendChild(newNodes[i]);
-        document.getElementById("v-pills-workspace").appendChild(
-            document.createElement("div").innerHTML = '<hr class ="solid">');
+        let breakNode = document.createElement("div");  //try hr
+        breakNode.innerHTML = '<hr class ="solid">';    
+        document.getElementById("v-pills-workspace").appendChild(breakNode);
     }
 });
 
-function userNode(user){
+async function userNode(user, workspace, _shared){
     let node = document.createElement("div");
     node.classList = "wp-user";
-    node.appendChild(document.createElement("span").innerText = user);
-    //fetch shared user's info
+    let userNameNode = document.createElement("span");
+    userNameNode.innerHTML = `<b>${_shared}</b>`;
+    node.appendChild(userNameNode);
+    let response = await fetch("/getUserInfo", {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+            userid: _shared
+        })
+    });
+    let json = await response.json();
+    let userinfo = [json.result.email, json.result.firstname, json.result.lastname, json.result.country];
+    userinfo.forEach((value) => {
+        let moreUserInfoNode = document.createElement("span");
+        moreUserInfoNode.innerText = value;
+        node.appendChild(moreUserInfoNode);
+    });
+
+    let disinvite = document.createElement("button");
+    disinvite.classList = "btn btn-primary";
+    disinvite.innerText = "Uninvite";
+    disinvite.addEventListener("click", async()=>{
+        disinvite.parentElement.remove();
+        await fetch("/uninvite", {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                userid: user,
+                title: workspace,
+                shared: _shared
+            })
+        });
+    });
     
-    node.appendChild(document.createElement("span").innerText = "more");
-    node.appendChild(document.createElement("span").innerText = "more");
-    node.appendChild(document.createElement("span").innerText = "more");
-    node.appendChild(document.createElement("span").innerText = "more");
+    node.appendChild(disinvite);
+
 
     return node;
 }
+
