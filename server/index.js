@@ -151,7 +151,7 @@ async function uninvite(req,res){
     res.send("success");
 }
 
-async function uninvite(req,res){
+async function uninviteAll(req,res){
     console.log("uninviting all");
     await connectAndRun(db => db.none("DELETE FROM workspaceinfo WHERE userid = ($1) AND title = ($2)", [req.body.userid, req.body.title]));
     console.log("Uninvited " + req.body.shared);
