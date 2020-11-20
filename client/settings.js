@@ -207,11 +207,14 @@ async function userNode(user){
         moreUserInfoNode.innerText = value;
         node.appendChild(moreUserInfoNode);
     });
+
     let disinvite = document.createElement("button");
     disinvite.innerText = "Uninvite";
     disinvite.addEventListener("click", ()=>{
         disinvite.parentElement.remove();
     });
+    node.appendChild(disinvite);
+
 
     return node;
 }
