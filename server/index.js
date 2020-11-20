@@ -123,9 +123,20 @@ app.post("/getWorkspaceInfo", workspacesUnderUser);
 app.post("/shared", getShared);
 app.post("/getUserInfo", getUserInfo);
 app.post("/uninvite", uninvite);
+app.post("/uninviteAll", uninviteAll);
+app.post("deleteWorkspace", deleteWorkspace);
+
 app.post("/changeProfPic", updateProfPic);
 
 app.post("/login", checkPassword);
+
+
+async function deleteWorkspace(req,res){
+    console.log("deleting workspace");
+    await connectAndRun(db => db.none("DELETE FROM workspaces WHERE userid = ($1) AND workspaceid = ($2)", [req.body.userid, req.body.workspaceid]));
+    console.log("Deleted " + req.body.workspaceid);
+    res.send("success");
+}
 
 async function updateProfPic(req, res){
     console.log("changing profile pic");
@@ -135,7 +146,14 @@ async function updateProfPic(req, res){
 
 async function uninvite(req,res){
     console.log("uninviting");
-    await connectAndRun(db => db.any("DELETE FROM workspaceinfo WHERE userid = ($1) AND title = ($2) AND shared = ($3)", [req.body.userid, req.body.title, req.body.shared]));
+    await connectAndRun(db => db.none("DELETE FROM workspaceinfo WHERE userid = ($1) AND title = ($2) AND shared = ($3)", [req.body.userid, req.body.title, req.body.shared]));
+    console.log("Uninvited " + req.body.shared);
+    res.send("success");
+}
+
+async function uninvite(req,res){
+    console.log("uninviting all");
+    await connectAndRun(db => db.none("DELETE FROM workspaceinfo WHERE userid = ($1) AND title = ($2)", [req.body.userid, req.body.title]));
     console.log("Uninvited " + req.body.shared);
     res.send("success");
 }

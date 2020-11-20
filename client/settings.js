@@ -244,6 +244,7 @@ async function userNode(user, workspace, _shared){
                 shared: _shared
             })
         });
+        
     });
 
     node.appendChild(disinvite);

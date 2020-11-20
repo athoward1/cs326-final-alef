@@ -21,7 +21,7 @@ window.addEventListener("load", async function() {
     let result = json.result;
     console.log(result);
     for (let i in result){
-        displayWorkspaces(result[i].workspaceid, result[i].image_url);
+        await displayWorkspaces(result[i].workspaceid, result[i].image_url);
     }
     
     //Set Profile Picture
@@ -37,7 +37,7 @@ window.addEventListener("load", async function() {
 
     document.getElementById('addButton').addEventListener('click', async()=>{
         //display this new blank box with these default values
-        displayWorkspaces("New Box","https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png");
+        await displayWorkspaces("New Box","https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png");
        
         //  Add Workspace to table
         let currentUser = loggedIn();   //  "guest" or username saved in localStorage
@@ -213,10 +213,10 @@ function logIn(username){
     });
     document.getElementById("row1").appendChild(newBtn);
 }
+
+
 let isOpen = true;
-
-
-function displayWorkspaces(title, image_url){
+async function displayWorkspaces(title, image_url){
     document.getElementById("addHint").style.display = "none";
     
     const addBox = document.createElement("div");
@@ -229,6 +229,28 @@ function displayWorkspaces(title, image_url){
     deleteBox.className = "deleteButton";  
     deleteBox.addEventListener("click", ()=> {
         document.getElementById("row1").removeChild(addBox);
+        let user = localStorage.getItem("userName");
+        let workspace = title;
+        await fetch("/uninviteAll", {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                userid: user,
+                title: workspace
+            })
+        });
+        await fetch("/deleteWorkspace", {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                userid: user,
+                workspaceid: workspace
+            })
+        });
     });
 
     let editBox = document.createElement("img");
@@ -236,11 +258,13 @@ function displayWorkspaces(title, image_url){
     editBox.className = "editBox";
     editBox.addEventListener("click", () =>{
         if(isOpen){
-            let newName = document.createElement("input");
             let saveName = document.createElement("button");
             saveName.className = "btn btn-primary";
             saveName.innerHTML = "Save Title";
+
+            let newName = document.createElement("input");
             newName.placeholder = "Enter New Title";
+
             addBox.appendChild(newName);
             addBox.appendChild(saveName);
             saveName.addEventListener("click", ()=>{
@@ -250,6 +274,11 @@ function displayWorkspaces(title, image_url){
                 addBox.removeChild(saveName);
                 addBox.appendChild(editBox);
                 isOpen = true;
+                
+
+
+
+
             });
             isOpen = false;
         }
@@ -277,7 +306,6 @@ function displayWorkspaces(title, image_url){
         
         saveimage.addEventListener("click", ()=>{
             let new_image_url = "url("+ newimage.value+ ")";
-            console.log(new_image_url);
             addBox.style.backgroundImage = new_image_url;
             addBox.removeChild(saveimage);
             addBox.removeChild(newimage);
