@@ -123,8 +123,15 @@ app.post("/getWorkspaceInfo", workspacesUnderUser);
 app.post("/shared", getShared);
 app.post("/getUserInfo", getUserInfo);
 app.post("/uninvite", uninvite);
+app.post("/changeProfPic", updateProfPic);
 
 app.post("/login", checkPassword);
+
+async function updateProfPic(req, res){
+    console.log("changing profile pic");
+    await connectAndRun(db => db.none("UPDATE userinfo SET image_url = ($1) WHERE username = ($2);", [req.body.image_url, req.body.username]));
+
+}
 
 async function uninvite(req,res){
     console.log("uninviting");

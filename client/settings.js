@@ -1,6 +1,24 @@
 "use strict";
 
-window.addEventListener("load", async function() {    
+window.addEventListener("load", async function() {   
+    
+    document.getElementById("img-button").addEventListener("click", async() => {
+        let img = document.getElementById("profileImage").value;
+        const response = await fetch('/changeProfPic', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                username: user,
+                image_url: img
+            })
+        });
+        if (!response.ok){
+            console.log("Uh oh?");
+        }
+    });
+
     document.getElementById("change-password").addEventListener("click", async() => {
         //  Change password
         let user = localStorage.getItem("userName");
@@ -224,7 +242,7 @@ async function userNode(user, workspace, _shared){
             })
         });
     });
-    
+
     node.appendChild(disinvite);
 
 

@@ -201,11 +201,23 @@ window.addEventListener("load", async function() {
 });
 
 async function getProfPic(user){
-    let image_url = "";    //  GET image_url of user from userinfo table
+    let response = await fetch("/getUserInfo", {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+            userid: user
+        })
+    });
+    let json = await response.json();
+    let image_url = json.result.image_url;    //  GET image_url of user from userinfo table
     if (image_url.match(/\.(jpeg|jpg|gif|png)$/) != null){
+        console.log("valid profile pic");
         return image_url;
     }else{
-        return false;
+        console.log("INvalid profile pic");
+        return "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
     }
 
 }
