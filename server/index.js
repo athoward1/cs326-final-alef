@@ -124,7 +124,7 @@ app.post("/shared", getShared);
 app.post("/getUserInfo", getUserInfo);
 app.post("/uninvite", uninvite);
 app.post("/uninviteAll", uninviteAll);
-app.post("deleteWorkspace", deleteWorkspace);
+app.post("/deleteWorkspace", deleteWorkspace);
 
 app.post("/changeProfPic", updateProfPic);
 
