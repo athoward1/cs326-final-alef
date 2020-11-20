@@ -195,6 +195,6 @@ async function updateLastName(req, res){
 
 async function updateRegion(req, res){
     console.log(`Set region of ${req.body.userid} to ${req.body.value}`);
-    await connectAndRun(db => db.none("UPDATE userinfo SET region = ($1) WHERE username = ($2);", [req.body.value, req.body.userid]));
+    await connectAndRun(db => db.none("UPDATE userinfo SET country = ($1) WHERE username = ($2);", [req.body.value, req.body.userid]));
     res.send(JSON.stringify({result:"success"}));
 }
