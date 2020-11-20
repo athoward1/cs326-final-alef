@@ -155,7 +155,7 @@ window.addEventListener("load", async function() {
         console.log("Workspace: "+result[i]);
         let newNode = document.createElement("div");
         newNode.innerHTML = `<h4>${result[i].title}<span id = "wp-attribute">${result[i].image_url}</span></h4>`;
-        newNodes += newNode;
+        newNodes[i] = newNode;
     }
     console.log(newNodes);
     for (let i in newNodes){
