@@ -190,9 +190,6 @@ window.addEventListener("load", async function() {
             let userLine = await userNode(_userid, result[i].workspaceid, result2[j].shared);
             newNode.appendChild(userLine);
         }
-
-
-
         newNodes[i] = newNode;
     }
 
