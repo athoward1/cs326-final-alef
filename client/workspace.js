@@ -32,6 +32,9 @@ window.addEventListener("load", async function() {
                 row1.removeChild(stickyNote);
             });
             $("#newSticky").modal('hide');
+            dragElement(stickyNote);
+            document.getElementById("row1").appendChild(stickyNote);
+
         
     });
 
