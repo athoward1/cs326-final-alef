@@ -17,6 +17,7 @@ html {
 
 .wp-title{
     display:inline;
+    margin-bottom: 0;
 }
 
 .form-group{
