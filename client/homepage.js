@@ -19,7 +19,6 @@ window.addEventListener("load", async function() {
     });
     let json = await response.json();
     let result = json.result;
-    console.log(result);
     for (let i in result){
         await displayWorkspaces(result[i].workspaceid, result[i].image_url);
     }
@@ -30,7 +29,7 @@ window.addEventListener("load", async function() {
         console.log("Guest logged in");
         document.getElementById("profilePicture").src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
     }else{
-        console.log(user + " logged in");
+        console.log("User " + user + " is logged in.");
         let src = await getProfPic(user);
         document.getElementById("profilePicture").src = "url(" + src + ")";    //  This line is very busted. I don't know why.
     }
@@ -314,7 +313,6 @@ async function displayWorkspaces(title, image_url){
     });
     let image = "url("+ image_url + ")";
     addBox.style.backgroundImage = image;
-    console.log(image);
     
     addBox.appendChild(editPicture);
     addBox.appendChild(deleteBox);
