@@ -190,7 +190,7 @@ async function userNode(user){
     let node = document.createElement("div");
     node.classList = "wp-user";
     let userNameNode = document.createElement("span");
-    userInfoNode.innerText = user;
+    userNameNode.innerText = user;
     node.appendChild(userNameNode);
     let response = await fetch("/getUserInfo", {
         method: 'POST',
