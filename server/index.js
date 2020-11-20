@@ -122,8 +122,15 @@ app.post("/updateRegion", updateRegion);
 app.post("/getWorkspaceInfo", workspacesUnderUser);
 app.post("/shared", getShared);
 app.post("/getUserInfo", getUserInfo);
+app.post("/uninvite", uninvite);
 
 app.post("/login", checkPassword);
+
+async function uninvite(req,res){
+    await connectAndRun(db => db.any("DELETE FROM workspaceinfo WHERE userid = ($1) AND title = ($2) AND shared = ($3)", [ŗeq.body.userid, req.body.title, req.body.shared]));
+    console.log("Uninvited " + req.body.shared);
+    res.send("success");
+}
 
 async function getUserInfo(req, res){
     console.log("Finding info for user");

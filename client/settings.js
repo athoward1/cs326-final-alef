@@ -167,7 +167,7 @@ window.addEventListener("load", async function() {
         let json2 = await response2.json();
         let result2 = json2.result;
         for (let j in result2){
-            let userLine = await userNode(result2[j].shared);
+            let userLine = await userNode(_userid, result[i].workspaceid, result2[j].shared);
             newNode.appendChild(userLine);
         }
 
@@ -176,7 +176,6 @@ window.addEventListener("load", async function() {
         newNodes[i] = newNode;
     }
 
-    console.log(newNodes);
     for (let i in newNodes){
         document.getElementById("v-pills-workspace").appendChild(newNodes[i]);
         let breakNode = document.createElement("div");  //try hr
@@ -185,7 +184,7 @@ window.addEventListener("load", async function() {
     }
 });
 
-async function userNode(user){
+async function userNode(user, workspace, _shared){
     let node = document.createElement("div");
     node.classList = "wp-user";
     let userNameNode = document.createElement("span");
@@ -197,7 +196,7 @@ async function userNode(user){
             'Content-Type':'application/json'
         },
         body: JSON.stringify({
-            userid: user
+            userid: _shared
         })
     });
     let json = await response.json();
@@ -209,12 +208,25 @@ async function userNode(user){
     });
 
     let disinvite = document.createElement("button");
+    disinvite.classList = "btn btn-primary";
     disinvite.innerText = "Uninvite";
-    disinvite.addEventListener("click", ()=>{
+    disinvite.addEventListener("click", async()=>{
         disinvite.parentElement.remove();
+        await fetch("/uninvite", {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                userid: user,
+                title: workspace,
+                shared: _shared
+            })
+        });
     });
     node.appendChild(disinvite);
 
 
     return node;
 }
+
