@@ -6,7 +6,7 @@ window.addEventListener("load", function() {
     document.getElementById("change-password").addEventListener("click", async() => {
         //  Change password
         let userinput = localStorage.getItem("userName");
-        let passinput = document.getElementById("currentPassword");
+        let passinput = document.getElementById("currentPassword").value;
         const response = await fetch('/login', {
             method: 'POST',
             headers: {
