@@ -112,6 +112,9 @@ app.post("/changePassword", deleteAccount, createAccount);
 
 app.post("/createAccount", findUser, createAccount);
 
+app.post("/createSettings", createSettings);
+
+
 app.post("/login", checkPassword);
 
 async function deleteAccount(req,res, next){
@@ -157,11 +160,18 @@ async function createAccount (req, res){
     let hash = mc.hash(req.body.password);
     let alreadyexists = await connectAndRun(db => db.none("INSERT INTO logins VALUES ($1, $2, $3);", [req.body.username, hash[0], hash[1]]));
     console.log(`Added user ${req.body.username} to the database`);
-    res.send(JSON.stringify({result: "No such user"})); //  
+    res.send(JSON.stringify({result: "No such user"})); 
     return alreadyexists;
 }
 
-//Hashing
+
+async function createSettings (req, res){
+    await connectAndRun(db => db.none("INSERT INTO userinfo VALUES ($1, $2, $3, $4, $5, $6);", [req.body.username, "image_url", "email", "firstname", "lastname", "country"]));
+    console.log(`Added settings for ${req.body.username} to the database`);
+    res.send(JSON.stringify({result: "success"})); //  
+    return alreadyexists;
+}
+
 
 
 

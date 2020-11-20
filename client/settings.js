@@ -20,6 +20,7 @@ window.addEventListener("load", function() {
         let json = await response.json();
         if (json.result === "Wrong Password"){
             //Ye don't know your own password :(
+            //Wrong Password
         }else if (json.result === "Login successful"){
             //Update old password
             const response2 = await fetch('/changePassword', {
@@ -32,7 +33,10 @@ window.addEventListener("load", function() {
                     password: passinput
                 })
             });
-
+            let json2 = response2.json();
+            if (json2.result === "No such user"){
+                //Password Changed
+            }
             if (!response.ok){
                 console.log("I dont know what happened");
             }
