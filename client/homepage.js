@@ -285,11 +285,6 @@ async function displayWorkspaces(title, image_url){
                         workspaceid: newName.value
                     })
                 });
-                
-                
-                
-
-
 
             });
             isOpen = false;
@@ -320,7 +315,19 @@ async function displayWorkspaces(title, image_url){
             let new_image_url = "url("+ newimage.value+ ")";
             addBox.style.backgroundImage = new_image_url;
             addBox.removeChild(saveimage);
-            addBox.removeChild(newimage);
+            addBox.removeChild(newimage);             
+            await fetch("/updateWorkspaceImage", {
+                method:'POST',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify({
+                    userid: user,
+                    workspaceid: title,
+                    image_url: new_image_url
+                })
+            });
+                
         });
         
     });
