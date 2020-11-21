@@ -206,8 +206,16 @@ async function updateWorkspaceImage(req, res){
 
 //This is the buggy one that changes all the titles when you update one of them. We can't update on the field we condition on...
 async function updateWorkspaceTitle(req, res){
-    console.log("Updating workspace title");                        //  Should be AND where workspaceid = the one we're on
-    await connectAndRun(db => db.none("UPDATE workspaces SET workspaceid = ($1) WHERE userid = ($2);", [req.body.newworkspaceid, req.body.userid]));
+    console.log("Updating workspace title");
+    //  First grab the entry
+    let entry = await connectAndRun(db => db.one("SELECT * FROM workspaces WHERE workspaceid = ($1) AND userid = ($2);", [req.body.workspaceid, req.body.userid]));
+    console.log(entry);
+    //  Now delete it
+    await connectAndRun(db => db.none("DELETE FROM workspaces WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
+    //  Now insert the updated vertion
+    await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1,$2,$3,$4,$5,$6);",
+        [req.body.userid, req.body.newworkspaceid,entry.chatid,entry.plannerid,entry.taskid,entry.timelineid, entry.image_url]));
+
     res.send(JSON.stringify({result: "success"}));
 }
 
