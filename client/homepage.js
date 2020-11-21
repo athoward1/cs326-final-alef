@@ -171,7 +171,7 @@ window.addEventListener("load", async function() {
 });
 
 async function displayAllWorkspaces(_userid){
-    let boxspace = document.getElementById("boxspace")
+    let boxspace = document.getElementById("boxspace");
     while (boxspace.children.length > 0){
         let child = boxspace.children[0];
         boxspace.removeChild(child);
