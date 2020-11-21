@@ -151,7 +151,7 @@ async function deleteImage(req, res){
 
 async function updateImagePosition(req, res){
     console.log(`UPDATE image SET positions=(${req.body.positions}) WHERE userid=(${req.body.userid}) AND workspaceid=(${req.body.workspaceid}) AND image_url=(${req.body.image_url})`);
-    await connectAndRun(db => db.none("UPDATE imagedata SET positions=($1) WHERE userid=($2) AND workspaceid=($3) AND sbody=($4);", [req.body.positions, req.body.userid, req.body.workspaceid, req.body.image_url]));
+    await connectAndRun(db => db.none("UPDATE imagedata SET positions=($1) WHERE userid=($2) AND workspaceid=($3) AND image_url=($4);", [req.body.positions, req.body.userid, req.body.workspaceid, req.body.image_url]));
     res.send(JSON.stringify({result: "success"}));
 }
 
