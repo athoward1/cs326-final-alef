@@ -14,7 +14,7 @@ hr.solid {
 }
 hr.linePosition {
     position: absolute;
-    top: 25%;
+    top: 12rem;
     left: -30%;
   }
 
@@ -51,7 +51,7 @@ hr.linePosition {
   }
 
 .addWorkspace{
-    top: 13%;
+    top: 6%;
     left: 72%;
     position: absolute;
     cursor: pointer;
@@ -78,7 +78,7 @@ hr.linePosition {
 .banner {
     background: radial-gradient(white, rgba(221, 223, 222, 0.705));
     width: 80%;
-    height: 28%;
+    height: 13rem;
     position: absolute;
     left: 0px;
 }

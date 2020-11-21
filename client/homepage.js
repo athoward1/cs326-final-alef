@@ -2,7 +2,7 @@
 
 
 window.addEventListener("load", async function() {
-    
+    /**
     let inviteClicked = true;
     let inviteCount = 1;
     document.getElementById("inviteButton").addEventListener("click", ()=>{
@@ -32,7 +32,7 @@ window.addEventListener("load", async function() {
         });
         }
     });
-    
+    */
     if (window.localStorage.getItem("userName")){   //  We're coming back to this page
         logIn(window.localStorage.getItem("userName"));
     }
