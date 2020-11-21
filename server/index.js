@@ -141,7 +141,7 @@ async function updateWorkspaceImage(req, res){
 
 async function updateWorkspaceTitle(req, res){
     console.log("Updating workspace title");
-    await connectAndRun(db => db.none("UPDATE workspaces SET workspaceid = ($1) WHERE userid = ($2);", [req.body.title, req.body.userid, req.body.workspaceid]));
+    await connectAndRun(db => db.none("UPDATE workspaces SET workspaceid = ($1) WHERE userid = ($2);", [req.body.title, req.body.userid]));
     res.send("success");
 }
 
