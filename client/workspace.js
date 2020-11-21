@@ -2,9 +2,11 @@
 "use strict";
 window.addEventListener("load", async function() {
 
-  
   let owner = localStorage.getItem("userName");  //should really be workspace owner, depenant on unique workspaceid
-  let __workspaceid = "New Box";
+  let __workspaceid = localStorage.getItem("workspace");  // get the title of the workspace you clicked on
+  document.title = __workspaceid;
+  document.getElementById("title").innerText = __workspaceid;
+
   //Display Stickies
   let response = await fetch('/getStickies', {
       method: 'POST',

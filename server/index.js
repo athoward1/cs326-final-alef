@@ -89,14 +89,6 @@ async function connectAndRun(task) {
     }
 }
 
-//Routing
-app.post("/newWorkspace", async (req, res) => {
-
-    let added = await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1, $2, $3, $4, $5, $6, $7);", [req.body.userid, req.body.workspaceid, req.body.chatid, req.body.plannerid, req.body.taskid, req.body.timelineid, req.body.image_url]));
-    res.send("Workspace added.");
-    return added;
-});
-
 app.get("/localGet", async (req, res) => {
     console.log("GET recieved");
     res.send("Gotchu");
@@ -106,6 +98,10 @@ app.use('/', express.static('./client'));
 
 app.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}`)
+});
+
+app.get("/workspace.html", async (req, res) => {
+    res.sendFile('client/workspace.html', { 'root' : __dirname })
 });
 
 app.post("/changePassword", deleteAccount, createAccount);
@@ -119,6 +115,7 @@ app.post("/updateFirstName", updateFirstName);
 app.post("/updateLastName", updateLastName);
 app.post("/updateRegion", updateRegion);
 
+
 app.post("/getWorkspaceInfo", workspacesUnderUser);
 app.post("/shared", getShared);
 app.post("/getUserInfo", getUserInfo);
@@ -127,6 +124,7 @@ app.post("/uninviteAll", uninviteAll);
 app.post("/deleteWorkspace", deleteWorkspace);
 app.post("/updateWorkspaceTitle", updateWorkspaceTitle);
 app.post("/updateWorkspaceImage", updateWorkspaceImage);
+app.post("/newWorkspace", newWorkspace);
 
 app.post("/createSticky", createSticky);
 app.post("/updateStickyPosition", updateStickyPosition);
@@ -142,6 +140,12 @@ app.post("/deleteImage", deleteImage);
 app.post("/changeProfPic", updateProfPic);
 
 app.post("/login", checkPassword);
+
+async function newWorkspace(req, res){
+    await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1, $2, $3, $4, $5, $6, $7);",
+    [req.body.userid, req.body.workspaceid, req.body.chatid, req.body.plannerid, req.body.taskid, req.body.timelineid, req.body.image_url]));
+    res.send(JSON.stringify({result: "Workspace added."}));
+}
 
 async function deleteImage(req, res){
     console.log("deleting image from db");

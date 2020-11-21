@@ -33,7 +33,7 @@ window.addEventListener("load", async function() {
         }
     });
     
-    if (window.localStorage.length != 0){   //  We're coming back to this page
+    if (window.localStorage.getItem("userName")){   //  We're coming back to this page
         logIn(window.localStorage.getItem("userName"));
     }
 
@@ -215,8 +215,6 @@ async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_tim
                 image_url:_image_url
             })
     });
-    let json = await response.json(); 
-    //POST response options?       
     if (!response.ok) {
         console.error(`Could not add user ${userid}'s workspace to the database.`);
     }
