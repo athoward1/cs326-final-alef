@@ -30,6 +30,7 @@ hr.linePosition {
     background-repeat: no-repeat;
     padding: 5px;
     margin: 20px;
+
 }
 .accounticon {
     top: 10%;
@@ -171,6 +172,12 @@ input[type=text], input[type=password] {
 }
 td{
     text-align: center;
+}
+
+#boxspace{
+    display:grid;
+    grid-template-columns: auto auto auto;
+
 }
 
 #addHint{
