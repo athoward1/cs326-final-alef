@@ -181,11 +181,7 @@ window.addEventListener("load", async function() {
 
 function formatPositions(array){
   let stringversion = String(array);
-  console.log(stringversion);
-  let len = stringversion.length;
-  stringversion[len-1] = '}';
-  stringversion[0] = '{';
-  array = stringversion;
+  array = '{' + stringversion + '}';
 }
 
 
