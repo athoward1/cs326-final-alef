@@ -156,6 +156,7 @@ window.addEventListener("load", async function() {
     //  Your Workspaces. Fetch all workspaces under this username
 
     let _userid = localStorage.getItem("userName");
+
     let response = await fetch('/getWorkspaceInfo', {
         method: 'POST',
         headers: {
@@ -190,6 +191,13 @@ window.addEventListener("load", async function() {
         });
         let json2 = await response2.json();
         let result2 = json2.result;
+
+        if (result2.length === 0){  //  No users shared yet
+            let noUsers = document.createElement("div");
+            noUsers.innerText = "No CoLab-rators.";
+            newNode.append(noUsers);
+        }
+
         for (let j in result2){
             let userLine = await userNode(_userid, result[i].workspaceid, result2[j].shared);
             newNode.appendChild(userLine);
