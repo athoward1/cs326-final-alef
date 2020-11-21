@@ -109,8 +109,8 @@ input[type=text], input[type=password] {
     height: 20px;
     cursor: pointer;
     position: relative;
-    top: 84%;
-    left: 47%;
+    bottom: 38%;
+    left: 89%;
 }
 
 .editPicture{
@@ -132,12 +132,13 @@ input[type=text], input[type=password] {
 .workspaceNameText{
     font-size: 30px;
     font-family: verdana;
-    font-weight: bold;
-    position: relative;
-    right: 37%;
     text-overflow: clip;
     overflow: hidden;
-    padding: 1em;
+    display: block;
+    width: 60%;
+    position: relative;
+    left: 25%;
+    bottom: 20%;
 }
 
 .signoutBtn{
