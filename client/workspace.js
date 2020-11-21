@@ -4,6 +4,7 @@ window.addEventListener("load", async function() {
 
   
   let owner = localStorage.getItem("userName");  //should really be workspace owner, depenant on unique workspaceid
+  let __workspaceid = "New Box";
   let response = await fetch('/getStickies', {
       method: 'POST',
       headers: {
