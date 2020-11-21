@@ -122,8 +122,8 @@ input[type=text], input[type=password] {
 
 .enter-button{
     position: relative;
-    top: 75%;
-    left: 80%;
+    top: 25%;
+    right: 80%;
     cursor: pointer;
 }
 
