@@ -130,12 +130,14 @@ input[type=text], input[type=password] {
 }
 
 .workspaceNameText{
+    display: block;
+    width:150px;
     font-size: 30px;
-    text-overflow: clip;
     font-family: verdana;
     font-weight: bold;
     position: relative;
     right: 37%;
+    word-wrap: none;
 }
 
 .signoutBtn{
