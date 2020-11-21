@@ -129,6 +129,8 @@ app.post("/updateWorkspaceTitle", updateWorkspaceTitle);
 app.post("/updateWorkspaceImage", updateWorkspaceImage);
 
 app.post("/createSticky", createSticky);
+app.post("/updateStickyPosition", updateStickyPosition);
+
 
 app.post("/changeProfPic", updateProfPic);
 
@@ -138,6 +140,12 @@ async function createSticky(req, res){
     console.log("adding new sticky to db");
     await connectAndRun(db => db.none("INSERT INTO stickydata VALUES ($1, $2, $3, $4, $5);", [req.body.userid, req.body.workspaceid, req.body.header, req.body.body, req.body.positions]));
     res.send("success");
+}
+
+async function updateStickyPosition(req, res){
+    console.log("updating positions to" + String(req.body.positions));
+    await connectAndRun(db => db.none("UPDATE stickydata SET positions=($1) WHERE userid=($2) AND workspaceid=($3) AND header=($4) AND body=($5));", [req.body.positions, req.body.userid, req.body.workspaceid, req.body.header, req.body.body]));
+    req.send("success")
 }
 
 async function updateWorkspaceImage(req, res){

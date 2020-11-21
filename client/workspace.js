@@ -12,24 +12,7 @@ window.addEventListener("load", async function() {
             
       let header = document.getElementById("stickyheader").value;
       let body = document.getElementById("stickybody").value;
-      await createSticky(header, body, [0,0,0,0]);
-            
-            
-
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+      await createSticky(header, body, [0,0,0,0]);      
             
     });
 
@@ -97,13 +80,13 @@ window.addEventListener("load", async function() {
             });
             imageDiv.appendChild(deleteBox);
             document.getElementById("row1").appendChild(imageDiv);
-            dragElement(imageDiv);
+            await dragElement(imageDiv);
             $("#newImg").modal('hide');
         }
 
     });
 
-    function dragElement(elmnt, positions) {
+    async function dragElement(elmnt, positions) {
         let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
         
         if (document.getElementById(elmnt.id + "header1")) {
@@ -139,13 +122,33 @@ window.addEventListener("load", async function() {
           elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
         }
       
-        function closeDragElement() {
+        async function closeDragElement() {
           // stop moving when mouse button is released:
           document.onmouseup = null;
           document.onmousemove = null;
-          console.log(pos1, pos2, pos3, pos4);
-          //sticky list children retrieve: stickyNoteheader and firstLine
-          console.log(elmnt.children);
+
+          //Request to update saved data
+          _positions = [pos1, pos2, pos3, pos4];
+          console.log(_positions);
+          let _header = elmnt.children[0], _body = elmnt.children[1];
+          const response = await fetch('./updateStickyPosition', {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                    userid:_userid,
+                    workspaceid:_workspaceid,
+                    header: _header,
+                    body: _body,
+                    positions: _positions
+                })
+          });
+          let json = await response.json();
+          //POST response options?       
+          if (!response.ok) {
+              console.error(`Failed to update sticky`);
+          }
         }
       }
       
