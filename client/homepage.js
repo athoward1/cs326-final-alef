@@ -36,7 +36,7 @@ window.addEventListener("load", async function() {
 
     document.getElementById('addButton').addEventListener('click', async()=>{
         //display this new blank box with these default values
-        await displayWorkspaces("New Box","https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png");
+        await displayWorkspaces("New Box","url(https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png)");
        
         //  Add Workspace to table
         let currentUser = loggedIn();   //  "guest" or username saved in localStorage
@@ -332,7 +332,7 @@ async function displayWorkspaces(title, image_url){
         });
         
     });
-    let image = "url("+ image_url + ")";
+    let image = image_url;
     addBox.style.backgroundImage = image;
     
     addBox.appendChild(editPicture);
