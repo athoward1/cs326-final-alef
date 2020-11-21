@@ -168,7 +168,7 @@ window.addEventListener("load", async function() {
           let json = await response.json();
           //POST response options?       
           if (!response.ok) {
-              console.error(`Failed to update sticky`);
+              console.error("Failed to update sticky");
           }
         }
       }
