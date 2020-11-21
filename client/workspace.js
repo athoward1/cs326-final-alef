@@ -31,6 +31,7 @@ window.addEventListener("load", async function() {
           
     let header = document.getElementById("stickyheader").value;
     let body = document.getElementById("stickybody").value;
+    console.log("body: " + body + "header: " + header);
     await createSticky(header, body, [0,0,0,0]);      
           
   });
