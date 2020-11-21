@@ -28,18 +28,18 @@ window.addEventListener("load", async function() {
             stickyNote.appendChild(firstLine);
             stickyNote.appendChild(deleteBox);
             
-            
             deleteBox.addEventListener("click", ()=>{
                 row1.removeChild(stickyNote);
             });
-            document.getElementById("row1").appendChild(stickyNote);
-            dragElement(stickyNote);
             $("#newSticky").modal('hide');
+            dragElement(stickyNote);
+            document.getElementById("row1").appendChild(stickyNote);
+
         
     });
 
     document.getElementById("saveImg").addEventListener("click", () =>{    
-        if(document.getElementById("imageForm").value !== ""){    
+        if(document.getElementById("imageForm").value !== ""){ 
             let imageDiv = document.createElement("div");
             imageDiv.id = "image";
             let image_url = "url("+ document.getElementById("imageForm").value+ ")";

@@ -140,6 +140,8 @@ async function updateWorkspaceImage(req, res){
     res.send("success");
 }
 
+
+//This is the buggy one that changes all the titles when you update one of them. We can't update on the field we condition on...
 async function updateWorkspaceTitle(req, res){
     console.log("Updating workspace title");
     await connectAndRun(db => db.none("UPDATE workspaces SET workspaceid = ($1) WHERE userid = ($2);", [req.body.newworkspaceid, req.body.userid]));

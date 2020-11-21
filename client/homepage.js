@@ -2,6 +2,37 @@
 
 
 window.addEventListener("load", async function() {
+    
+    let inviteClicked = true;
+    let inviteCount = 1;
+    document.getElementById("inviteButton").addEventListener("click", ()=>{
+        if(inviteClicked){
+        inviteClicked = false;
+        
+        let inviteInput = document.createElement("input");
+        inviteInput.className = "formPosition";
+        inviteInput.id = "inviteInput";
+        inviteInput.placeholder = "Username of Person";
+        let inviteButton = document.createElement("button");
+        inviteButton.className = "btn btn-success inviteSave";
+        inviteButton.innerHTML = "Save";
+        inviteButton.id = "inviteButton";
+        
+        document.getElementById("row1").appendChild(inviteInput);
+        document.getElementById("row1").appendChild(inviteButton);
+        inviteButton.addEventListener("click", ()=>{
+            if(inviteInput !== ""){
+                inviteClicked = true;
+                
+                document.getElementById("row1").removeChild(inviteInput);
+                document.getElementById("row1").removeChild(inviteButton);
+                document.getElementById(`invitedPerson${inviteCount}`).innerHTML = inviteInput.value;
+                inviteCount++;
+            }
+        });
+        }
+    });
+    
     if (window.localStorage.length != 0){   //  We're coming back to this page
         logIn(window.localStorage.getItem("userName"));
     }
@@ -27,6 +58,7 @@ window.addEventListener("load", async function() {
     let user = loggedIn();
     if (user === "Guest"){
         console.log("Guest logged in");
+
         document.getElementById("profilePicture").src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
     }else{
         console.log("User " + user + " is logged in.");
@@ -145,6 +177,7 @@ window.addEventListener("load", async function() {
             console.log("Huh? Error." + json.result);
         }  
     });
+    
 });
 
 async function getProfPic(user){
