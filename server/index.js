@@ -136,6 +136,7 @@ app.post("/login", checkPassword);
 async function updateWorkspaceImage(req, res){
     console.log("Updating workspace image");
     await connectAndRun(db => db.none("UPDATE workspaces SET image_url = ($1) WHERE userid = ($2) AND workspaceid = ($3);", [req.body.image_url, req.body.userid, req.body.workspaceid]));
+    console.log("image changed");
     res.send("success");
 }
 
