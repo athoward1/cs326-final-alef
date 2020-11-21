@@ -375,6 +375,7 @@ async function displayWorkspaces(title, image_url){
         window.localStorage.setItem("workspace", title);    //Needs to be a GET
         let response = await fetch("/workspace.html");
         console.log(response);
+        window.open("/workspace.html");
     });
 
     addBox.appendChild(enterButton);
