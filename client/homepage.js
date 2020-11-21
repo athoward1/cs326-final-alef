@@ -368,9 +368,17 @@ async function displayWorkspaces(title, image_url){
         });
         
     });
-    let image = image_url;
-    addBox.style.backgroundImage = image;
-    
+
+    let enterButton = document.createElement("button");
+    enterButton.classList = "btn btn-primary enter-button";
+    enterButton.innerText = "Enter";
+    enterButton.onclick = "location.href='/workspace.html";
+    enterButton.addEventListener("click", ()=>{
+        window.localStorage.setItem("workspace", title);
+    });
+
+
+    addBox.style.backgroundImage = image_url;
     addBox.appendChild(editPicture);
     addBox.appendChild(deleteBox);
     addBox.appendChild(boxName);

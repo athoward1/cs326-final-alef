@@ -47,6 +47,10 @@ window.addEventListener("load", async function() {
   document.getElementById("cancelImg").addEventListener("click", ()=>{
       $("#newImg").modal('hide');
   });
+  document.getElementById("backButton").addEventListener("click", ()=>{
+    window.localStorage.removeItem("workspace");
+  });
+
   document.getElementById("saveSticky").addEventListener("click", async()=>{
     let header = document.getElementById("stickyheader").value;
     let body = document.getElementById("stickybody").value;
