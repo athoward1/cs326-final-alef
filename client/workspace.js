@@ -129,6 +129,7 @@ window.addEventListener("load", async function() {
           document.onmousemove = null;
 
           //Request to update saved data
+          let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
           let _positions = [pos1, pos2, pos3, pos4];
           console.log(_positions);
           let _header = elmnt.children[0], _body = elmnt.children[1];
