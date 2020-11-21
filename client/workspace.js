@@ -99,6 +99,7 @@ window.addEventListener("load", async function() {
           // stop moving when mouse button is released:
           document.onmouseup = null;
           document.onmousemove = null;
+          console.log(pos1, pos2, pos3, pos4);
         }
       }
       
