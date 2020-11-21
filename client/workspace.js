@@ -37,7 +37,7 @@ window.addEventListener("load", async function() {
     await createSticky(header, body, [0,0,0,0]);      
   });
 
-  async function displaySticky(_header, _body, _position){
+  async function displaySticky(_header, _body, positions){
     let stickyNote = document.createElement("div");
     let stickyNoteheader = document.createElement("div");
     stickyNote.id = "stickyNote";
@@ -59,13 +59,13 @@ window.addEventListener("load", async function() {
     deleteBox.addEventListener("click", ()=>{
         row1.removeChild(stickyNote);
     });
-    await dragElement(stickyNote, _positions);
+    await dragElement(stickyNote, positions);
     document.getElementById("row1").appendChild(stickyNote);
 
   }
 
   async function createSticky(_header, _body, _positions){
-    await displaySticky(_header, _body, _position);
+    await displaySticky(_header, _body, _positions);
     $("#newSticky").modal('hide');
     let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
     //get workspaceid
