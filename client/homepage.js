@@ -171,9 +171,13 @@ window.addEventListener("load", async function() {
 });
 
 async function displayAllWorkspaces(_userid){
-    while (document.getElementById("row1").children > 0){
-        document.getElementById("row1").removeChild();
+    let row1 = document.getElementById("row1")
+    while (row1.children.length > 0){
+        let child = row1.children[0];
+        row1.removeChild(child);
     }
+    
+    
 
     let response = await fetch('/getWorkspaceInfo', {
         method: 'POST',
