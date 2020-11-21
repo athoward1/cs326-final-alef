@@ -150,6 +150,10 @@ window.addEventListener("load", async function() {
       let deleteBox = document.createElement("img");
       deleteBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png"
       deleteBox.className = "deleteBox";
+
+          
+      let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
+      let _workspaceid = "New Box";
       deleteBox.addEventListener("click", async()=>{
           row1.removeChild(imageDiv);
           await fetch("/deleteImage", {
