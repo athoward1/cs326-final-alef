@@ -272,8 +272,6 @@ window.addEventListener("load", async function() {
                     positions: _positions
                 })
           });
-          let json = await response.json();
-          //POST response options?       
           if (!response.ok) {
               console.error("Failed to update image");
           }
