@@ -1,20 +1,21 @@
 
 "use strict";
 window.addEventListener("load", async function() {
-    document.getElementById("cancel").addEventListener("click", ()=>{
-        $("#newSticky").modal('hide');
-        $("#newImg").modal('hide');
-    });
-    document.getElementById("cancelImg").addEventListener("click", ()=>{
-        $("#newImg").modal('hide');
-    });
-    document.getElementById("saveSticky").addEventListener("click", async()=>{
-            
-      let header = document.getElementById("stickyheader").value;
-      let body = document.getElementById("stickybody").value;
-      await createSticky(header, body, [0,0,0,0]);      
-            
-    });
+
+  document.getElementById("cancel").addEventListener("click", ()=>{
+      $("#newSticky").modal('hide');
+      $("#newImg").modal('hide');
+  });
+  document.getElementById("cancelImg").addEventListener("click", ()=>{
+      $("#newImg").modal('hide');
+  });
+  document.getElementById("saveSticky").addEventListener("click", async()=>{
+          
+    let header = document.getElementById("stickyheader").value;
+    let body = document.getElementById("stickybody").value;
+    await createSticky(header, body, [0,0,0,0]);      
+          
+  });
 
   async function createSticky(_header, _body, _positions){
     let stickyNote = document.createElement("div");
@@ -40,7 +41,7 @@ window.addEventListener("load", async function() {
     });
 
     $("#newSticky").modal('hide');
-    dragElement(stickyNote, _positions);
+    await dragElement(stickyNote, _positions);
     document.getElementById("row1").appendChild(stickyNote);
     let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
     //get workspaceid
@@ -65,7 +66,7 @@ window.addEventListener("load", async function() {
     }
   }
 
-    document.getElementById("saveImg").addEventListener("click", () =>{    
+    document.getElementById("saveImg").addEventListener("click", async() =>{    
         if(document.getElementById("imageForm").value !== ""){ 
             let imageDiv = document.createElement("div");
             imageDiv.id = "image";
