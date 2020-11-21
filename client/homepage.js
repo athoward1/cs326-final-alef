@@ -372,7 +372,7 @@ async function displayWorkspaces(title, image_url){
     let enterButton = document.createElement("button");
     enterButton.classList = "btn btn-primary enter-button";
     enterButton.innerText = "Enter";
-    enterButton.addEventListener("click", ()=>{
+    enterButton.addEventListener("click", async()=>{
         console.log("clicked");
         window.localStorage.setItem("workspace", title);    //Needs to be a GET
         await fetch("/workspace.html");
