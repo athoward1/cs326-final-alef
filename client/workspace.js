@@ -22,8 +22,33 @@ window.addEventListener("load", async function() {
     console.log(`Displaying sticky. Header: ${result[i].sheader}. Positions: ${result[i].positions}`);
     await displaySticky(result[i].sheader, result[i].sbody, result[i].positions);
   }
+  document.getElementById("inviteDropDown").addEventListener("click", () =>{
+    if(document.getElementById("invitePopUp").style.display === "block"){
+      document.getElementById("invitePopUp").style.display = "none";
+    }else{
+      document.getElementById("invitePopUp").style.display = "block";
+      document.getElementById("invitedText").style.display = "none";
+    }
+    
+    document.getElementById("inviteButton").addEventListener("click", ()=>{
+        if(document.getElementById("invitedText") !== "Invited!" && document.getElementById("newPersonName").value !== ""){
+          let solidLine = document.createElement("hr");
+          
+          document.getElementById("invitePlaceholder").style.display = "none";
+          let newPerson = document.createElement("p");
+          newPerson.innerHTML = document.getElementById("newPersonName").value;
+          document.getElementById("invitedDiv").appendChild(newPerson);
+          document.getElementById("invitedDiv").appendChild(solidLine);
+          document.getElementById("newPersonName").value = "";
+          
+          document.getElementById("invitedText").style.display = "block";
+        }
+        
+    });
+    
+    
+  });
   
-
   document.getElementById("cancel").addEventListener("click", ()=>{
       $("#newSticky").modal('hide');
       $("#newImg").modal('hide');
@@ -153,8 +178,8 @@ window.addEventListener("load", async function() {
           // stop moving when mouse button is released:
           document.onmouseup = null;
           document.onmousemove = null;
-
           //Request to update saved data
+          
           let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
           let _workspaceid = "New Box"; //  get workspaceid somehow
           let _positions = [pos1, pos2, pos3, pos4];

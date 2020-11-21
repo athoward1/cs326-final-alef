@@ -155,3 +155,26 @@ padding-bottom: 9999px;
 .backButton{
   position: absolute;
 }
+#inviteDiv{
+  position: absolute;
+  top: 0%;
+  left: 80%;
+  z-index: 1000;
+}
+.invitePopUp{
+  display: none;
+  background-color: lightblue;
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  top: 10%;
+  left: 70%;
+  z-index: 1000;
+  border: 5px solid;
+  border-radius: 2%;
+  text-align: center;
+}
+
+.invitedText{
+  display: none;
+}
