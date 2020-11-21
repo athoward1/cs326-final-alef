@@ -131,11 +131,35 @@ app.post("/updateWorkspaceImage", updateWorkspaceImage);
 app.post("/createSticky", createSticky);
 app.post("/updateStickyPosition", updateStickyPosition);
 app.post("/getStickies", getStickies);
+app.post("/deleteSticky", deleteSticky);
+
+app.post("/createImage", createImage);
+app.post("/getImages", getImages);
+app.post("/updateImagePosition", updateImagePosition);
+app.post("/deleteImage", deleteImage);
 
 
 app.post("/changeProfPic", updateProfPic);
 
 app.post("/login", checkPassword);
+
+async function deleteImage(req, res){
+    console.log("deleting image from db");
+    await connectAndRun(db => db.none("DELETE FROM imagedata WHERE userid=($1) AND workspaceid=($2) AND image_url=($3);", [req.body.userid, req.body.workspaceid, req.body.image_url]));
+    res.send(JSON.stringify({result: "success"}));
+}
+
+async function updateImagePosition(req, res){
+    console.log(`UPDATE image SET positions=(${req.body.positions}) WHERE userid=(${req.body.userid}) AND workspaceid=(${req.body.workspaceid}) AND image_url=(${req.body.image_url})`);
+    await connectAndRun(db => db.none("UPDATE imagedata SET positions=($1) WHERE userid=($2) AND workspaceid=($3) AND sbody=($4);", [req.body.positions, req.body.userid, req.body.workspaceid, req.body.image_url]));
+    res.send(JSON.stringify({result: "success"}));
+}
+
+async function deleteSticky(req, res){
+    console.log("deleting sticky from db");
+    await connectAndRun(db => db.none("DELETE FROM stickydata WHERE userid=($1) AND workspaceid=($2) AND sheader=($3) AND sbody=($4);", [req.body.userid, req.body.workspaceid, req.body.header, req.body.body]));
+    res.send(JSON.stringify({result: "success"}));
+}
 
 async function createSticky(req, res){
     console.log("adding new sticky to db");
@@ -143,6 +167,18 @@ async function createSticky(req, res){
     res.send(JSON.stringify({result: "success"}));
 }
 
+async function createImage(req, res){
+    console.log("adding new image to db");
+    await connectAndRun(db => db.none("INSERT INTO imagedata VALUES ($1, $2, $3, $4);", [req.body.userid, req.body.workspaceid, req.body.image_url, req.body.positions]));
+    res.send(JSON.stringify({result: "success"}));
+}
+
+
+async function getImages(req, res){
+    console.log("Selecting images under user");
+    let imgs = await connectAndRun(db => db.any("SELECT * FROM imagedata WHERE userid=($1) AND workspaceid=($2);", [req.body.userid, req.body.workspaceid]));
+    res.send(JSON.stringify({result: imgs}));
+}
 async function updateStickyPosition(req, res){
     console.log(`UPDATE stickydata SET positions=(${req.body.positions}) WHERE userid=(${req.body.userid}) AND workspaceid=(${req.body.workspaceid}) AND sheader=(${req.body.header}) AND sbody=(${req.body.body});`);
     await connectAndRun(db => db.none("UPDATE stickydata SET positions=($1) WHERE userid=($2) AND workspaceid=($3) AND sheader=($4) AND sbody=($5);", [req.body.positions, req.body.userid, req.body.workspaceid, req.body.header, req.body.body]));
