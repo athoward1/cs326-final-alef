@@ -128,10 +128,17 @@ app.post("/deleteWorkspace", deleteWorkspace);
 app.post("/updateWorkspaceTitle", updateWorkspaceTitle);
 app.post("/updateWorkspaceImage", updateWorkspaceImage);
 
+app.post("/createSticky", createSticky);
 
 app.post("/changeProfPic", updateProfPic);
 
 app.post("/login", checkPassword);
+
+async function createSticky(req, res){
+    console.log("adding new sticky to db");
+    await connectAndRun(db => db.none("INSERT INTO stickydata VALUES ($1, $2, $3, $4, $5);", [req.body.userid, req.body.workspaceid, req.body.header, req.body.body, req.body.positions]));
+    res.send("success");
+}
 
 async function updateWorkspaceImage(req, res){
     console.log("Updating workspace image");

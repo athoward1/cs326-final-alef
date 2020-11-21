@@ -8,35 +8,79 @@ window.addEventListener("load", async function() {
     document.getElementById("cancelImg").addEventListener("click", ()=>{
         $("#newImg").modal('hide');
     });
-    document.getElementById("saveSticky").addEventListener("click", ()=>{
-            let stickyNote = document.createElement("div");
-            let stickyNoteheader = document.createElement("div");
-            stickyNote.id = "stickyNote";
-            stickyNoteheader.id = "stickyNoteheader";
-            stickyNoteheader.innerHTML = document.getElementById("stickyheader").value;
-            stickyNoteheader.style.width = "250px";
+    document.getElementById("saveSticky").addEventListener("click", async()=>{
+            
+      let header = document.getElementById("stickyheader").value;
+      let body = document.getElementById("stickybody").value;
+      await createSticky(header, body, [0,0,0,0]);
+            
+            
 
-            let firstLine = document.createElement("p");
-            firstLine.innerHTML = document.getElementById("stickybody").value;
-            firstLine.style.width = "250px";
             
-            let deleteBox = document.createElement("img");
-            deleteBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png"
-            deleteBox.className = "deleteBox";
             
-            stickyNote.appendChild(stickyNoteheader);
-            stickyNote.appendChild(firstLine);
-            stickyNote.appendChild(deleteBox);
             
-            deleteBox.addEventListener("click", ()=>{
-                row1.removeChild(stickyNote);
-            });
-            $("#newSticky").modal('hide');
-            dragElement(stickyNote);
-            document.getElementById("row1").appendChild(stickyNote);
-
-        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
     });
+
+  async function createSticky(_header, _body, _positions){
+    let stickyNote = document.createElement("div");
+    let stickyNoteheader = document.createElement("div");
+    stickyNote.id = "stickyNote";
+    stickyNoteheader.id = "stickyNoteheader";
+    stickyNoteheader.innerHTML = _header;
+    stickyNoteheader.style.width = "250px";
+    let firstLine = document.createElement("p");
+    firstLine.innerHTML = _body;
+    firstLine.style.width = "250px";
+                
+    let deleteBox = document.createElement("img");
+    deleteBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png"
+    deleteBox.className = "deleteBox";
+                
+    stickyNote.appendChild(stickyNoteheader);
+    stickyNote.appendChild(firstLine);
+    stickyNote.appendChild(deleteBox);
+                
+    deleteBox.addEventListener("click", ()=>{
+        row1.removeChild(stickyNote);
+    });
+
+    $("#newSticky").modal('hide');
+    dragElement(stickyNote, _positions);
+    document.getElementById("row1").appendChild(stickyNote);
+    let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
+    //get workspaceid
+    let _workspaceid = "New Box";
+    const response = await fetch('./createSticky', {
+      method:'POST',
+      headers:{
+          'Content-Type':'application/json'
+      },
+      body: JSON.stringify({
+              userid:_userid,
+              workspaceid:_workspaceid,
+              header: _header,
+              body: _body,
+              positions: _positions
+          })
+    });
+    let json = await response.json();
+    //POST response options?       
+    if (!response.ok) {
+        console.error(`Could not add sticky to database.`);
+    }
+  }
 
     document.getElementById("saveImg").addEventListener("click", () =>{    
         if(document.getElementById("imageForm").value !== ""){ 
@@ -59,8 +103,8 @@ window.addEventListener("load", async function() {
 
     });
 
-    function dragElement(elmnt) {
-        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    function dragElement(elmnt, positions) {
+        let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
         
         if (document.getElementById(elmnt.id + "header1")) {
           // if present, the header is where you move the DIV from:
@@ -100,6 +144,8 @@ window.addEventListener("load", async function() {
           document.onmouseup = null;
           document.onmousemove = null;
           console.log(pos1, pos2, pos3, pos4);
+          //sticky list children retrieve: stickyNoteheader and firstLine
+          console.log(elmnt.children);
         }
       }
       
