@@ -150,8 +150,8 @@ async function updateStickyPosition(req, res){
 }
 
 async function getStickies(req, res){
-    console.log("Selecting workspaces under user");
-    let stickies = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE userid=($1) AND workspaceid=($2);", [req.body.userid, req.body.workspaceid]));
+    console.log("Selecting stickies under user");
+    let stickies = await connectAndRun(db => db.any("SELECT * FROM stickydata WHERE userid=($1) AND workspaceid=($2);", [req.body.userid, req.body.workspaceid]));
     res.send(JSON.stringify({result: stickies}));
 }
 
