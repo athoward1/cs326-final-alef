@@ -31,7 +31,7 @@ window.addEventListener("load", async function() {
           
     let header = document.getElementById("stickyheader").value;
     let body = document.getElementById("stickybody").value;
-    console.log("body: " + body + "header: " + header);
+    console.log("body: " + body + " header: " + header);
     await createSticky(header, body, [0,0,0,0]);      
           
   });
@@ -152,6 +152,8 @@ window.addEventListener("load", async function() {
           let _workspaceid = "New Box"; //  get workspaceid somehow
           let _positions = [pos1, pos2, pos3, pos4];
           console.log(_positions);
+          formatPositions(_positions);  // small SQL particular
+          console.log(_positions);
           let _header = elmnt.children[0], _body = elmnt.children[1];
           const response = await fetch('./updateStickyPosition', {
             method:'POST',
@@ -176,5 +178,12 @@ window.addEventListener("load", async function() {
       
      
 });
+
+function formatPositions(array){
+  let stringversion = String(array);
+  stringversion[stringversion.length-1] = '}';
+  stringversion[0] = '{';
+  array = stringversion;
+}
 
 

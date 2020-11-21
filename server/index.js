@@ -139,13 +139,13 @@ app.post("/login", checkPassword);
 async function createSticky(req, res){
     console.log("adding new sticky to db");
     await connectAndRun(db => db.none("INSERT INTO stickydata VALUES ($1, $2, $3, $4, $5);", [req.body.userid, req.body.workspaceid, req.body.header, req.body.body, req.body.positions]));
-    res.send("success");
+    res.send(JSON.stringify({result: "success"}));
 }
 
 async function updateStickyPosition(req, res){
     console.log("updating positions to" + String(req.body.positions));
     await connectAndRun(db => db.none("UPDATE stickydata SET positions=($1) WHERE userid=($2) AND workspaceid=($3) AND sheader=($4) AND sbody=($5));", [req.body.positions, req.body.userid, req.body.workspaceid, req.body.header, req.body.body]));
-    req.send("success")
+    req.send(JSON.stringify({result: "success"}))
 }
 
 
@@ -154,7 +154,7 @@ async function updateWorkspaceImage(req, res){
     console.log("Updating workspace image");
     await connectAndRun(db => db.none("UPDATE workspaces SET image_url = ($1) WHERE userid = ($2) AND workspaceid = ($3);", [req.body.image_url, req.body.userid, req.body.workspaceid]));
     console.log("image changed");
-    res.send("success");
+    res.send(JSON.stringify({result: "success"}));
 }
 
 
@@ -162,34 +162,34 @@ async function updateWorkspaceImage(req, res){
 async function updateWorkspaceTitle(req, res){
     console.log("Updating workspace title");
     await connectAndRun(db => db.none("UPDATE workspaces SET workspaceid = ($1) WHERE userid = ($2);", [req.body.newworkspaceid, req.body.userid]));
-    res.send("success");
+    res.send(JSON.stringify({result: "success"}));
 }
 
 async function deleteWorkspace(req,res){
     console.log("deleting workspace");
     await connectAndRun(db => db.none("DELETE FROM workspaces WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
     console.log("Deleted " + req.body.workspaceid);
-    res.send("success");
+    res.send(JSON.stringify({result: "success"}));
 }
 
 async function updateProfPic(req, res){
     console.log("changing profile pic");
     await connectAndRun(db => db.none("UPDATE userinfo SET image_url = ($1) WHERE username = ($2);", [req.body.image_url, req.body.username]));
-    res.send("success");
+    res.send(JSON.stringify({result: "success"}));
 }
 
 async function uninvite(req,res){
     console.log("uninviting");
     await connectAndRun(db => db.none("DELETE FROM workspaceinfo WHERE userid = ($1) AND title = ($2) AND shared = ($3);", [req.body.userid, req.body.title, req.body.shared]));
     console.log("Uninvited " + req.body.shared);
-    res.send("success");
+    res.send(JSON.stringify({result: "success"}));
 }
 
 async function uninviteAll(req,res){
     console.log("uninviting all");
     await connectAndRun(db => db.none("DELETE FROM workspaceinfo WHERE userid = ($1) AND title = ($2);", [req.body.userid, req.body.title]));
     console.log("Uninvited all");
-    res.send("success");
+    res.send(JSON.stringify({result: "success"}));
 }
 
 async function getUserInfo(req, res){
