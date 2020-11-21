@@ -143,7 +143,7 @@ async function createSticky(req, res){
 }
 
 async function updateStickyPosition(req, res){
-    console.log("updating positions to " + String(req.body.positions));
+    console.log(`UPDATE stickydata SET positions=(${req.body.positions}) WHERE userid=(${req.body.userid}) AND workspaceid=(${req.body.workspaceid}) AND sheader=(${req.body.header}) AND sbody=(${req.body.body});`);
     await connectAndRun(db => db.none("UPDATE stickydata SET positions=($1) WHERE userid=($2) AND workspaceid=($3) AND sheader=($4) AND sbody=($5);", [req.body.positions, req.body.userid, req.body.workspaceid, req.body.header, req.body.body]));
     res.send(JSON.stringify({result: "success"}))
 }
