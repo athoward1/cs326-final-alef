@@ -373,7 +373,8 @@ async function displayWorkspaces(title, image_url){
     enterButton.addEventListener("click", async()=>{
         console.log("clicked");
         window.localStorage.setItem("workspace", title);    //Needs to be a GET
-        await fetch("/workspace.html");
+        let response = await fetch("/workspace.html");
+        console.log(response);
     });
 
     addBox.appendChild(enterButton);
