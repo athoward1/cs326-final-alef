@@ -36,7 +36,7 @@ window.addEventListener("load", async function() {
   let json2 = await response2.json();
   let result2 = json2.result;
   for (let i in result2){
-    console.log(`Displaying sticky. Image: ${result2[i].image_url}. Positions: ${result2[i].positions}`);
+    console.log(`Displaying image. Image: ${result2[i].image_url}. Positions: ${result2[i].positions}`);
     await displayImage(result2[i].image_url, result2[i].positions);
   }
 
@@ -123,7 +123,7 @@ window.addEventListener("load", async function() {
       $("#newImg").modal('hide');
       let image_url = "url("+ document.getElementById("imageForm").value+ ")";
       await displayImage(image_url, [0,0,0,0])  
-      await createImage(image_url);
+      await createImage(image_url, [0,0,0,0]);
     });
 
     async function createImage(_image_url, _positions){
