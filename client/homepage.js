@@ -39,20 +39,7 @@ window.addEventListener("load", async function() {
 
     //Load Workspaces
     let _userid = localStorage.getItem("userName");
-    let response = await fetch('/getWorkspaceInfo', {
-        method: 'POST',
-        headers: {
-            'Content-Type':'application/json'
-        },
-        body: JSON.stringify({
-            userid: _userid
-        })
-    });
-    let json = await response.json();
-    let result = json.result;
-    for (let i in result){
-        await displayWorkspaces(result[i].workspaceid, result[i].image_url);
-    }
+    await displayAllWorkspaces(_userid);
     
     //Set Profile Picture
     let user = loggedIn();
@@ -182,6 +169,23 @@ window.addEventListener("load", async function() {
     });
     
 });
+
+async function displayAllWorkspaces(_userid){
+    let response = await fetch('/getWorkspaceInfo', {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+            userid: _userid
+        })
+    });
+    let json = await response.json();
+    let result = json.result;
+    for (let i in result){
+        await displayWorkspaces(result[i].workspaceid, result[i].image_url);
+    }
+}
 
 async function getProfPic(user){
     let response = await fetch("/getUserInfo", {
