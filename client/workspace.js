@@ -17,8 +17,6 @@ window.addEventListener("load", async function() {
   });
   let json = await response.json();
   let result = json.result;
-  console.log(result);
-  console.log(result.length);
 
   for (let i in result){
     console.log(`Displaying sticky. Header: ${result[i].sheader}. Positions: ${result[i].positions}`);
@@ -115,6 +113,7 @@ window.addEventListener("load", async function() {
     });
 
     async function dragElement(elmnt, positions) {
+        console.log("Initialize drag element at position "+String(positions));
         let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
         
         if (document.getElementById(elmnt.id + "header1")) {
