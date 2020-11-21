@@ -2,23 +2,26 @@
 "use strict";
 window.addEventListener("load", async function() {
 
-  /**
-  let _userid = localStorage.getItem("userName");
-  let response = await fetch('/getWorkspaceInfo', {
+  
+  let owner = localStorage.getItem("userName");  //should really be workspace owner, depenant on unique workspaceid
+  let response = await fetch('/getStickies', {
       method: 'POST',
       headers: {
           'Content-Type':'application/json'
       },
       body: JSON.stringify({
-          userid: _userid
+          userid: owner,
+          workspaceid: __workspaceid
       })
   });
   let json = await response.json();
   let result = json.result;
+
   for (let i in result){
-      await displayWorkspaces(result[i].workspaceid, result[i].image_url);
+    console.log("Displaying sticky");
+    await displaySticky(result[i].header, result[i].body, result[i].positions);
   }
-  */
+  
 
   document.getElementById("cancel").addEventListener("click", ()=>{
       $("#newSticky").modal('hide');
@@ -28,15 +31,12 @@ window.addEventListener("load", async function() {
       $("#newImg").modal('hide');
   });
   document.getElementById("saveSticky").addEventListener("click", async()=>{
-          
     let header = document.getElementById("stickyheader").value;
     let body = document.getElementById("stickybody").value;
-    console.log("body: " + body + " header: " + header);
     await createSticky(header, body, [0,0,0,0]);      
-          
   });
 
-  async function createSticky(_header, _body, _positions){
+  async function displaySticky(_header, _body, _position){
     let stickyNote = document.createElement("div");
     let stickyNoteheader = document.createElement("div");
     stickyNote.id = "stickyNote";
@@ -58,13 +58,18 @@ window.addEventListener("load", async function() {
     deleteBox.addEventListener("click", ()=>{
         row1.removeChild(stickyNote);
     });
-
-    $("#newSticky").modal('hide');
     await dragElement(stickyNote, _positions);
     document.getElementById("row1").appendChild(stickyNote);
+
+  }
+
+  async function createSticky(_header, _body, _positions){
+    await displaySticky(_header, _body, _position);
+    $("#newSticky").modal('hide');
     let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
     //get workspaceid
     let _workspaceid = "New Box";
+    
     const response = await fetch('./createSticky', {
       method:'POST',
       headers:{
@@ -152,9 +157,7 @@ window.addEventListener("load", async function() {
           let _workspaceid = "New Box"; //  get workspaceid somehow
           let _positions = [pos1, pos2, pos3, pos4];
           _positions = '{' + String(_positions) + '}';
-          console.log(_positions);
           let _header = elmnt.children[0].innerHTML, _body = elmnt.children[1].innerHTML;
-          console.log(_header);
           const response = await fetch('./updateStickyPosition', {
             method:'POST',
             headers:{

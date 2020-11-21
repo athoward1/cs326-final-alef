@@ -67,8 +67,8 @@ window.addEventListener("load", async function() {
     }
 
     document.getElementById('addButton').addEventListener('click', async()=>{
-        //display this new blank box with these default values
-        await displayWorkspaces("New Box","https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png");   //   make unique name
+        
+        
        
         //  Add Workspace to table
         let currentUser = loggedIn();   //  "guest" or username saved in localStorage
@@ -80,6 +80,9 @@ window.addEventListener("load", async function() {
             taskidtobegotten=5,
             timelineidtobegotten=5,
             image_url = "https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png";
+            
+        //display this new blank box with these default values
+        await displayWorkspaces(workspaceidtobegotten,image_url);   //   make unique name
         await newWorkspace(currentUser,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
         
         

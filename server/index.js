@@ -130,6 +130,7 @@ app.post("/updateWorkspaceImage", updateWorkspaceImage);
 
 app.post("/createSticky", createSticky);
 app.post("/updateStickyPosition", updateStickyPosition);
+app.post("/getStickies", getStickies);
 
 
 app.post("/changeProfPic", updateProfPic);
@@ -145,9 +146,14 @@ async function createSticky(req, res){
 async function updateStickyPosition(req, res){
     console.log(`UPDATE stickydata SET positions=(${req.body.positions}) WHERE userid=(${req.body.userid}) AND workspaceid=(${req.body.workspaceid}) AND sheader=(${req.body.header}) AND sbody=(${req.body.body});`);
     await connectAndRun(db => db.none("UPDATE stickydata SET positions=($1) WHERE userid=($2) AND workspaceid=($3) AND sheader=($4) AND sbody=($5);", [req.body.positions, req.body.userid, req.body.workspaceid, req.body.header, req.body.body]));
-    res.send(JSON.stringify({result: "success"}))
+    res.send(JSON.stringify({result: "success"}));
 }
 
+async function getStickies(req, res){
+    console.log("Selecting workspaces under user");
+    let stickies = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE userid=($1) AND workspaceid=($2);", [req.body.userid, req.body.workspaceid]));
+    res.send(JSON.stringify({result: stickies}));
+}
 
 
 async function updateWorkspaceImage(req, res){
