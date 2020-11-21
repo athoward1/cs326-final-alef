@@ -18,14 +18,14 @@ window.addEventListener("load", async function() {
         inviteButton.innerHTML = "Save";
         inviteButton.id = "inviteButton";
         
-        document.getElementById("row1").appendChild(inviteInput);
-        document.getElementById("row1").appendChild(inviteButton);
+        document.getElementById("boxspace").appendChild(inviteInput);
+        document.getElementById("boxspace").appendChild(inviteButton);
         inviteButton.addEventListener("click", ()=>{
             if(inviteInput !== ""){
                 inviteClicked = true;
                 
-                document.getElementById("row1").removeChild(inviteInput);
-                document.getElementById("row1").removeChild(inviteButton);
+                document.getElementById("boxspace").removeChild(inviteInput);
+                document.getElementById("boxspace").removeChild(inviteButton);
                 document.getElementById(`invitedPerson${inviteCount}`).innerHTML = inviteInput.value;
                 inviteCount++;
             }
@@ -171,10 +171,10 @@ window.addEventListener("load", async function() {
 });
 
 async function displayAllWorkspaces(_userid){
-    let row1 = document.getElementById("row1")
-    while (row1.children.length > 0){
-        let child = row1.children[0];
-        row1.removeChild(child);
+    let boxspace = document.getElementById("boxspace")
+    while (boxspace.children.length > 0){
+        let child = boxspace.children[0];
+        boxspace.removeChild(child);
     }
     
     
@@ -268,13 +268,13 @@ async function displayWorkspaces(title, image_url){
     const addBox = document.createElement("div");
     addBox.className = "workspacebox";
     addBox.setAttribute = ("id", "box1");
-    document.getElementById("row1").appendChild(addBox);
+    document.getElementById("boxspace").appendChild(addBox);
 
     let deleteBox = document.createElement("img");
     deleteBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png";
     deleteBox.className = "deleteButton";  
     deleteBox.addEventListener("click", async()=> {
-        document.getElementById("row1").removeChild(addBox);
+        document.getElementById("boxspace").removeChild(addBox);
         let workspace = title;
         await fetch("/uninviteAll", {
             method:'POST',
