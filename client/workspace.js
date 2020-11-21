@@ -153,7 +153,8 @@ window.addEventListener("load", async function() {
           let _positions = [pos1, pos2, pos3, pos4];
           _positions = '{' + String(_positions) + '}';
           console.log(_positions);
-          let _header = elmnt.children[0], _body = elmnt.children[1];
+          let _header = elmnt.children[0].innerHTML, _body = elmnt.children[1].innerHTML;
+          console.log(_header);
           const response = await fetch('./updateStickyPosition', {
             method:'POST',
             headers:{
