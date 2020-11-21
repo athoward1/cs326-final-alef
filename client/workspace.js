@@ -21,8 +21,8 @@ window.addEventListener("load", async function() {
   console.log(result.length);
 
   for (let i in result){
-    console.log(`Displaying sticky. Header: ${result[i].header}. Positions: ${result[i].positions}`);
-    await displaySticky(result[i].header, result[i].body, result[i].positions);
+    console.log(`Displaying sticky. Header: ${result[i].sheader}. Positions: ${result[i].positions}`);
+    await displaySticky(result[i].sheader, result[i].sbody, result[i].positions);
   }
   
 
