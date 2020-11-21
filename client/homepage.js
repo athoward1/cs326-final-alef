@@ -377,7 +377,7 @@ async function displayWorkspaces(title, image_url){
         window.localStorage.setItem("workspace", title);
     });
 
-
+    addBox.appendChild(enterButton);
     addBox.style.backgroundImage = image_url;
     addBox.appendChild(editPicture);
     addBox.appendChild(deleteBox);

@@ -120,6 +120,13 @@ input[type=text], input[type=password] {
     cursor: pointer;
 }
 
+.enter-button{
+    position: relative;
+    top: 75%;
+    left: 80%;
+    cursor: pointer;
+}
+
 .workspaceNameText{
     font-size: 30px;
     font-family: verdana;
