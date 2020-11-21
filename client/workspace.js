@@ -151,8 +151,7 @@ window.addEventListener("load", async function() {
           let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
           let _workspaceid = "New Box"; //  get workspaceid somehow
           let _positions = [pos1, pos2, pos3, pos4];
-          console.log(_positions);
-          formatPositions(_positions);  // small SQL particular
+          _positions = '{' + String(_positions) + '}';
           console.log(_positions);
           let _header = elmnt.children[0], _body = elmnt.children[1];
           const response = await fetch('./updateStickyPosition', {
@@ -178,10 +177,3 @@ window.addEventListener("load", async function() {
       
      
 });
-
-function formatPositions(array){
-  let stringversion = String(array);
-  array = '{' + stringversion + '}';
-}
-
-
