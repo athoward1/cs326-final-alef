@@ -19,7 +19,7 @@ window.addEventListener("load", async function() {
   let result = json.result;
 
   for (let i in result){
-    console.log("Displaying sticky");
+    console.log(`Displaying sticky. Header: ${result[i].header}. Positions: ${result[i].positions}`);
     await displaySticky(result[i].header, result[i].body, result[i].positions);
   }
   
