@@ -113,7 +113,7 @@ window.addEventListener("load", async function() {
     });
 
     async function dragElement(elmnt, positions) {
-        console.log("Initialize drag element at position "+String(positions));
+        console.log("Initialize drag element at position "+String(positions));  //  I thought next line would set position of sticky.g
         let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
         
         if (document.getElementById(elmnt.id + "header1")) {
