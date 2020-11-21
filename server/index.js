@@ -123,20 +123,55 @@ app.post("/getWorkspaceInfo", workspacesUnderUser);
 app.post("/shared", getShared);
 app.post("/getUserInfo", getUserInfo);
 app.post("/uninvite", uninvite);
+app.post("/uninviteAll", uninviteAll);
+app.post("/deleteWorkspace", deleteWorkspace);
+app.post("/updateWorkspaceTitle", updateWorkspaceTitle);
+app.post("/updateWorkspaceImage", updateWorkspaceImage);
+
+
 app.post("/changeProfPic", updateProfPic);
 
 app.post("/login", checkPassword);
 
+async function updateWorkspaceImage(req, res){
+    console.log("Updating workspace image");
+    await connectAndRun(db => db.none("UPDATE workspaces SET image_url = ($1) WHERE userid = ($2) AND workspaceid = ($3);", [req.body.image_url, req.body.userid, req.body.workspaceid]));
+    console.log("image changed");
+    res.send("success");
+}
+
+
+//This is the buggy one that changes all the titles when you update one of them. We can't update on the field we condition on...
+async function updateWorkspaceTitle(req, res){
+    console.log("Updating workspace title");
+    await connectAndRun(db => db.none("UPDATE workspaces SET workspaceid = ($1) WHERE userid = ($2);", [req.body.newworkspaceid, req.body.userid]));
+    res.send("success");
+}
+
+async function deleteWorkspace(req,res){
+    console.log("deleting workspace");
+    await connectAndRun(db => db.none("DELETE FROM workspaces WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
+    console.log("Deleted " + req.body.workspaceid);
+    res.send("success");
+}
+
 async function updateProfPic(req, res){
     console.log("changing profile pic");
     await connectAndRun(db => db.none("UPDATE userinfo SET image_url = ($1) WHERE username = ($2);", [req.body.image_url, req.body.username]));
-
+    res.send("success");
 }
 
 async function uninvite(req,res){
     console.log("uninviting");
-    await connectAndRun(db => db.any("DELETE FROM workspaceinfo WHERE userid = ($1) AND title = ($2) AND shared = ($3)", [req.body.userid, req.body.title, req.body.shared]));
+    await connectAndRun(db => db.none("DELETE FROM workspaceinfo WHERE userid = ($1) AND title = ($2) AND shared = ($3);", [req.body.userid, req.body.title, req.body.shared]));
     console.log("Uninvited " + req.body.shared);
+    res.send("success");
+}
+
+async function uninviteAll(req,res){
+    console.log("uninviting all");
+    await connectAndRun(db => db.none("DELETE FROM workspaceinfo WHERE userid = ($1) AND title = ($2);", [req.body.userid, req.body.title]));
+    console.log("Uninvited all");
     res.send("success");
 }
 

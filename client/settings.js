@@ -153,9 +153,10 @@ window.addEventListener("load", async function() {
         }
     }); //  end personal-button
     
-    //  Your Workspaces. First fetch all workspaces under this username
+    //  Your Workspaces. Fetch all workspaces under this username
 
     let _userid = localStorage.getItem("userName");
+
     let response = await fetch('/getWorkspaceInfo', {
         method: 'POST',
         headers: {
@@ -170,7 +171,12 @@ window.addEventListener("load", async function() {
     let result = json.result;
     for (let i in result){
         let newNode = document.createElement("div");
-        newNode.innerHTML = `<img class="wp-img" src=${result[i].image_url}></img><h4 class="wp-title">${result[i].workspaceid}</h4>`;
+        newNode.classList = "wp-img";
+        newNode.src = "url(" + result[i].image_url + ")";
+        let titleNode = document.createElement("h4");
+        titleNode.classList = "wp-title";
+        titleNode.innerText = result[i].workspaceid;
+        newNode.appendChild(titleNode);
         
         //fetch this workspace's users, in order to append them to workspace node
         let response2 = await fetch("/shared", {
@@ -185,13 +191,17 @@ window.addEventListener("load", async function() {
         });
         let json2 = await response2.json();
         let result2 = json2.result;
+
+        if (result2.length === 0){  //  No users shared yet
+            let noUsers = document.createElement("div");
+            noUsers.innerText = "No CoLab-rators.";
+            newNode.append(noUsers);
+        }
+
         for (let j in result2){
             let userLine = await userNode(_userid, result[i].workspaceid, result2[j].shared);
             newNode.appendChild(userLine);
         }
-
-
-
         newNodes[i] = newNode;
     }
 
@@ -242,6 +252,7 @@ async function userNode(user, workspace, _shared){
                 shared: _shared
             })
         });
+        
     });
 
     node.appendChild(disinvite);
