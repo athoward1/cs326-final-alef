@@ -1,12 +1,24 @@
+
+:root{
+    --main-color:rgba(13, 13, 133, 0.705);
+}
+
+html {
+    background: linear-gradient(white,var(--main-color));
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: local;
+}
+
 hr.solid {
-    border-top: 5px solid #bbb;
+    border-top: 5px solid rgb(33, 39, 128);
     width: 110%;
     left: -18.5%;
     margin-bottom: 2%;
     position: relative;
 }
 .verticalline {
-    border-left: 6px solid #bbb;
+    border-left: 10px solid rgb(33, 39, 128);
     height: 100%;
     position: absolute;
     top: 0;
@@ -33,25 +45,25 @@ hr.linePosition {
 
 }
 .accounticon {
-    top: 10%;
+    top: 8rem;
     position: absolute;
     left: 84%;
   }
 .loginButton{
-    top: 3%;
+    top: 1rem;
     position: absolute;
     left: 85%;
     width: 15%;
     text-align: center;
 }
 .settingsicon {
-    top: 40%;
+    top: 22rem;
     position: absolute;
     left: 86.5%;
   }
 
 .addWorkspace{
-    top: 6%;
+    top: 5rem;
     left: 72%;
     position: absolute;
     cursor: pointer;
@@ -70,9 +82,12 @@ hr.linePosition {
 
 .motto{
     position: absolute;
-    top: 20%;
+    top: 9rem;
     left: 32%;
     font-size: 150%;
+}
+.container{
+    background-color:transparent;
 }
 
 .banner {
@@ -102,7 +117,8 @@ input[type=text], input[type=password] {
     height: 50px;
     cursor: pointer;
     position: relative;
-    right: 40%;
+    right: 17%;
+    bottom: 108%;
 }
 
 .editBox{
@@ -110,7 +126,7 @@ input[type=text], input[type=password] {
     height: 20px;
     cursor: pointer;
     position: relative;
-    bottom: 38%;
+    bottom: 147%;
     left: 89%;
 }
 
@@ -118,33 +134,39 @@ input[type=text], input[type=password] {
     width: 50px;
     height: 50px;
     position: relative;
-    top: 75%;
-    left: 54%;
+    bottom: 33%;
+    left: 80%;
     cursor: pointer;
 }
 
 .enter-button{
     position: relative;
-    top: 75%;
-    left: 5%;
+    top: 28%;
+    right: 36%;
     cursor: pointer;
+    transform: scale(.25);
+}
+
+.enter-button:hover{
+    transform: scale(.3);
 }
 
 .workspaceNameText{
     font-size: 30px;
     font-family: verdana;
     text-overflow: clip;
+    white-space: nowrap;
     overflow: hidden;
     display: block;
     width: 60%;
     position: relative;
-    left: 25%;
-    bottom: 20%;
+    left: 22%;
+    bottom: 128%;
 }
 
 .signoutBtn{
-    top: 55%;
-    left: 86.5%;
+    top: 29rem;
+    left: 86.9%;
     position: absolute;
 }
 

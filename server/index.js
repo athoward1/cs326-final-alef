@@ -125,6 +125,7 @@ app.post("/deleteWorkspace", deleteWorkspace);
 app.post("/updateWorkspaceTitle", updateWorkspaceTitle);
 app.post("/updateWorkspaceImage", updateWorkspaceImage);
 app.post("/newWorkspace", newWorkspace);
+app.post("/checkUniqueWorkspaceName", checkUnique);
 
 app.post("/createSticky", createSticky);
 app.post("/updateStickyPosition", updateStickyPosition);
@@ -206,8 +207,16 @@ async function updateWorkspaceImage(req, res){
 
 //This is the buggy one that changes all the titles when you update one of them. We can't update on the field we condition on...
 async function updateWorkspaceTitle(req, res){
-    console.log("Updating workspace title");                        //  Should be AND where workspaceid = the one we're on
-    await connectAndRun(db => db.none("UPDATE workspaces SET workspaceid = ($1) WHERE userid = ($2);", [req.body.newworkspaceid, req.body.userid]));
+    console.log("Updating workspace title");
+    //  First grab the entry
+    let entry = await connectAndRun(db => db.one("SELECT * FROM workspaces WHERE workspaceid = ($1) AND userid = ($2);", [req.body.workspaceid, req.body.userid]));
+    console.log(entry);
+    //  Now delete it
+    await connectAndRun(db => db.none("DELETE FROM workspaces WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
+    //  Now insert the updated vertion
+    await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1,$2,$3,$4,$5,$6);",
+        [req.body.userid, req.body.newworkspaceid,entry.chatid,entry.plannerid,entry.taskid,entry.timelineid, entry.image_url]));
+
     res.send(JSON.stringify({result: "success"}));
 }
 
@@ -216,6 +225,17 @@ async function deleteWorkspace(req,res){
     await connectAndRun(db => db.none("DELETE FROM workspaces WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
     console.log("Deleted " + req.body.workspaceid);
     res.send(JSON.stringify({result: "success"}));
+}
+
+async function checkUnique(req,res){
+    console.log("checking duplicate workspace name");
+    let entries = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.newworkspaceid]));
+    console.log(entries);
+    if (entries.length === 0){
+        res.send(JSON.stringify({result: "unique"}));
+    }else{
+        res.send(JSON.stringify({result: "multiple"}))
+    }
 }
 
 async function updateProfPic(req, res){
