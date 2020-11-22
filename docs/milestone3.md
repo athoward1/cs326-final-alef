@@ -13,6 +13,12 @@
               header: Object,
               body: Object,
               positions: Object}
+   
+   createSticky{userid:String,
+              workspaceid:String,
+              header: Object,
+              text: Object,
+              dateSent: Object}
               
     createImage{userid: String, workspaceid: String, image_url: String, positions: Object}
     
