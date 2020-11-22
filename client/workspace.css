@@ -4,6 +4,10 @@
 
 html, body { height: 100%; }
 
+.timeline{
+  min-height: 10%;
+}
+
 .container-fluid{
     min-height: 100%;
     overflow: hidden;
@@ -32,8 +36,9 @@ padding-bottom: 95%;
 	padding-bottom: 9999px;
 }
 
-#timeline{
+#theTimeline{
     min-height: 5%;
+  padding-bottom: 10px;
 }
 
 #task-button{

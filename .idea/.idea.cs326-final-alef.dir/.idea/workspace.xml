@@ -20,16 +20,28 @@
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:Luis-Dev" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:main" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="790b9947-a464-4619-ad8e-b5e23ab4cb0b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/.idea/contentModel.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/.idea/projectSettingsUpdater.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/riderModule.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/UI flowchart.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/workspace.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/workspace.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/workspace.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/workspace.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/workspace.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/workspace.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/debug.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +55,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/client/workspace.html" />
+        <option value="$PROJECT_DIR$/client/workspace.css" />
         <option value="$PROJECT_DIR$/client/workspace.js" />
       </list>
     </option>
@@ -84,7 +97,7 @@
       <workItem from="1605655435864" duration="1514000" />
       <workItem from="1605840140366" duration="5547000" />
       <workItem from="1605913316394" duration="1860000" />
-      <workItem from="1606001162015" duration="23779000" />
+      <workItem from="1606001162015" duration="27309000" />
     </task>
     <servers />
   </component>
@@ -104,7 +117,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="Luis-Dev" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
