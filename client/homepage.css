@@ -134,6 +134,7 @@ input[type=text], input[type=password] {
     font-size: 30px;
     font-family: verdana;
     text-overflow: clip;
+    white-space: nowrap;
     overflow: hidden;
     display: block;
     width: 60%;
