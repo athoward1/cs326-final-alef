@@ -73,7 +73,7 @@ window.addEventListener("load", async function() {
         });
         let json = await response.json();
         if (json.result === "duplicate"){
-            let result2;
+            let response2;
             let i = 0;
             while (json.result === "duplicate"){
                 i += 1;
