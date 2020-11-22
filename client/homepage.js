@@ -101,7 +101,9 @@ window.addEventListener("load", async function() {
             image_url = "https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png";
 
         await newWorkspace(currentUser,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
-        await displayAllWorkspaces(currentUser);
+        if (loggedIn() !== "Guest"){    //  Guest doesn't save, so reloading all of them is useless
+            await displayAllWorkspaces(currentUser);
+        }
         
 
     });
@@ -242,8 +244,11 @@ async function getProfPic(user){
 
 async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_timelineid,_image_url){
     if (loggedIn() === "Guest"){    //  Guest doesn't need to have workspaces
+        await displayWorkspaces(_workspaceid, _image_url);  //  So skip the posting, skip the loading of all the workspaces
         return;
     }
+    
+    
     const response = await fetch('./newWorkspace', {
         method:'POST',
         headers:{
@@ -295,7 +300,7 @@ function logIn(username){
 let isOpen = true;
 async function displayWorkspaces(title, image_url){
     document.getElementById("addHint").style.display = "none";
-    let user = localStorage.getItem("userName");
+    let user = loggedIn();
 
     const addBox = document.createElement("div");
     addBox.className = "workspacebox";
