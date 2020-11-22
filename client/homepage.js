@@ -189,6 +189,7 @@ window.addEventListener("load", async function() {
                     localStorage.setItem("userName", userinput);
                     localStorage.setItem("password", passinput);
                     logIn(userinput);
+                    window.open("/index.html", "_self");    //  Just reload to clear current workspaces
                     $("#loginModal").modal('hide');
                     return;
 
@@ -240,6 +241,9 @@ async function getProfPic(user){
 }
 
 async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_timelineid,_image_url){
+    if (loggedIn() === "Guest"){    //  Guest doesn't need to have workspaces
+        return;
+    }
     const response = await fetch('./newWorkspace', {
         method:'POST',
         headers:{
@@ -281,6 +285,7 @@ function logIn(username){
         document.getElementById("loginBtn").innerHTML = "Login/Sign up";
         document.getElementById("loginBtn").disabled = false;
         window.localStorage.clear();   //Empty local storage. Kinda sketchy
+        window.open("/index.html", "_self");
         newBtn.style.display = "none";
     });
     document.getElementById("row1").appendChild(newBtn);
@@ -422,6 +427,10 @@ async function displayWorkspaces(title, image_url){
     enterButton.className = "enter-button";
     enterButton.src = "https://cdn2.iconfinder.com/data/icons/donkey/800/2-256.png";
     enterButton.addEventListener("click", async()=>{
+        if (loggedIn() === "Guest"){
+            alert("Please log in before entering a workspace!");
+            return;
+        }
         console.log("clicked");
         window.localStorage.setItem("workspace", title);    //Needs to be a GET
         let response = await fetch("/workspace.html");
