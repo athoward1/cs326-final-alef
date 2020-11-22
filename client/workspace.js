@@ -33,20 +33,22 @@ window.addEventListener("load", async function() {
     }
     
     document.getElementById("inviteButton").addEventListener("click", async()=>{
-      if(document.getElementById("invitedText") !== "Invited!" && document.getElementById("newPersonName").value !== ""){
+      let _invite = document.getElementById("newPersonName").value;
+      let owner = window.localStorage.getItem("userName");
+
+      if(document.getElementById("invitedText") !== "Invited!" && _invite !== "" && _invite !== owner){
         let solidLine = document.createElement("hr");
         
         document.getElementById("invitePlaceholder").style.display = "none";
+
         let newPerson = document.createElement("p");
-        newPerson.innerHTML = document.getElementById("newPersonName").value;
+        newPerson.innerHTML = _invite;
         document.getElementById("invitedDiv").appendChild(newPerson);
         document.getElementById("invitedDiv").appendChild(solidLine);
         document.getElementById("newPersonName").value = "";
         
         document.getElementById("invitedText").style.display = "block";
-        let owner = window.localStorage.getItem("userName");
         let _workspaceid = localStorage.getItem("workspace");
-        let _invite = newPerson.innerHTML;
         let response = fetch("/addNewShare",{
           method: 'POST',
           headers:{
