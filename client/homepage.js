@@ -57,7 +57,10 @@ window.addEventListener("load", async function() {
     }
 
     document.getElementById('addButton').addEventListener('click', async()=>{
-        
+        if (loggedIn() === "Guest"){
+            alert("Please log in before adding a workspace!");
+            return;
+        }
         //  Add Workspace to table
         let currentUser = loggedIn();   //  "guest" or username saved in localStorage
         console.log("Adding workspace for " + currentUser);
