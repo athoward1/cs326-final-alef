@@ -267,6 +267,12 @@ async function uninviteAll(req,res){
 
 async function getUserInfo(req, res){
     console.log("Finding info for user");
+    //check if this user exists
+    let exists = await connectAndRun(db => db.any("SELECT * FROM userinfo WHERE username =($1);", [req.body.userid]));
+    if (exists.length === 0){
+        res.send(JSON.stringify({result: "No such userinfo"}));
+        return;
+    }
     let entries = await connectAndRun(db => db.one("SELECT * FROM userinfo WHERE username =($1);", [req.body.userid]));
     res.send(JSON.stringify({result: entries}));
 }

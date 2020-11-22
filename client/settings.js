@@ -242,6 +242,7 @@ async function userNode(user, workspace, _shared){
         let moreUserInfoNode = document.createElement("span");
         moreUserInfoNode.innerText = "This username does not belong to anyone yet!";
         node.appendChild(moreUserInfoNode);
+
     }
     let disinvite = document.createElement("button");
     disinvite.classList = "btn btn-primary";
