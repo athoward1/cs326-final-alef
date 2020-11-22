@@ -11,14 +11,14 @@ html {
 }
 
 hr.solid {
-    border-top: 5px solid #bbb;
+    border-top: 5px solid rgb(33, 39, 128);
     width: 110%;
     left: -18.5%;
     margin-bottom: 2%;
     position: relative;
 }
 .verticalline {
-    border-left: 6px solid #bbb;
+    border-left: 10px solid rgb(33, 39, 128);
     height: 100%;
     position: absolute;
     top: 0;
@@ -85,6 +85,9 @@ hr.linePosition {
     top: 9rem;
     left: 32%;
     font-size: 150%;
+}
+.container{
+    background-color:transparent;
 }
 
 .banner {
