@@ -32,20 +32,31 @@ window.addEventListener("load", async function() {
       document.getElementById("invitedText").style.display = "none";
     }
     
-    document.getElementById("inviteButton").addEventListener("click", ()=>{
-        if(document.getElementById("invitedText") !== "Invited!" && document.getElementById("newPersonName").value !== ""){
-          let solidLine = document.createElement("hr");
-          
-          document.getElementById("invitePlaceholder").style.display = "none";
-          let newPerson = document.createElement("p");
-          newPerson.innerHTML = document.getElementById("newPersonName").value;
-          document.getElementById("invitedDiv").appendChild(newPerson);
-          document.getElementById("invitedDiv").appendChild(solidLine);
-          document.getElementById("newPersonName").value = "";
-          
-          document.getElementById("invitedText").style.display = "block";
-        }
+    document.getElementById("inviteButton").addEventListener("click", async()=>{
+      if(document.getElementById("invitedText") !== "Invited!" && document.getElementById("newPersonName").value !== ""){
+        let solidLine = document.createElement("hr");
         
+        document.getElementById("invitePlaceholder").style.display = "none";
+        let newPerson = document.createElement("p");
+        newPerson.innerHTML = document.getElementById("newPersonName").value;
+        document.getElementById("invitedDiv").appendChild(newPerson);
+        document.getElementById("invitedDiv").appendChild(solidLine);
+        document.getElementById("newPersonName").value = "";
+        
+        document.getElementById("invitedText").style.display = "block";
+      }   
+      let response = fetch("/addNewShare",{
+        method: 'POST',
+        headers:{
+        'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+            userid:owner,
+            workspaceid:_workspaceid,
+            invite:_invite
+        })
+      });
+      
     });
     
     
@@ -311,5 +322,14 @@ window.addEventListener("load", async function() {
         }
       }
       
-     
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
 });
