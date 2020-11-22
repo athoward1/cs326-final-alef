@@ -417,10 +417,9 @@ async function displayWorkspaces(title, image_url){
         });
         
     });
-
-    let enterButton = document.createElement("button");
-    enterButton.classList = "btn btn-primary enter-button";
-    enterButton.innerText = "Enter";
+    let enterButton = document.createElement("img");
+    enterButton.className = "enter-button";
+    enterButton.src = https://cdn2.iconfinder.com/data/icons/donkey/800/2-256.png;
     enterButton.addEventListener("click", async()=>{
         console.log("clicked");
         window.localStorage.setItem("workspace", title);    //Needs to be a GET

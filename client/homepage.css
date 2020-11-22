@@ -130,6 +130,10 @@ input[type=text], input[type=password] {
     cursor: pointer;
 }
 
+.enter-button:hover{
+    transform: scale(2);
+}
+
 .workspaceNameText{
     font-size: 30px;
     font-family: verdana;
