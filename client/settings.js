@@ -229,7 +229,7 @@ async function userNode(user, workspace, _shared){
         })
     });
     let json = await response.json();
-    if (json.result === "No such user"){
+    if (json.result === "No such userinfo"){
         console.log("This user was not found");
         let moreUserInfoNode = document.createElement("span");
         moreUserInfoNode.innerText = "This username does not belong to anyone yet!";
