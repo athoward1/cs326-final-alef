@@ -230,6 +230,9 @@ async function updateWorkspaceTitle(req, res){
 async function deleteWorkspace(req,res){
     console.log("deleting workspace");
     await connectAndRun(db => db.none("DELETE FROM workspaces WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
+    await connectAndRun(db => db.none("DELETE FROM stickydata WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
+    await connectAndRun(db => db.none("DELETE FROM imagedata WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
+
     console.log("Deleted " + req.body.workspaceid);
     res.send(JSON.stringify({result: "success"}));
 }
