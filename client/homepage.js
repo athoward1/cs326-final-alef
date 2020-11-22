@@ -241,6 +241,9 @@ async function getProfPic(user){
 }
 
 async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_timelineid,_image_url){
+    if (loggedIn() === "Guest"){    //  Guest doesn't need to have workspaces
+        return;
+    }
     const response = await fetch('./newWorkspace', {
         method:'POST',
         headers:{
