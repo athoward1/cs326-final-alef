@@ -33,25 +33,25 @@ hr.linePosition {
 
 }
 .accounticon {
-    top: 10%;
+    top: 8rem;
     position: absolute;
     left: 84%;
   }
 .loginButton{
-    top: 3%;
+    top: 1rem;
     position: absolute;
     left: 85%;
     width: 15%;
     text-align: center;
 }
 .settingsicon {
-    top: 40%;
+    top: 22;
     position: absolute;
     left: 86.5%;
   }
 
 .addWorkspace{
-    top: 6%;
+    top: 5rem;
     left: 72%;
     position: absolute;
     cursor: pointer;
@@ -70,7 +70,7 @@ hr.linePosition {
 
 .motto{
     position: absolute;
-    top: 20%;
+    top: 9rem;
     left: 32%;
     font-size: 150%;
 }
@@ -144,8 +144,8 @@ input[type=text], input[type=password] {
 }
 
 .signoutBtn{
-    top: 55%;
-    left: 86.5%;
+    top: 29rem;
+    left: 86.9%;
     position: absolute;
 }
 
