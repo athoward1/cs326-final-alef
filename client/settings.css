@@ -24,6 +24,7 @@ html {
 }
 
 .wp-user span{
+    font-size: 25px;
     display: table-cell
 }
 
