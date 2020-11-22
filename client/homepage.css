@@ -1,3 +1,8 @@
+
+:root{
+    --main-color:rgba(13, 13, 133, 0.705);
+}
+
 html {
     background: linear-gradient(white,var(--main-color));
     min-height: 100%;
