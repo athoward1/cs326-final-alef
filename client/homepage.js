@@ -427,6 +427,10 @@ async function displayWorkspaces(title, image_url){
     enterButton.className = "enter-button";
     enterButton.src = "https://cdn2.iconfinder.com/data/icons/donkey/800/2-256.png";
     enterButton.addEventListener("click", async()=>{
+        if (loggedIn() === "Guest"){
+            alert("Please log in before entering a workspace!");
+            return;
+        }
         console.log("clicked");
         window.localStorage.setItem("workspace", title);    //Needs to be a GET
         let response = await fetch("/workspace.html");
