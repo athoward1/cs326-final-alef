@@ -189,6 +189,7 @@ window.addEventListener("load", async function() {
                     localStorage.setItem("userName", userinput);
                     localStorage.setItem("password", passinput);
                     logIn(userinput);
+                    window.open("/index.html", "_self");    //  Just reload to clear current workspaces
                     $("#loginModal").modal('hide');
                     return;
 
