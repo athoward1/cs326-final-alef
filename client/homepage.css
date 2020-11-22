@@ -119,7 +119,7 @@ input[type=text], input[type=password] {
     width: 50px;
     height: 50px;
     position: relative;
-    top: 33%;
+    bottom: 33%;
     left: 80%;
     cursor: pointer;
 }
@@ -127,13 +127,13 @@ input[type=text], input[type=password] {
 .enter-button{
     position: relative;
     top: 28%;
-    left: 35%;
+    right: 36%;
     cursor: pointer;
     transform: scale(.25);
 }
 
 .enter-button:hover{
-    transform: scale(.5);
+    transform: scale(.3);
 }
 
 .workspaceNameText{
