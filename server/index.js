@@ -144,7 +144,7 @@ app.post("/changeProfPic", updateProfPic);
 app.post("/login", checkPassword);
 
 async function share(req, res){
-    await connectAndRun(db => db.none("INSERT INTO workspaceid VALUES ($1, $2, $3);", [req.body.userid, req.body.workspaceid, req.body.invite]));
+    await connectAndRun(db => db.none("INSERT INTO workspaceinfo VALUES ($1, $2, $3);", [req.body.userid, req.body.workspaceid, req.body.invite]));
     res.send(JSON.stringify({result: "success"}));
 }
 
