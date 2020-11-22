@@ -13,7 +13,20 @@
     </head>
     <body>
       <a type="button" id ="backButton" class="btn btn-info btn-sm backButton" href="index.html"><-- Back</a>
+      
+      <div id="inviteDiv">
+        <button class="btn btn-primary" type = "button" id="inviteDropDown">Invite</button>
       </div>
+        <div id="invitePopUp" class="invitePopUp">
+          <p><b>Invited Users:</b></p>
+          <hr>
+          <p id="invitePlaceholder">None</p>
+          <div id="invitedDiv"></div>
+          <input type="text" id="newPersonName" placerholder="Username of Person">
+          <button type="button" id = "inviteButton" class="btn btn-success">Invite</button>
+          <span id="invitedText" class = "invitedText">Invited!</span>
+        </div>
+        
         <div id = "timeline" class="container-fluid">
             <p class="text-center text-large">Timeline</p>
             <div class="progress">
