@@ -55,21 +55,50 @@ window.addEventListener("load", async function() {
 
     document.getElementById('addButton').addEventListener('click', async()=>{
         
-        
-       
         //  Add Workspace to table
         let currentUser = loggedIn();   //  "guest" or username saved in localStorage
         console.log("Adding workspace for " + currentUser);
 
-        let workspaceidtobegotten="New Box",
-            chatidtobegotten=5,
+        let workspaceidtobegotten="New Box";
+        
+        let response = await fetch("/checkUniqueWorkspaceName", {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                userid: user,
+                newworkspaceid: workspaceidtobegotten
+            })
+        });
+        let json = await response.json();
+        if (json.result === "duplicate"){
+            let result2;
+            let i = 0;
+            while (json.result === "duplicate"){
+                i += 1;
+                workspaceidtobegotten = workspaceidtobegotten + String(i);
+                response2 = await fetch("/checkUniqueWorkspaceName", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({
+                        userid: user,
+                        newworkspaceid: workspaceidtobegotten
+                    })
+                });
+                json = await response2.json();
+                
+            }
+        }
+
+        let chatidtobegotten=5,
             planneridtobegotten=5,
             taskidtobegotten=5,
             timelineidtobegotten=5,
             image_url = "https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png";
 
-        //display this new blank box with these default values
-        //await displayWorkspaces(workspaceidtobegotten,image_url);   //   make unique name
         await newWorkspace(currentUser,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
         await displayAllWorkspaces(currentUser);
         
@@ -176,9 +205,6 @@ async function displayAllWorkspaces(_userid){
         let child = boxspace.children[0];
         boxspace.removeChild(child);
     }
-    
-    
-
     let response = await fetch('/getWorkspaceInfo', {
         method: 'POST',
         headers: {
@@ -206,7 +232,7 @@ async function getProfPic(user){
         })
     });
     let json = await response.json();
-    let image_url = json.result.image_url;    //  GET image_url of user from userinfo table
+    let image_url = json.result.image_url;
     return image_url;
 
 }
@@ -233,7 +259,6 @@ async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_tim
 }
 
 function loggedIn(){
-    //localStorage?
     let username = window.localStorage.getItem("userName");
     if (username){
         return username;
@@ -319,20 +344,33 @@ async function displayWorkspaces(title, image_url){
                 addBox.removeChild(saveName);
                 addBox.appendChild(editBox);
                 isOpen = true;
-                //Update workspace title
-                //if unique
-                await fetch("/updateWorkspaceTitle", {
-                    method:'POST',
+                //Check if new title is unique 
+                let response = await fetch("/checkUniqueWorkspaceName", {
+                    method: 'POST',
                     headers: {
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({
                         userid: user,
-                        workspaceid: title,
                         newworkspaceid: newName.value
                     })
                 });
-
+                let json = await response.json();
+                if (json.result === "duplicate"){
+                    alert("Name must be unique");
+                }else{
+                    await fetch("/updateWorkspaceTitle", {
+                        method:'POST',
+                        headers: {
+                            'Content-Type':'application/json'
+                        },
+                        body: JSON.stringify({
+                            userid: user,
+                            workspaceid: title,
+                            newworkspaceid: newName.value
+                        })
+                    });
+                }
             });
             isOpen = false;
         }

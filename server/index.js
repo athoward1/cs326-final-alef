@@ -125,6 +125,7 @@ app.post("/deleteWorkspace", deleteWorkspace);
 app.post("/updateWorkspaceTitle", updateWorkspaceTitle);
 app.post("/updateWorkspaceImage", updateWorkspaceImage);
 app.post("/newWorkspace", newWorkspace);
+app.post("/checkUniqueWorkspaceName", checkUnique);
 
 app.post("/createSticky", createSticky);
 app.post("/updateStickyPosition", updateStickyPosition);
@@ -224,6 +225,17 @@ async function deleteWorkspace(req,res){
     await connectAndRun(db => db.none("DELETE FROM workspaces WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
     console.log("Deleted " + req.body.workspaceid);
     res.send(JSON.stringify({result: "success"}));
+}
+
+async function checkUnique(req,res){
+    console.log("checking duplicate workspace name");
+    let entries = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.newworkspaceid]));
+    console.log(entries);
+    if (entries.length === 0){
+        res.send(JSON.stringify({result: "unique"}));
+    }else{
+        res.send(JSON.stringify({result: "multiple"}))
+    }
 }
 
 async function updateProfPic(req, res){
