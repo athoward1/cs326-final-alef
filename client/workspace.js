@@ -437,6 +437,8 @@ document.getElementById("sendChat").addEventListener( 'click', async () => {
     const theSpan = document.createElement('span');
     const theB = document.createElement('br');
     
+    await addChat(text,theDate.toDateString())
+    
     theDiv.classList.add('container');
     theImg.classList.add('right');
     theImg.setAttribute('src', 'sourceOfImg');
@@ -727,4 +729,29 @@ $(document).on('click','#voteNotButt',async function(){
     card.remove();
     }
 });
+
+async function addChat(_text, _sender, _dateSent){
+   
+    let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
+    //get workspaceid
+    let _workspaceid = "New Box";
+    
+    const response = await fetch('./addChat', {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+            userid:_userid,
+            workspaceid:_workspaceid,
+            header: _header,
+            text: _text,
+            dateSent: _dateSent
+            
+        })
+    });
+    if (!response.ok) {
+        console.error(`Could not add message to database.`);
+    }
+}
 
