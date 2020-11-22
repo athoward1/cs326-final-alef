@@ -72,10 +72,10 @@ window.addEventListener("load", async function() {
             })
         });
         let json = await response.json();
-        if (json.result === "duplicate"){
+        if (json.result === "multiple"){
             let response2;
             let i = 0;
-            while (json.result === "duplicate"){
+            while (json.result === "multiple"){
                 i += 1;
                 workspaceidtobegotten = workspaceidtobegotten + String(i);
                 response2 = await fetch("/checkUniqueWorkspaceName", {
