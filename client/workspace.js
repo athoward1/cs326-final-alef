@@ -44,18 +44,22 @@ window.addEventListener("load", async function() {
         document.getElementById("newPersonName").value = "";
         
         document.getElementById("invitedText").style.display = "block";
-      }   
-      let response = fetch("/addNewShare",{
-        method: 'POST',
-        headers:{
-        'Content-Type':'application/json'
-        },
-        body: JSON.stringify({
-            userid:owner,
-            workspaceid:_workspaceid,
-            invite:_invite
-        })
-      });
+        let owner = window.localStorage.getItem("userName");
+        let _workspaceid = localStorage.getItem("workspace");
+        let _invite = newPerson.innerHTML;
+        let response = fetch("/addNewShare",{
+          method: 'POST',
+          headers:{
+          'Content-Type':'application/json'
+          },
+          body: JSON.stringify({
+              userid: owner,
+              workspaceid:_workspaceid,
+              invite:_invite
+          })
+        });
+      }
+
       
     });
     
