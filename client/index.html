@@ -25,10 +25,19 @@
         
 
         <!--Horizontal Line-->
-        <hr class="solid">
-
+        <hr class="solid linePosition">
+        <div class="row"></div>
         <!--ROW 1-->
-        <div class = "row" id = "row1">
+        <div class = "row rowPosition" id = "row1">
+            <!----
+            <div id="inviteDiv">
+                <button type="button" id="inviteButton" class="btn-primary btn inviteButton">Invite</button>
+            </div>
+            !---->
+            
+            <div id="boxspace">
+                <!--BOXES GO HERE-->
+            </div>
                 <div class = "col-3.1">
                 <p id = "addHint">Click the plus sign to add a new workspace.</p>
                 <!--VERTICAL LINE-->
@@ -38,7 +47,7 @@
 
                 <span class = "loginButton">
                 
-                <button type="button" id ="loginBtn" class="btn btn-light" data-toggle="modal" data-target="#loginModal">
+                <button type="button" id ="loginBtn" class="btn btn-dark" data-toggle="modal" data-target="#loginModal">
                     Login/Sign Up
                 </button>
                 </span>
@@ -77,7 +86,7 @@
                                     <button type="button" id = "login" class="btn btn-primary">Login</button>
                                 
 
-                                    <button type="button" class="btn btn-danger">Cancel</button>
+                                    <button type="button" id = "closeLogin" class="btn btn-danger">Cancel</button>
                                 </div>    
                                 <div id ="signupTab" class="tab-pane fade">
                                     <h3>Create an Account</h3>
@@ -86,7 +95,6 @@
 
                                     <label for ="newpassword"><b>Password</b></label>
                                     <input type="password" id="newpassword" placeholder="Enter Password" required>
-                                    <input type="password" id="newpassword1" placeholder="Re-Enter Password" required>
                                     <small id="terms" class="form-text text-muted">By signing up you agree to our terms and privacy policy.</small>
                                     <br>
                                     <button type="button" id="createAccount" class="btn btn-success">Create Account</button>
@@ -114,9 +122,8 @@
                     </a>
                   
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                      <a class="dropdown-item" href="settings.html#account">Account</a>
-                      <a class="dropdown-item navlink" href="settings.html#v-pills-profile">Profile</a>
-                      <a class="dropdown-item" href="settings.html#about">About</a>
+                      <a class="dropdown-item" href="settings.html">Profile</a>
+                      <a class="dropdown-item navlink" href="settings.html#v-pills-workspace">Workspaces</a>
                     </div>
                   </div>
                 </span>
@@ -124,11 +131,6 @@
                 
         </div>
 
-        <!--ROW 2-->
-        <div class = "row">
-        
-        <!--ROW 3-->
-        <div class = "row">
             
         <div id="intro-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog modal-lg">

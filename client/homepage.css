@@ -1,17 +1,34 @@
+
+:root{
+    --main-color:rgba(13, 13, 133, 0.705);
+}
+
+html {
+    background: linear-gradient(white,var(--main-color));
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: local;
+}
+
 hr.solid {
-    border-top: 3px solid #bbb;
-    width: 91%;
-    left: -46px;
-    margin-bottom: 5px;
+    border-top: 5px solid rgb(33, 39, 128);
+    width: 110%;
+    left: -18.5%;
+    margin-bottom: 2%;
     position: relative;
 }
 .verticalline {
-    border-left: 6px solid #bbb;
-    height: 1000px;
+    border-left: 10px solid rgb(33, 39, 128);
+    height: 100%;
     position: absolute;
     top: 0;
     left: 80%;
 }
+hr.linePosition {
+    position: absolute;
+    top: 12rem;
+    left: -30%;
+  }
 
 .workspacebox {
     background-color: rgb(141, 215, 207);
@@ -25,25 +42,28 @@ hr.solid {
     background-repeat: no-repeat;
     padding: 5px;
     margin: 20px;
+
 }
 .accounticon {
-    top: 10%;
+    top: 8rem;
     position: absolute;
     left: 84%;
   }
 .loginButton{
-    top: 5px;
+    top: 1rem;
     position: absolute;
-    left: 88%;
+    left: 85%;
+    width: 15%;
+    text-align: center;
 }
 .settingsicon {
-    top: 40%;
+    top: 22rem;
     position: absolute;
     left: 86.5%;
   }
 
 .addWorkspace{
-    top: 10px;
+    top: 5rem;
     left: 72%;
     position: absolute;
     cursor: pointer;
@@ -52,22 +72,28 @@ hr.solid {
 .headerfont{
     font-family: Verdana;
     font-weight: bold;
-    font-size: 60px;
+    font-size: 600%;
     position: relative;
-    top: 5px;
-    left: 5%;
+    top: 3%;
+    left: 0%;
+    margin-bottom: 4%;
 }
+
 
 .motto{
     position: absolute;
-    top: 85px;
-    left: 30%;
+    top: 9rem;
+    left: 32%;
+    font-size: 150%;
+}
+.container{
+    background-color:transparent;
 }
 
 .banner {
     background: radial-gradient(white, rgba(221, 223, 222, 0.705));
-    width: 1220px;
-    height: 141px;
+    width: 80%;
+    height: 13rem;
     position: absolute;
     left: 0px;
 }
@@ -91,7 +117,8 @@ input[type=text], input[type=password] {
     height: 50px;
     cursor: pointer;
     position: relative;
-    left: -15%;
+    right: 17%;
+    bottom: 108%;
 }
 
 .editBox{
@@ -99,26 +126,82 @@ input[type=text], input[type=password] {
     height: 20px;
     cursor: pointer;
     position: relative;
+    bottom: 147%;
+    left: 89%;
 }
 
 .editPicture{
     width: 50px;
     height: 50px;
     position: relative;
-    top: 75%;
+    bottom: 33%;
     left: 80%;
     cursor: pointer;
 }
+
+.enter-button{
+    position: relative;
+    top: 28%;
+    right: 36%;
+    cursor: pointer;
+    transform: scale(.25);
+}
+
+.enter-button:hover{
+    transform: scale(.3);
+}
+
 .workspaceNameText{
     font-size: 30px;
     font-family: verdana;
-    font-weight: bold;
+    text-overflow: clip;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    width: 60%;
     position: relative;
-    left: -10%;
+    left: 22%;
+    bottom: 128%;
 }
 
 .signoutBtn{
-    top: 55%;
-    left: 86.5%;
+    top: 29rem;
+    left: 86.9%;
     position: absolute;
+}
+
+.inviteButton{
+    position: absolute;
+    top: 20%;
+    left: 3%;
+}
+
+.formPosition{
+    position: absolute;
+    top: 20%;
+    left: 3%;
+}
+.inviteSave{
+    position: absolute;
+    top: 25%;
+    left: 3%;
+}
+
+.inviteTable{
+    position: absolute;
+    top: 60%;
+    left: 86%;
+}
+td{
+    text-align: center;
+}
+
+#boxspace{
+    display:grid;
+    grid-template-columns: auto auto auto;
+
+}
+
+#addHint{
+    font-size: 150%;
 }

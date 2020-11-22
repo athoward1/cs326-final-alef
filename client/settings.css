@@ -11,11 +11,35 @@ html {
     background-color:transparent;
 }
 
+.wp-img{
+    display:inline;
+    border-color: black;
+}
+
+.wp-user{
+    margin-top: 5px;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.wp-user span{
+    font-size: 15px;
+    display: table-cell
+}
+
+.wp-title{
+    font-size: 20px;
+    display: inline;
+    margin-left: 3rem;
+}
+
 .form-group{
     margin-left: 2rem;
 }
 
 .form-control{
+    color: black;
     background-color: rgba(0, 0, 0, 0.336);
     border-color: black;
 }
