@@ -101,7 +101,9 @@ window.addEventListener("load", async function() {
             image_url = "https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png";
 
         await newWorkspace(currentUser,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
-        await displayAllWorkspaces(currentUser);
+        if (loggedIn() !== "Guest"){    //  Guest doesn't save, so reloading all of them is useless
+            await displayAllWorkspaces(currentUser);
+        }
         
 
     });
