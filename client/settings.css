@@ -24,10 +24,12 @@ html {
 }
 
 .wp-user span{
+    font-size: 15px;
     display: table-cell
 }
 
 .wp-title{
+    font-size: 20px;
     display: inline;
     margin-left: 3rem;
 }

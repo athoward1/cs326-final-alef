@@ -220,6 +220,7 @@ async function displayAllWorkspaces(_userid){
     for (let i in result){
         await displayWorkspaces(result[i].workspaceid, result[i].image_url);
     }
+    //display ones shared with me
 }
 
 async function getProfPic(user){

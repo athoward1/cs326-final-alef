@@ -229,13 +229,20 @@ async function userNode(user, workspace, _shared){
         })
     });
     let json = await response.json();
-    let userinfo = [json.result.email, json.result.firstname, json.result.lastname, json.result.country];   //  make result[0]?
-    userinfo.forEach((value) => {
+    if (json.result === "No such userinfo"){
+        console.log("This user was not found");
         let moreUserInfoNode = document.createElement("span");
-        moreUserInfoNode.innerText = value;
+        moreUserInfoNode.innerText = "This username does not belong to anyone yet!";
         node.appendChild(moreUserInfoNode);
-    });
-
+    }else{
+        console.log("This user was found");
+        let userinfo = [json.result.email, json.result.firstname, json.result.lastname, json.result.country];   //  make result[0]?
+        userinfo.forEach((value) => {
+            let moreUserInfoNode = document.createElement("span");
+            moreUserInfoNode.innerText = value;
+            node.appendChild(moreUserInfoNode);
+        });  
+    }
     let disinvite = document.createElement("button");
     disinvite.classList = "btn btn-primary";
     disinvite.innerText = "Uninvite";

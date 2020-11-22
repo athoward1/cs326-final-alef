@@ -115,9 +115,10 @@ app.post("/updateFirstName", updateFirstName);
 app.post("/updateLastName", updateLastName);
 app.post("/updateRegion", updateRegion);
 
+app.post("/shared", getShared);
+app.post("/addNewShare", share);
 
 app.post("/getWorkspaceInfo", workspacesUnderUser);
-app.post("/shared", getShared);
 app.post("/getUserInfo", getUserInfo);
 app.post("/uninvite", uninvite);
 app.post("/uninviteAll", uninviteAll);
@@ -141,6 +142,12 @@ app.post("/deleteImage", deleteImage);
 app.post("/changeProfPic", updateProfPic);
 
 app.post("/login", checkPassword);
+
+async function share(req, res){
+    await connectAndRun(db => db.none("INSERT INTO workspaceinfo VALUES ($1, $2, $3);", [req.body.userid, req.body.workspaceid, req.body.invite]));
+    res.send(JSON.stringify({result: "success"}));
+}
+
 
 async function newWorkspace(req, res){
     await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1, $2, $3, $4, $5, $6, $7);",
@@ -223,6 +230,9 @@ async function updateWorkspaceTitle(req, res){
 async function deleteWorkspace(req,res){
     console.log("deleting workspace");
     await connectAndRun(db => db.none("DELETE FROM workspaces WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
+    await connectAndRun(db => db.none("DELETE FROM stickydata WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
+    await connectAndRun(db => db.none("DELETE FROM imagedata WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
+
     console.log("Deleted " + req.body.workspaceid);
     res.send(JSON.stringify({result: "success"}));
 }
@@ -260,6 +270,12 @@ async function uninviteAll(req,res){
 
 async function getUserInfo(req, res){
     console.log("Finding info for user");
+    //check if this user exists
+    let exists = await connectAndRun(db => db.any("SELECT * FROM userinfo WHERE username =($1);", [req.body.userid]));
+    if (exists.length === 0){
+        res.send(JSON.stringify({result: "No such userinfo"}));
+        return;
+    }
     let entries = await connectAndRun(db => db.one("SELECT * FROM userinfo WHERE username =($1);", [req.body.userid]));
     res.send(JSON.stringify({result: entries}));
 }
