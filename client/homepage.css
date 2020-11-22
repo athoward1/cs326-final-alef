@@ -1,3 +1,10 @@
+html {
+    background: linear-gradient(white,var(--main-color));
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: local;
+}
+
 hr.solid {
     border-top: 5px solid #bbb;
     width: 110%;
