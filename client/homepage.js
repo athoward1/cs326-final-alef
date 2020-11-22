@@ -2,6 +2,9 @@
 
 
 window.addEventListener("load", async function() {
+    document.getElementById("closeLogin").addEventListener("click", () =>{
+        $("#loginModal").modal('hide');
+    });
     /**
     let inviteClicked = true;
     let inviteCount = 1;
