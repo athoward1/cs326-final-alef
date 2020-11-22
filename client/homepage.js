@@ -242,7 +242,7 @@ async function getProfPic(user){
 
 async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_timelineid,_image_url){
     if (loggedIn() === "Guest"){    //  Guest doesn't need to have workspaces
-        await displayWorkspaces(workspaceid, image_url);  //  So skip the posting, skip the loading of all the workspaces
+        await displayWorkspaces(_workspaceid, _image_url);  //  So skip the posting, skip the loading of all the workspaces
         return;
     }
     
