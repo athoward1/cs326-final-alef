@@ -77,7 +77,7 @@ window.addEventListener("load", async function() {
             let i = 0;
             while (json.result === "multiple"){
                 i += 1;
-                let intermediary_name = workspaceidtobegotten + String(i);
+
                 response2 = await fetch("/checkUniqueWorkspaceName", {
                     method: 'POST',
                     headers: {
@@ -85,12 +85,13 @@ window.addEventListener("load", async function() {
                     },
                     body: JSON.stringify({
                         userid: user,
-                        newworkspaceid: intermediary_name
+                        newworkspaceid: workspaceidtobegotten + String(i)
                     })
                 });
                 json = await response2.json();
                 
             }
+            workspaceidtobegotten = workspaceidtobegotten + String(i);
         }
 
         let chatidtobegotten=5,
