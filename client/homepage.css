@@ -102,7 +102,8 @@ input[type=text], input[type=password] {
     height: 50px;
     cursor: pointer;
     position: relative;
-    right: 40%;
+    right: 17%;
+    bottom: 108%;
 }
 
 .editBox{
@@ -110,7 +111,7 @@ input[type=text], input[type=password] {
     height: 20px;
     cursor: pointer;
     position: relative;
-    bottom: 38%;
+    bottom: 147%;
     left: 89%;
 }
 
@@ -118,20 +119,21 @@ input[type=text], input[type=password] {
     width: 50px;
     height: 50px;
     position: relative;
-    top: 75%;
-    left: 54%;
+    top: 33%;
+    left: 80%;
     cursor: pointer;
 }
 
 .enter-button{
     position: relative;
-    top: 75%;
-    left: 5%;
+    top: 28%;
+    left: 35%;
     cursor: pointer;
+    transform: scale(.25);
 }
 
 .enter-button:hover{
-    transform: scale(2);
+    transform: scale(.5);
 }
 
 .workspaceNameText{
@@ -143,8 +145,8 @@ input[type=text], input[type=password] {
     display: block;
     width: 60%;
     position: relative;
-    left: 25%;
-    bottom: 20%;
+    left: 26%;
+    bottom: 128%;
 }
 
 .signoutBtn{
