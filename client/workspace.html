@@ -57,36 +57,48 @@
 
       <div id="chat" class="col" style="background-color:grey;">
         <h1>Chat</h1>
+        <button id="createIdea" class="btn btn-primary btn-sm" type="button" data-toggle="collapse"
+                data-target="#collapsedIdea" aria-expanded="false" aria-controls="collapseExample">
+          Create Idea
+        </button>
+        <div class="collapse" id="collapsedIdea">
+          <div id="createIdeaForm" class="card card-body">
 
-        <div class="container">
-          <img src="/w3images/bandmember.jpg" alt="Avatar" style="width:100%;">
-          <p>Hello. How are you today?</p>
-          <span class="time-right">11:00</span>
-        </div>
+            <form>
+              <div class="form-group">
+                <label for="ideaName">Idea Name</label>
+                <input type="text" class="form-control" id="ideaName" placeholder="Name for your task">
+              </div>
+              <div class="form-group">
+                <label for="IdeaTaskSelect" id="taskSelectLabel">Number of tasks needed to finish</label>
+                <select class="form-control" id="IdeaTaskSelect">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+              <div class="form-group" id="selectedTasks">
+              </div>
+              <div class="form-group">
+                <label for="ideaDesc">Whats the description?</label>
+                <textarea class="form-control" id="ideaDesc" rows="3"></textarea>
+              </div>
+            </form>
 
-        <div class="container darker">
-          <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right" style="width:100%;">
-          <p>Hey! I'm fine. Thanks for asking!</p>
-          <span class="time-left">11:01</span>
+            <button id="confirmIdea" type="button" class="btn btn-primary">Confirm Idea</button>
+          </div>
         </div>
-
-        <div class="container">
-          <img src="/w3images/bandmember.jpg" alt="Avatar" style="width:100%;">
-          <p>Sweet! So, what do you wanna do today?</p>
-          <span class="time-right">11:02</span>
-        </div>
-
-        <div class="container darker">
-          <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right" style="width:100%;">
-          <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
-          <span class="time-left">11:05</span>
-        </div>
+        
         <div class="form-group">
-          <label for="textEnter">Enter message</label>
+          <label id="textEnterLabel" for="textEnter">Enter message</label>
           <textarea type="text" class="form-control" id="textEnter" rows="3">
           </textarea>
-          <button type="button" class="btn btn-primary" id="sendChat">Send</button>
+          
+            <button type="button" class="btn btn-primary" id="sendChat">Send message</button>
         </div>
+        
       </div>
       
       
