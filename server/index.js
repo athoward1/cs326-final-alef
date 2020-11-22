@@ -179,6 +179,12 @@ async function createSticky(req, res){
     res.send(JSON.stringify({result: "success"}));
 }
 
+async function addChat(req, res){
+    console.log("adding chat message to db");
+    await connectAndRun(db => db.none("INSERT INTO Chat VALUES ($1, $2, $3, $4, $5, $6);", [req.body.userid, req.body.workspaceid, req.body.header, req.body.text, req.body.dateSent]));
+    res.send(JSON.stringify({result: "success"}));
+}
+
 async function createImage(req, res){
     console.log("adding new image to db");
     await connectAndRun(db => db.none("INSERT INTO imagedata VALUES ($1, $2, $3, $4);", [req.body.userid, req.body.workspaceid, req.body.image_url, req.body.positions]));
