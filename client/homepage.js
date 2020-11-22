@@ -281,6 +281,7 @@ function logIn(username){
         document.getElementById("loginBtn").innerHTML = "Login/Sign up";
         document.getElementById("loginBtn").disabled = false;
         window.localStorage.clear();   //Empty local storage. Kinda sketchy
+        window.open("/index.html", "_self");
         newBtn.style.display = "none";
     });
     document.getElementById("row1").appendChild(newBtn);
