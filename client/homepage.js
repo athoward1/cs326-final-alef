@@ -276,12 +276,13 @@ function logIn(username){
 
 let isOpen = true;
 async function displayWorkspace(_title, image_url){
+    console.log("displaying workspace" + _title);
     document.getElementById("addHint").style.display = "none";
+
     let user = loggedIn();
 
     const addBox = document.createElement("div");
     addBox.className = "workspacebox";
-    addBox.setAttribute = ("id", "box1");
     document.getElementById("boxspace").appendChild(addBox);
 
     let boxName = document.createElement("span");
@@ -367,6 +368,7 @@ async function displayWorkspace(_title, image_url){
                     }
                     title = title + String(i);
                 }else{
+                    console.log("Updating title to " + boxName.innerHTML);
                     await fetch("/updateWorkspaceTitle", {
                         method:'POST',
                         headers: {
