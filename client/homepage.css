@@ -112,6 +112,12 @@ input[type=text], input[type=password] {
     margin: 8px 0;
 }
 
+.box-rel{
+    position: relative;
+    bottom:110%;
+    margin-top: 2rem;
+}
+
 .deleteButton{
     width: 50px;
     height: 50px;

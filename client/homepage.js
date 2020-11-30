@@ -323,7 +323,7 @@ async function displayWorkspace(_title, image_url){
     editBox.addEventListener("click", async() =>{
         if(isOpen){
             let saveName = document.createElement("button");
-            saveName.className = "btn btn-primary";
+            saveName.className = "btn btn-primary box-rel";
             saveName.innerHTML = "Save Title";
 
             let newName = document.createElement("input");

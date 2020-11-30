@@ -271,14 +271,13 @@ async function uninvite(req,res){
 }
 
 async function uninviteAll(req,res){
-    console.log("uninviting all");
     await connectAndRun(db => db.none("DELETE FROM workspaceinfo WHERE userid = ($1) AND title = ($2);", [req.body.userid, req.body.title]));
     console.log("Uninvited all");
     res.send(JSON.stringify({result: "success"}));
 }
 
 async function getUserInfo(req, res){
-    console.log("Finding info for user");
+    console.log("Finding info for user " + req.body.userid);
     //check if this user exists
     let exists = await connectAndRun(db => db.any("SELECT * FROM userinfo WHERE username =($1);", [req.body.userid]));
     if (exists.length === 0){
@@ -305,7 +304,6 @@ async function deleteAccount(req,res, next){
     await connectAndRun(db => db.none("DELETE FROM logins WHERE userid = ($1);", [req.body.username]));   //there better be exactly one
     console.log("Deleted account");
     next();
-    
 }
 
 async function checkPassword(req, res) {
@@ -320,12 +318,10 @@ async function checkPassword(req, res) {
         console.log("correct hash");
         res.send(JSON.stringify({result:"Login successful"}));
     }else{
-
         //  Incorrect Password
         await new Promise((r) => setTimeout(r, 1000));
         res.send(JSON.stringify({result: "Wrong Password"}));
         console.log("hash not matched Password");
-
     }    
 }
 

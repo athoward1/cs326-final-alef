@@ -197,7 +197,7 @@ window.addEventListener("load", async function() {
             newNode.append(noUsers);
         }
         for (let j in result2){
-            let userLine = await userNode(_userid, result[i].workspaceid, result2[j].shared);
+            let userLine = await userNode(_userid, result[i].title, result2[j].shared);
             newNode.appendChild(userLine);
         }
         newNodes[i] = newNode;
