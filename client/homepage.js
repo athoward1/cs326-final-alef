@@ -327,6 +327,7 @@ async function displayWorkspace(_title, image_url){
             saveName.innerHTML = "Save Title";
 
             let newName = document.createElement("input");
+            newName.className = "box-rel"
             newName.placeholder = "Enter New Title";
 
             addBox.appendChild(newName);
