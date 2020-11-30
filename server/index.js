@@ -1,5 +1,4 @@
 "use strict";
-
 import * as _pgp from "pg-promise";
 import * as _express from "express";
 import * as _expressSession from "express-session";
