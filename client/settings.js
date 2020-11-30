@@ -175,7 +175,7 @@ window.addEventListener("load", async function() {
         newNode.src = "url(" + result[i].image_url + ")";
         let titleNode = document.createElement("h4");
         titleNode.classList = "wp-title";
-        titleNode.innerText = result[i].workspaceid;
+        titleNode.innerText = result[i].title;
         newNode.appendChild(titleNode);
         
         //fetch this workspace's users, in order to append them to workspace node
