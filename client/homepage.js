@@ -253,8 +253,6 @@ async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_tim
         await displayWorkspaces(_workspaceid, _image_url);  //  So skip the posting, skip the loading of all the workspaces
         return;
     }
-    
-    
     const response = await fetch('./newWorkspace', {
         method:'POST',
         headers:{
@@ -285,7 +283,7 @@ function loggedIn(){
 }
 
 function logIn(username){
-    //  set local storage
+    //  set local storag (or have around caller)
 
     document.getElementById("loginBtn").innerHTML = "Welcome, " + username;
     document.getElementById("loginBtn").disabled = true;
@@ -299,7 +297,7 @@ function logIn(username){
         window.open("/index.html", "_self");
         newBtn.style.display = "none";
     });
-    document.getElementById("row1").appendChild(newBtn);
+    document.getElementById("side").appendChild(newBtn);
 }
 
 
