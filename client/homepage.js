@@ -2,40 +2,15 @@
 
 
 window.addEventListener("load", async function() {
+    try{
+        console.log(process.env.port);
+    }catch{
+        console.log("couldn't find PORT");
+    }
+
     document.getElementById("closeLogin").addEventListener("click", () =>{
         $("#loginModal").modal('hide');
     });
-    /**
-    let inviteClicked = true;
-    let inviteCount = 1;
-    document.getElementById("inviteButton").addEventListener("click", ()=>{
-        if(inviteClicked){
-        inviteClicked = false;
-        
-        let inviteInput = document.createElement("input");
-        inviteInput.className = "formPosition";
-        inviteInput.id = "inviteInput";
-        inviteInput.placeholder = "Username of Person";
-        let inviteButton = document.createElement("button");
-        inviteButton.className = "btn btn-success inviteSave";
-        inviteButton.innerHTML = "Save";
-        inviteButton.id = "inviteButton";
-        
-        document.getElementById("boxspace").appendChild(inviteInput);
-        document.getElementById("boxspace").appendChild(inviteButton);
-        inviteButton.addEventListener("click", ()=>{
-            if(inviteInput !== ""){
-                inviteClicked = true;
-                
-                document.getElementById("boxspace").removeChild(inviteInput);
-                document.getElementById("boxspace").removeChild(inviteButton);
-                document.getElementById(`invitedPerson${inviteCount}`).innerHTML = inviteInput.value;
-                inviteCount++;
-            }
-        });
-        }
-    });
-    */
     if (window.localStorage.getItem("userName")){   //  We're coming back to this page
         logIn(window.localStorage.getItem("userName"));
     }
@@ -46,9 +21,8 @@ window.addEventListener("load", async function() {
     
     //Set Profile Picture
     let user = loggedIn();
-    if (user === "Guest"){
+    if (user === "Guest"){  //  ===GUESTID
         console.log("Guest logged in");
-
         document.getElementById("profilePicture").src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
     }else{
         console.log("User " + user + " is logged in.");
@@ -65,8 +39,9 @@ window.addEventListener("load", async function() {
         let currentUser = loggedIn();   //  "guest" or username saved in localStorage
         console.log("Adding workspace for " + currentUser);
 
-        let workspaceidtobegotten="New Box";
-        
+        let title="New Box";
+        let workspaceid = makeWorkspaceID();
+
         let response = await fetch("/checkUniqueWorkspaceName", {
             method: 'POST',
             headers: {
@@ -74,16 +49,15 @@ window.addEventListener("load", async function() {
             },
             body: JSON.stringify({
                 userid: user,
-                newworkspaceid: workspaceidtobegotten
+                newtitle: title
             })
         });
         let json = await response.json();
-        if (json.result === "multiple"){
+        if (json.result === "multiple"){    //  If this title already exists under this user, add number at end (e.g. boxy, [NEW: boxy] => boxy, boxy1)
             let response2;
             let i = 0;
             while (json.result === "multiple"){
                 i += 1;
-
                 response2 = await fetch("/checkUniqueWorkspaceName", {
                     method: 'POST',
                     headers: {
@@ -91,13 +65,13 @@ window.addEventListener("load", async function() {
                     },
                     body: JSON.stringify({
                         userid: user,
-                        newworkspaceid: workspaceidtobegotten + String(i)
+                        newtitle: title + String(i)
                     })
                 });
                 json = await response2.json();
                 
             }
-            workspaceidtobegotten = workspaceidtobegotten + String(i);
+            title = title + String(i);
         }
 
         let chatidtobegotten=5,
@@ -106,8 +80,8 @@ window.addEventListener("load", async function() {
             timelineidtobegotten=5,
             image_url = "https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png";
 
-        await newWorkspace(currentUser,workspaceidtobegotten,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,image_url);
         if (loggedIn() !== "Guest"){    //  Guest doesn't save, so reloading all of them is useless
+            await newWorkspace(currentUser,workspaceid,chatidtobegotten,planneridtobegotten,taskidtobegotten,timelineidtobegotten,title,image_url);
             await displayAllWorkspaces(currentUser);
         }
         
@@ -153,11 +127,9 @@ window.addEventListener("load", async function() {
                 }else{
                     //settings info not added
                 }
-
-
             }else{
                 console.log(json.result);
-                alert("We shouldn't be here... json.result was only 'ok' or 'duplicate'...");   //  Shouldn't be an alert, we should have tooltips.
+                alert("We shouldn't be here");   //  Shouldn't be an alert, we should have tooltips.
             }
         }
 
@@ -227,7 +199,7 @@ async function displayAllWorkspaces(_userid){
     let json = await response.json();
     let result = json.result;
     for (let i in result){
-        await displayWorkspaces(result[i].workspaceid, result[i].image_url);
+        await displayWorkspace(result[i].title, result[i].image_url);
     }
     //display ones shared with me
 }
@@ -248,9 +220,9 @@ async function getProfPic(user){
 
 }
 
-async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_timelineid,_image_url){
-    if (loggedIn() === "Guest"){    //  Guest doesn't need to have workspaces
-        await displayWorkspaces(_workspaceid, _image_url);  //  So skip the posting, skip the loading of all the workspaces
+async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_timelineid,_title,_image_url){
+    if (loggedIn() === "Guest"){    //  ===GUESTID Guest doesn't need to have workspaces
+        await displayWorkspace(_workspaceid, _image_url);  //  So skip the posting, skip the loading of all the workspaces
         return;
     }
     const response = await fetch('./newWorkspace', {
@@ -265,6 +237,7 @@ async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_tim
                 plannerid:_plannerid,
                 taskid:_taskid,
                 timelineid:_timelineid,
+                title:_title,
                 image_url:_image_url
             })
     });
@@ -283,7 +256,7 @@ function loggedIn(){
 }
 
 function logIn(username){
-    //  set local storag (or have around caller)
+    //  set local storage here (or have around where called)
 
     document.getElementById("loginBtn").innerHTML = "Welcome, " + username;
     document.getElementById("loginBtn").disabled = true;
@@ -302,7 +275,7 @@ function logIn(username){
 
 
 let isOpen = true;
-async function displayWorkspaces(title, image_url){
+async function displayWorkspace(_title, image_url){
     document.getElementById("addHint").style.display = "none";
     let user = loggedIn();
 
@@ -311,12 +284,16 @@ async function displayWorkspaces(title, image_url){
     addBox.setAttribute = ("id", "box1");
     document.getElementById("boxspace").appendChild(addBox);
 
+    let boxName = document.createElement("span");
+    boxName.innerHTML = _title;
+    boxName.className = "workspaceNameText";
+    boxName.style.fontWeight = "bold";
+
     let deleteBox = document.createElement("img");
     deleteBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png";
     deleteBox.className = "deleteButton";  
     deleteBox.addEventListener("click", async()=> {
         document.getElementById("boxspace").removeChild(addBox);
-        let workspace = title;
         await fetch("/uninviteAll", {
             method:'POST',
             headers: {
@@ -324,7 +301,7 @@ async function displayWorkspaces(title, image_url){
             },
             body: JSON.stringify({
                 userid: user,
-                title: workspace
+                title: boxName.innerHTML
             })
         });
         await fetch("/deleteWorkspace", {
@@ -334,7 +311,7 @@ async function displayWorkspaces(title, image_url){
             },
             body: JSON.stringify({
                 userid: user,
-                workspaceid: workspace
+                title: boxName.innerHTML
             })
         });
     });
@@ -342,7 +319,7 @@ async function displayWorkspaces(title, image_url){
     let editBox = document.createElement("img");
     editBox.src = "https://image.flaticon.com/icons/png/512/84/84380.png";
     editBox.className = "editBox";
-    editBox.addEventListener("click", () =>{
+    editBox.addEventListener("click", async() =>{
         if(isOpen){
             let saveName = document.createElement("button");
             saveName.className = "btn btn-primary";
@@ -354,13 +331,12 @@ async function displayWorkspaces(title, image_url){
             addBox.appendChild(newName);
             addBox.appendChild(saveName);
             saveName.addEventListener("click", async()=>{
-                boxName.innerHTML = newName.value;
                 addBox.appendChild(boxName);
                 addBox.removeChild(newName);
                 addBox.removeChild(saveName);
                 addBox.appendChild(editBox);
                 isOpen = true;
-                //Check if new title is unique 
+                //Check if the new title is unique 
                 let response = await fetch("/checkUniqueWorkspaceName", {
                     method: 'POST',
                     headers: {
@@ -368,12 +344,28 @@ async function displayWorkspaces(title, image_url){
                     },
                     body: JSON.stringify({
                         userid: user,
-                        newworkspaceid: newName.value
+                        newtitle: newName.value
                     })
                 });
                 let json = await response.json();
-                if (json.result === "duplicate"){
-                    alert("Name must be unique");
+                if (json.result === "multiple"){
+                    let response2;
+                    let i = 0;
+                    while (json.result === "multiple"){
+                        i += 1;
+                        response2 = await fetch("/checkUniqueWorkspaceName", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type':'application/json'
+                            },
+                            body: JSON.stringify({
+                                userid: user,
+                                newtitle: title + String(i)
+                            })
+                        });
+                        json = await response2.json();  //  Repeat if uniqueWorkspaceName still results in a multiple entry
+                    }
+                    title = title + String(i);
                 }else{
                     await fetch("/updateWorkspaceTitle", {
                         method:'POST',
@@ -382,25 +374,21 @@ async function displayWorkspaces(title, image_url){
                         },
                         body: JSON.stringify({
                             userid: user,
-                            workspaceid: title,
-                            newworkspaceid: newName.value
+                            oldtitle: boxName.innerHTML,
+                            newtitle: newName.value
                         })
                     });
+                    boxName.innerHTML = newName.value;
                 }
             });
             isOpen = false;
         }
     });
-
-    let boxName = document.createElement("span");
-    boxName.innerHTML = title;
-    boxName.className = "workspaceNameText";
-    boxName.style.fontWeight = "bold";
-
+    
     let editPicture = document.createElement("img");
     editPicture.src = "https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png";
     editPicture.className = "editPicture";
-    editPicture.addEventListener("click", ()=>{
+    editPicture.addEventListener("click", async()=>{
 
         let newimage = document.createElement("input");
         newimage.placeholder = "Enter Image Url";
@@ -413,7 +401,7 @@ async function displayWorkspaces(title, image_url){
         addBox.appendChild(saveimage);
         
         saveimage.addEventListener("click", async()=>{
-            let new_image_url = "url("+ newimage.value+ ")";
+            let new_image_url = newimage.value;
             addBox.style.backgroundImage = new_image_url;
             addBox.removeChild(saveimage);
             addBox.removeChild(newimage);             
@@ -424,29 +412,25 @@ async function displayWorkspaces(title, image_url){
                 },
                 body: JSON.stringify({
                     userid: user,
-                    workspaceid: title,
+                    title: boxName.innerHTML,
                     image_url: new_image_url
                 })
-            });
-                
-        });
-        
+            });     
+        }); 
     });
     let enterButton = document.createElement("img");
     enterButton.className = "enter-button";
     enterButton.src = "https://cdn2.iconfinder.com/data/icons/donkey/800/2-256.png";
     enterButton.addEventListener("click", async()=>{
-        if (loggedIn() === "Guest"){
+        if (loggedIn() === "Guest"){    //  GUESTID
             alert("Please log in before entering a workspace!");
             return;
         }
-        console.log("clicked");
-        window.localStorage.setItem("workspace", title);    //Needs to be a GET
-        let response = await fetch("/workspace.html");
-        console.log(response);
+        window.localStorage.setItem("workspace", boxName.innerHTML);    //Needs to be a GET
+        //  Dynamically created button needs dynamically created html requests.
+        //  await fetch("/workspace.html");
         window.open("/workspace.html", "_self");
     });
-
     addBox.appendChild(enterButton);
     addBox.style.backgroundImage = image_url;
     addBox.appendChild(editPicture);
@@ -454,3 +438,13 @@ async function displayWorkspaces(title, image_url){
     addBox.appendChild(boxName);
     addBox.appendChild(editBox);
 }
+
+function makeWorkspaceID() {
+    let result           = '';
+    let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let length = 10;      //  So there is 1/(62^10) chance of duplicates
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+ }

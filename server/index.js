@@ -99,48 +99,58 @@ app.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}`)
 });
 
-app.get("/workspace.html", async (req, res) => {
-    res.sendFile('client/workspace.html', { 'root' : __dirname })
-});
+//
+//app.get("/workspace.html", async (req, res) => {    res.sendFile('client/workspace.html', { 'root' : __dirname });  });
 
+//  In the table called LOGINS with (unique) username w/ salt and hash: (user, salt, hash)
 app.post("/changePassword", deleteAccount, createAccount);
-
 app.post("/createAccount", findUser, createAccount);
+app.post("/login", checkPassword);
 
+
+//  All settings stuff is under USERINFO, by the unique username: (username, image_url, email, firstname, lastname, country)
 app.post("/createSettings", createSettings);
-
 app.post("/updateEmail", updateEmail);
 app.post("/updateFirstName", updateFirstName);
 app.post("/updateLastName", updateLastName);
 app.post("/updateRegion", updateRegion);
+app.post("/changeProfPic", updateProfPic);
+app.post("/getUserInfo", getUserInfo);
 
+
+//  WORKSPACEINFO table. Keeps track of which users are shared with which workspace: (owner, workspaceid, shared)
 app.post("/shared", getShared);
 app.post("/addNewShare", share);
-
-app.post("/getWorkspaceInfo", workspacesUnderUser);
-app.post("/getUserInfo", getUserInfo);
 app.post("/uninvite", uninvite);
 app.post("/uninviteAll", uninviteAll);
+
+/**
+ * Side note: There were (and are) much better ways to do this. For one, we don't need two seperate tables for the workspace information,
+ * instead we could store the shared users in an array in WORKSPACES.
+ */
+
+
+//  The information of each workspace called WORKSPACES that distinguishes by user when loading all, and by workspaceid when getting specific.
+// (username text, workspaceid text, chatid text, plannerid text, taskid text, timelineid text, title text, image_url text)
+app.post("/newWorkspace", newWorkspace);
+app.post("/getWorkspaceInfo", workspacesUnderUser);
 app.post("/deleteWorkspace", deleteWorkspace);
 app.post("/updateWorkspaceTitle", updateWorkspaceTitle);
 app.post("/updateWorkspaceImage", updateWorkspaceImage);
-app.post("/newWorkspace", newWorkspace);
 app.post("/checkUniqueWorkspaceName", checkUnique);
 
+
+//  The sticky and image data under each workspaceid. STICKYDATA: (userid, workspaceid, sheader, sbody, positions)
 app.post("/createSticky", createSticky);
 app.post("/updateStickyPosition", updateStickyPosition);
 app.post("/getStickies", getStickies);
 app.post("/deleteSticky", deleteSticky);
 
+//  The "positions" is a length-4 array of measurements. IMAGEDATA: (userid, workspaceid, image_url, positions)
 app.post("/createImage", createImage);
 app.post("/getImages", getImages);
 app.post("/updateImagePosition", updateImagePosition);
 app.post("/deleteImage", deleteImage);
-
-
-app.post("/changeProfPic", updateProfPic);
-
-app.post("/login", checkPassword);
 
 async function share(req, res){
     await connectAndRun(db => db.none("INSERT INTO workspaceinfo VALUES ($1, $2, $3);", [req.body.userid, req.body.workspaceid, req.body.invite]));
@@ -149,26 +159,26 @@ async function share(req, res){
 
 
 async function newWorkspace(req, res){
-    await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1, $2, $3, $4, $5, $6, $7);",
-    [req.body.userid, req.body.workspaceid, req.body.chatid, req.body.plannerid, req.body.taskid, req.body.timelineid, req.body.image_url]));
+    await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1, $2, $3, $4, $5, $6, $7, $8);",
+    [req.body.userid, req.body.workspaceid, req.body.chatid, req.body.plannerid, req.body.taskid, req.body.timelineid, req.body.title, req.body.image_url]));
     res.send(JSON.stringify({result: "Workspace added."}));
 }
 
 async function deleteImage(req, res){
     console.log("deleting image from db");
-    await connectAndRun(db => db.none("DELETE FROM imagedata WHERE userid=($1) AND workspaceid=($2) AND image_url=($3);", [req.body.userid, req.body.workspaceid, req.body.image_url]));
+    await connectAndRun(db => db.none("DELETE FROM imagedata WHERE workspaceid=($1) AND image_url=($2);", [req.body.workspaceid, req.body.image_url]));
     res.send(JSON.stringify({result: "success"}));
 }
 
 async function updateImagePosition(req, res){
-    console.log(`UPDATE image SET positions=(${req.body.positions}) WHERE userid=(${req.body.userid}) AND workspaceid=(${req.body.workspaceid}) AND image_url=(${req.body.image_url})`);
-    await connectAndRun(db => db.none("UPDATE imagedata SET positions=($1) WHERE userid=($2) AND workspaceid=($3) AND image_url=($4);", [req.body.positions, req.body.userid, req.body.workspaceid, req.body.image_url]));
+    console.log(`UPDATE image SET positions=(${req.body.positions}) WHERE workspaceid=(${req.body.workspaceid}) AND image_url=(${req.body.image_url})`);
+    await connectAndRun(db => db.none("UPDATE imagedata SET positions=($1) WHERE workspaceid=($2) AND image_url=($3);", [req.body.positions, req.body.workspaceid, req.body.image_url]));
     res.send(JSON.stringify({result: "success"}));
 }
 
 async function deleteSticky(req, res){
     console.log("deleting sticky from db");
-    await connectAndRun(db => db.none("DELETE FROM stickydata WHERE userid=($1) AND workspaceid=($2) AND sheader=($3) AND sbody=($4);", [req.body.userid, req.body.workspaceid, req.body.header, req.body.body]));
+    await connectAndRun(db => db.none("DELETE FROM stickydata WHERE workspaceid=($1) AND sheader=($2) AND sbody=($3);", [req.body.workspaceid, req.body.header, req.body.body]));
     res.send(JSON.stringify({result: "success"}));
 }
 
@@ -193,50 +203,45 @@ async function createImage(req, res){
 
 async function getImages(req, res){
     console.log("Selecting images under user");
-    let imgs = await connectAndRun(db => db.any("SELECT * FROM imagedata WHERE userid=($1) AND workspaceid=($2);", [req.body.userid, req.body.workspaceid]));
+    let imgs = await connectAndRun(db => db.any("SELECT * FROM imagedata WHERE workspaceid=($1);", [req.body.workspaceid]));
     res.send(JSON.stringify({result: imgs}));
 }
 async function updateStickyPosition(req, res){
-    console.log(`UPDATE stickydata SET positions=(${req.body.positions}) WHERE userid=(${req.body.userid}) AND workspaceid=(${req.body.workspaceid}) AND sheader=(${req.body.header}) AND sbody=(${req.body.body});`);
-    await connectAndRun(db => db.none("UPDATE stickydata SET positions=($1) WHERE userid=($2) AND workspaceid=($3) AND sheader=($4) AND sbody=($5);", [req.body.positions, req.body.userid, req.body.workspaceid, req.body.header, req.body.body]));
+    console.log(`UPDATE stickydata SET positions=(${req.body.positions}) WHERE workspaceid=(${req.body.workspaceid}) AND sheader=(${req.body.header}) AND sbody=(${req.body.body});`);
+    //Stickies with the same data are problematic...
+    await connectAndRun(db => db.none("UPDATE stickydata SET positions=($1) WHERE workspaceid=($2) AND sheader=($3) AND sbody=($4);", [req.body.positions, req.body.workspaceid, req.body.header, req.body.body]));
     res.send(JSON.stringify({result: "success"}));
 }
 
 async function getStickies(req, res){
     console.log("Selecting stickies under user");
-    let stickies = await connectAndRun(db => db.any("SELECT * FROM stickydata WHERE userid=($1) AND workspaceid=($2);", [req.body.userid, req.body.workspaceid]));
+    let stickies = await connectAndRun(db => db.any("SELECT * FROM stickydata WHERE workspaceid=($1);", [req.body.workspaceid]));
     res.send(JSON.stringify({result: stickies}));
 }
 
 
 async function updateWorkspaceImage(req, res){
     console.log("Updating workspace image");
-    await connectAndRun(db => db.none("UPDATE workspaces SET image_url = ($1) WHERE userid = ($2) AND workspaceid = ($3);", [req.body.image_url, req.body.userid, req.body.workspaceid]));
+    await connectAndRun(db => db.none("UPDATE workspaces SET image_url = ($1) WHERE userid = ($2) AND title = ($3);", [req.body.image_url, req.body.userid, req.body.title]));
     console.log("image changed");
     res.send(JSON.stringify({result: "success"}));
 }
 
 
-//This is the buggy one that changes all the titles when you update one of them. We can't update on the field we condition on...
 async function updateWorkspaceTitle(req, res){
     console.log("Updating workspace title");
-    //  First grab the entry
-    let entry = await connectAndRun(db => db.one("SELECT * FROM workspaces WHERE workspaceid = ($1) AND userid = ($2);", [req.body.workspaceid, req.body.userid]));
-    console.log(entry);
-    //  Now delete it
-    await connectAndRun(db => db.none("DELETE FROM workspaces WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
-    //  Now insert the updated vertion
-    await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1,$2,$3,$4,$5,$6);",
-        [req.body.userid, req.body.newworkspaceid,entry.chatid,entry.plannerid,entry.taskid,entry.timelineid, entry.image_url]));
-
+    let workspaceid = await connectAndRun(db => db.one("SELECT workspaceid FROM workspaces WHERE userid = ($1) AND title = ($2);", [req.body.userid, req.body.oldtitle]));
+    await connectAndRun(db => db.none("UPDATE workspaces SET title = ($1) WHERE workspaceid = ($2);", [req.body.newtitle, workspaceid]));
     res.send(JSON.stringify({result: "success"}));
 }
 
 async function deleteWorkspace(req,res){
     console.log("deleting workspace");
-    await connectAndRun(db => db.none("DELETE FROM workspaces WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
-    await connectAndRun(db => db.none("DELETE FROM stickydata WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
-    await connectAndRun(db => db.none("DELETE FROM imagedata WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.workspaceid]));
+    let workspaceid = await connectAndRun(db => db.one("SELECT workspaceid FROM workspaces WHERE userid = ($1) AND title = ($2);", [req.body.userid, req.body.title]));
+    console.log(workspaceid + " found.");
+    await connectAndRun(db => db.none("DELETE FROM workspaces WHERE workspaceid = ($1);", [workspaceid]));
+    await connectAndRun(db => db.none("DELETE FROM stickydata WHERE workspaceid = ($1);", [workspaceid]));
+    await connectAndRun(db => db.none("DELETE FROM imagedata WHERE workspaceid = ($1);", [workspaceid]));
 
     console.log("Deleted " + req.body.workspaceid);
     res.send(JSON.stringify({result: "success"}));
@@ -244,7 +249,7 @@ async function deleteWorkspace(req,res){
 
 async function checkUnique(req,res){
     console.log("checking duplicate workspace name");
-    let entries = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE userid = ($1) AND workspaceid = ($2);", [req.body.userid, req.body.newworkspaceid]));
+    let entries = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE userid = ($1) AND title = ($2);", [req.body.userid, req.body.newtitle]));
     console.log(entries);
     if (entries.length === 0){
         res.send(JSON.stringify({result: "unique"}));
