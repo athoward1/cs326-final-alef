@@ -9,117 +9,93 @@
     <title>Settings</title>
   </head>
   <body class = "container">
-    <div>
-    
-
     <!--Bootstrap Tab-->
     <div class="row">
-        <div class="col-3">
-          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Profile</a>
-            <a class="nav-link" id="v-pills-workspace-tab" data-toggle="pill" href="#v-pills-workspace" role="tab" aria-controls="v-pills-workspace" aria-selected="false">Workspaces</a>
-            <br>
-            <a href="index.html" class="btn btn-outline-secondary btn-sm active" role="button" aria-pressed="true">Home</a>
-          </div>
+      <div class="col-3">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Profile</a>
+          <a class="nav-link" id="v-pills-workspace-tab" data-toggle="pill" href="#v-pills-workspace" role="tab" aria-controls="v-pills-workspace" aria-selected="false">Workspaces</a>
+          <br>
+          <a href="index.html" class="btn btn-outline-secondary btn-sm active" role="button" aria-pressed="true">Home</a>
         </div>
-
-        <!--Tab Content-->
-        <div class="col-9">
-          <div class="tab-content" id="v-pills-tabContent">
-            <h1>Settings</h1>
-            <!--PROFILE TAB-->
-            <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                <h2>Edit your Account</h2><br>
-                <form>
-
-                    <!--Email Form-->
-
-                    <div class="form-group">
-                      <label for="emailAddress">Email address</label>
-                      <input type="email" class="form-control w-50" id="emailAddress" aria-describedby="emailHelp" placeholder="name@example.com">
-                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                      <br>
-                      <button id = "email-button" type = "submit" class = "btn btn-primary">Update Email</button>
-
-                    </div>
-
-                    <!--Profile Image Form-->
-                    <form>
-                      <div class="form-group">
-                        <label for="profileImage">Import an Image</label>
-                        <input class="form-control-file" id="profileImage" placeholder="Enter Image Url">
-                        <br>
-                        <button id="img-button" type="submit" class="btn btn-primary">Save</button>
-                      </div>
-                    </form>
-                    <hr>
-
-                    <!--Password Form-->
-                    <h4>Change Password</h4><br>
-                    <div class="form-group">
-                      <label for="currentPassword w-50">Current Password</label>
-                      <input type="password" class="form-control w-50" id="currentPassword">
-                    </div>
-
-                    <!--Confirm Password Form-->
-                    <div class="form-group">
-                        <label for="newPassword">New Password</label>
-                        <input type="password" class="form-control w-50" id="newPassword">
-                        <br>
-                        <button id = "change-password" type = "submit" class = "btn btn-primary">Change Password</button>
-                    </div>
-
-                    <hr class="solid">
-
-                    <h4>Personal Information</h4>
-                    <br>
-                    <!--First Name Form-->
-                    <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input type="email" class="form-control w-50" id="firstName">
-                    </div>
-
-                    <!--Last Name Form-->
-                    <div class="form-group">
-                        <label for="lastName" class=>Last Name</label>
-                        <input type="email" class="form-control w-50" id="lastName">
-                    </div>
-
-                    <!--Country/Region Form-->
-                    <div class="form-group">
-                        <label for="region">Country/Region of Residence</label>
-                        <select class="form-control w-50" id="region">
-                          <option>United States</option>
-                          <option>United Kingdom</option>
-                          <option>Canada</option>
-                          <option>Mexico</option>
-                          <option>Germany</option>
-                          <option>Russia</option>
-                        </select>
-                    </div>
-                      
-                    <button id = "personal-button" type = "submit" class = "btn btn-primary">Update</button>
-
-                    <hr class="solid">
-
-
-                    Delete Account
-                    <!--Delete Account Link-->
-                    <small id="deleteHelp" class="form-text">Deleted accounts cannot be recovered. <a href="#">Delete Account</a></small>
-                      
-                    <hr class="solid">
-                      
-                    <hr class = "solid">
-                  </form>
-            </div>
-
-            <!--Workspaces TAB-->
-            <div class="tab-pane fade" id="v-pills-workspace" role="tabpanel" aria-labelledby="v-pills-workspace-tab">
-                <h2>Your Workspaces</h2><br>
-
-                <hr class ="solid">
-                
-            </div>
+      </div>
+      <!--Tab Content-->
+      <div class="col-9">
+        <div class="tab-content" id="v-pills-tabContent">
+          <h1>Settings</h1>
+          <!--PROFILE TAB-->
+          <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+            <h2>Edit your Account</h2><br>
+            <form>
+              <!--Email Form-->
+              <div class="form-group">
+                <label for="emailAddress">Email address</label>
+                <input type="email" class="form-control w-50" id="emailAddress" aria-describedby="emailHelp" placeholder="name@example.com">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                <br>
+                <button id = "email-button" type = "submit" class = "btn btn-primary">Update Email</button>
+              </div>
+                  <!--Profile Image Form-->
+              <form>
+                <div class="form-group">
+                  <label for="profileImage">Import an Image</label>
+                  <input class="form-control-file" id="profileImage" placeholder="Enter Image Url">
+                  <br>
+                  <button id="img-button" type="submit" class="btn btn-primary">Save</button>
+                </div>
+              </form>
+              <hr>
+              <!--Password Form-->
+              <h4>Change Password</h4><br>
+              <div class="form-group">
+                <label for="currentPassword w-50">Current Password</label>
+                <input type="password" class="form-control w-50" id="currentPassword">
+              </div>
+                  <!--Confirm Password Form-->
+              <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input type="password" class="form-control w-50" id="newPassword">
+                <br>
+                <button id = "change-password" type = "submit" class = "btn btn-primary">Change Password</button>
+              </div>
+              <hr class="solid">
+              <h4>Personal Information</h4>
+              <br>
+                <!--First Name Form-->
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="email" class="form-control w-50" id="firstName">
+              </div>
+                <!--Last Name Form-->
+              <div class="form-group">
+                <label for="lastName" class=>Last Name</label>
+                <input type="email" class="form-control w-50" id="lastName">
+              </div>
+              <!--Country/Region Form-->
+              <div class="form-group">
+                <label for="region">Country/Region of Residence</label>
+                <select class="form-control w-50" id="region">
+                  <option>United States</option>
+                  <option>United Kingdom</option>
+                  <option>Canada</option>
+                  <option>Mexico</option>
+                  <option>Germany</option>
+                  <option>Russia</option>
+                </select>
+              </div>  
+              <button id = "personal-button" type = "submit" class = "btn btn-primary">Update</button>
+              <hr class="solid">
+              <b>Delete Account</b>
+                <!--Delete Account Link-->
+              <small id="deleteHelp" class="form-text">Deleted accounts cannot be recovered. <a href="#">Delete Account</a></small> 
+              <hr class="solid">
+              <hr class="solid">
+            </form>
+          </div>
+          <!--Workspaces TAB-->
+          <div class="tab-pane fade" id="v-pills-workspace" role="tabpanel" aria-labelledby="v-pills-workspace-tab">
+            <h2>Your Workspaces</h2><br>
+            <hr class ="solid">
           </div>
         </div>
       </div>

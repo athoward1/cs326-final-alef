@@ -24,6 +24,7 @@ window.addEventListener("load", async function() {
     console.log(`Displaying sticky. Header: ${result[i].sheader}. Positions: ${result[i].positions}`);
     await displaySticky(result[i].sheader, result[i].sbody, result[i].positions);
   }
+  
   document.getElementById("inviteDropDown").addEventListener("click", () =>{
     if(document.getElementById("invitePopUp").style.display === "block"){
       document.getElementById("invitePopUp").style.display = "none";
