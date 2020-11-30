@@ -231,20 +231,18 @@ async function updateWorkspaceImage(req, res){
 async function updateWorkspaceTitle(req, res){
     console.log("Updating title to " + req.body.oldtitle + " and " + req.body.userid);
     let response = await connectAndRun(db => db.one("SELECT workspaceid FROM workspaces WHERE username = ($1) AND title = ($2);", [req.body.userid, req.body.oldtitle]));
-    console.log("Got workspaceid (maybe this is a promise?): " + response.workspaceid);
-    await connectAndRun(db => db.none("UPDATE workspaces SET title = ($1) WHERE workspaceid = ($2);", [req.body.newtitle, workspaceid[0]]));
+    console.log("Got workspaceid: " + response.workspaceid);
+    await connectAndRun(db => db.none("UPDATE workspaces SET title = ($1) WHERE workspaceid = ($2);", [req.body.newtitle, response.workspaceid]));
     res.send(JSON.stringify({result: "success"}));
 }
 
 async function deleteWorkspace(req,res){
     console.log("deleting workspace");
-    let workspaceid = await connectAndRun(db => db.one("SELECT workspaceid FROM workspaces WHERE username = ($1) AND title = ($2);", [req.body.userid, req.body.title]));
-    console.log(workspaceid + " found.");
-    await connectAndRun(db => db.none("DELETE FROM workspaces WHERE workspaceid = ($1);", [workspaceid]));
-    await connectAndRun(db => db.none("DELETE FROM stickydata WHERE workspaceid = ($1);", [workspaceid]));
-    await connectAndRun(db => db.none("DELETE FROM imagedata WHERE workspaceid = ($1);", [workspaceid]));
-
-    console.log("Deleted " + req.body.workspaceid);
+    let response = await connectAndRun(db => db.one("SELECT workspaceid FROM workspaces WHERE username = ($1) AND title = ($2);", [req.body.userid, req.body.title]));
+    console.log(response.workspaceid + " found. Now deleting any reference to it in all tables.");
+    await connectAndRun(db => db.none("DELETE FROM workspaces WHERE workspaceid = ($1);", [response.workspaceid]));
+    await connectAndRun(db => db.none("DELETE FROM stickydata WHERE workspaceid = ($1);", [response.workspaceid]));
+    await connectAndRun(db => db.none("DELETE FROM imagedata WHERE workspaceid = ($1);", [response.workspaceid]));
     res.send(JSON.stringify({result: "success"}));
 }
 
