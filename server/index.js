@@ -153,7 +153,7 @@ app.post("/updateImagePosition", updateImagePosition);
 app.post("/deleteImage", deleteImage);
 
 async function share(req, res){
-    await connectAndRun(db => db.none("INSERT INTO workspaceinfo VALUES ($1, $2, $3);", [req.body.userid, req.body.workspaceid, req.body.invite]));
+    await connectAndRun(db => db.none("INSERT INTO workspaceinfo VALUES ($1, $2, $3);", [req.body.userid, req.body.title, req.body.invite]));
     res.send(JSON.stringify({result: "success"}));
 }
 
@@ -222,7 +222,7 @@ async function getStickies(req, res){
 
 async function updateWorkspaceImage(req, res){
     console.log("Updating workspace image");
-    await connectAndRun(db => db.none("UPDATE workspaces SET image_url = ($1) WHERE userid = ($2) AND title = ($3);", [req.body.image_url, req.body.userid, req.body.title]));
+    await connectAndRun(db => db.none("UPDATE workspaces SET image_url = ($1) WHERE username = ($2) AND title = ($3);", [req.body.image_url, req.body.userid, req.body.title]));
     console.log("image changed");
     res.send(JSON.stringify({result: "success"}));
 }
@@ -230,14 +230,14 @@ async function updateWorkspaceImage(req, res){
 
 async function updateWorkspaceTitle(req, res){
     console.log("Updating workspace title");
-    let workspaceid = await connectAndRun(db => db.one("SELECT workspaceid FROM workspaces WHERE userid = ($1) AND title = ($2);", [req.body.userid, req.body.oldtitle]));
+    let workspaceid = await connectAndRun(db => db.one("SELECT workspaceid FROM workspaces WHERE username = ($1) AND title = ($2);", [req.body.userid, req.body.oldtitle]));
     await connectAndRun(db => db.none("UPDATE workspaces SET title = ($1) WHERE workspaceid = ($2);", [req.body.newtitle, workspaceid]));
     res.send(JSON.stringify({result: "success"}));
 }
 
 async function deleteWorkspace(req,res){
     console.log("deleting workspace");
-    let workspaceid = await connectAndRun(db => db.one("SELECT workspaceid FROM workspaces WHERE userid = ($1) AND title = ($2);", [req.body.userid, req.body.title]));
+    let workspaceid = await connectAndRun(db => db.one("SELECT workspaceid FROM workspaces WHERE username = ($1) AND title = ($2);", [req.body.userid, req.body.title]));
     console.log(workspaceid + " found.");
     await connectAndRun(db => db.none("DELETE FROM workspaces WHERE workspaceid = ($1);", [workspaceid]));
     await connectAndRun(db => db.none("DELETE FROM stickydata WHERE workspaceid = ($1);", [workspaceid]));
@@ -249,7 +249,7 @@ async function deleteWorkspace(req,res){
 
 async function checkUnique(req,res){
     console.log("checking duplicate workspace name");
-    let entries = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE userid = ($1) AND title = ($2);", [req.body.userid, req.body.newtitle]));
+    let entries = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE username = ($1) AND title = ($2);", [req.body.userid, req.body.newtitle]));
     console.log(entries);
     if (entries.length === 0){
         res.send(JSON.stringify({result: "unique"}));
@@ -298,7 +298,7 @@ async function getShared(req, res){
 
 async function workspacesUnderUser(req, res){
     console.log("Selecting workspaces under user");
-    let wsps = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE userid =($1);", [req.body.userid]));
+    let wsps = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE username =($1);", [req.body.userid]));
     res.send(JSON.stringify({result: wsps}));
 }
 
