@@ -230,8 +230,8 @@ async function updateWorkspaceImage(req, res){
 
 async function updateWorkspaceTitle(req, res){
     console.log("Updating title to " + req.body.oldtitle + " and " + req.body.userid);
-    let workspaceid = await connectAndRun(db => db.one("SELECT workspaceid FROM workspaces WHERE username = ($1) AND title = ($2);", [req.body.userid, req.body.oldtitle]));
-    console.log("Got workspaceid: " + workspaceid[0]);
+    let response = await connectAndRun(db => db.one("SELECT workspaceid FROM workspaces WHERE username = ($1) AND title = ($2);", [req.body.userid, req.body.oldtitle]));
+    console.log("Got workspaceid (maybe this is a promise?): " + response.workspaceid);
     await connectAndRun(db => db.none("UPDATE workspaces SET title = ($1) WHERE workspaceid = ($2);", [req.body.newtitle, workspaceid[0]]));
     res.send(JSON.stringify({result: "success"}));
 }
