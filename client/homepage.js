@@ -198,8 +198,13 @@ async function displayAllWorkspaces(_userid){
     });
     let json = await response.json();
     let result = json.result;
-    for (let i in result){
-        await displayWorkspace(result[i].title, result[i].image_url);
+    if (result.length === 0){
+        document.getElementById("addHint").style.display = "block";
+    }else{
+        document.getElementById("addHint").style.display = "none";
+        for (let i in result){
+            await displayWorkspace(result[i].title, result[i].image_url);
+        }
     }
     //display ones shared with me
 }
@@ -277,8 +282,6 @@ function logIn(username){
 let isOpen = true;
 async function displayWorkspace(_title, image_url){
     console.log("displaying workspace" + _title);
-    document.getElementById("addHint").style.display = "none";
-
     let user = loggedIn();
 
     const addBox = document.createElement("div");
