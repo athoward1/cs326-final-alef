@@ -318,6 +318,7 @@ async function displayWorkspace(_title, image_url){
                 title: boxName.innerHTML
             })
         });
+        displayAllWorkspaces(user);
     });
 
     let editBox = document.createElement("img");
