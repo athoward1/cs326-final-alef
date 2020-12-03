@@ -199,7 +199,7 @@ async function displayAllWorkspaces(_userid){
         await displayWorkspace(my_workspaces[i].title, my_workspaces[i].image_url);
     }
     //  Display ones shared with me
-    let response2 = await fetch('/getSharedtoUser', {
+    let response2 = await fetch('/getSharedToUser', {
         method:'POST',
         headers:{
             'Content-Type':'application/json'
@@ -214,7 +214,7 @@ async function displayAllWorkspaces(_userid){
         await displaySharedWorkspace(workspaces_shared_with_me[i].title, workspaces_shared_with_me[i].userid);
     }
     //  Display hint if there are no boxes in the boxspace
-    if (document.getElementById("boxspace").childNodes().length === 0){
+    if (document.getElementById("boxspace").children.length === 0){
         document.getElementById("addHint").style.display = "block";
     }else{
         document.getElementById("addHint").style.display = "none";   
