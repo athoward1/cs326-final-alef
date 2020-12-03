@@ -25,11 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="790b9947-a464-4619-ad8e-b5e23ab4cb0b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.cs326-final-alef.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/workspace.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/workspace.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/index.js" afterDir="false" />
-    </list>
+    <list default="true" id="790b9947-a464-4619-ad8e-b5e23ab4cb0b" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -85,7 +81,7 @@
       <workItem from="1605655435864" duration="1514000" />
       <workItem from="1605840140366" duration="5547000" />
       <workItem from="1605913316394" duration="1860000" />
-      <workItem from="1606001162015" duration="28299000" />
+      <workItem from="1606001162015" duration="28917000" />
     </task>
     <servers />
   </component>
