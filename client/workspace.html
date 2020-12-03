@@ -51,6 +51,44 @@
             </div>
           </div>
         </div>
+        <div id="chat" class="col" style="background-color:grey;">
+          <h1>Chat</h1>
+          <button id="createIdea" class="btn btn-primary btn-sm" type="button" data-toggle="collapse"
+                  data-target="#collapsedIdea" aria-expanded="false" aria-controls="collapseExample">
+            Create Idea
+          </button>
+          <div class="collapse" id="collapsedIdea">
+            <div id="createIdeaForm" class="card card-body">
+              <form>
+                <div class="form-group">
+                  <label for="ideaName">Idea Name</label>
+                  <input type="text" class="form-control" id="ideaName" placeholder="Name for your task">
+                </div>
+                <div class="form-group">
+                  <label for="IdeaTaskSelect" id="taskSelectLabel">Number of tasks needed to finish</label>
+                  <select class="form-control" id="IdeaTaskSelect">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                </div>
+                <div class="form-group" id="selectedTasks"></div>
+                <div class="form-group">
+                  <label for="ideaDesc">Whats the description?</label>
+                  <textarea class="form-control" id="ideaDesc" rows="3"></textarea>
+                </div>
+              </form>
+              <button id="confirmIdea" type="button" class="btn btn-primary">Confirm Idea</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label id="textEnterLabel" for="textEnter">Enter message</label>
+            <textarea type="text" class="form-control" id="textEnter" rows="3"></textarea>
+            <button type="button" class="btn btn-primary" id="sendChat">Send message</button>
+          </div>
+        </div>
         <div class="modal fade" id="newSticky" tabindex="-1" role="dialog" aria-labelledby="newStickyModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -102,65 +140,9 @@
                 <button type="button" id = "saveImg" class="btn btn-primary">Save Image</button>
                 <button type="button" class="btn btn-danger" id = "cancelImg">Cancel</button>
               </div>
-              <div class="form-group">
-                <label for="IdeaTaskSelect" id="taskSelectLabel">Number of tasks needed to finish</label>
-                <select class="form-control" id="IdeaTaskSelect">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </div>
-              <div class="form-group" id="selectedTasks">
-              </div>
-              <div class="form-group">
-                <label for="ideaDesc">Whats the description?</label>
-                <textarea class="form-control" id="ideaDesc" rows="3"></textarea>
-              </div>
-            </form>
-
-            <button id="confirmIdea" type="button" class="btn btn-primary">Confirm Idea</button>
           </div>
         </div>
       </div>
-    </div>             
-    <div id="chat" class="col" style="background-color:grey;">
-      <h1>FUCKING Chat</h1>
-      <button id="createIdea" class="btn btn-primary btn-sm" type="button" data-toggle="collapse"
-              data-target="#collapsedIdea" aria-expanded="false" aria-controls="collapseExample">
-        Create Idea
-      </button>
-      <div class="collapse" id="collapsedIdea">
-        <div id="createIdeaForm" class="card card-body">
-          <form>
-            <div class="form-group">
-              <label for="ideaName">Idea Name</label>
-              <input type="text" class="form-control" id="ideaName" placeholder="Name for your task">
-            </div>
-            <div class="form-group">
-              <label for="IdeaTaskSelect" id="taskSelectLabel">Number of tasks needed to finish</label>
-              <select class="form-control" id="IdeaTaskSelect">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
-            <div class="form-group" id="selectedTasks"></div>
-            <div class="form-group">
-              <label for="ideaDesc">Whats the description?</label>
-              <textarea class="form-control" id="ideaDesc" rows="3"></textarea>
-            </div>
-          </form>
-          <button id="confirmIdea" type="button" class="btn btn-primary">Confirm Idea</button>
-        </div>
-      </div>
-      <div class="form-group">
-        <label id="textEnterLabel" for="textEnter">Enter message</label>
-        <textarea type="text" class="form-control" id="textEnter" rows="3"></textarea>
-        <button type="button" class="btn btn-primary" id="sendChat">Send message</button>
       </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
