@@ -16,7 +16,7 @@ window.addEventListener("load", async function() {
     
     //Set Profile Picture
     let user = loggedIn();
-    if (user === "Guest"){  //  ===GUESTID
+    if (user === "Guest"){  //  === GUESTID
         console.log("Guest logged in");
         document.getElementById("profilePicture").src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
     }else{
@@ -177,11 +177,13 @@ window.addEventListener("load", async function() {
 });
 
 async function displayAllWorkspaces(_userid){
+    //  First clear all boxes.
     let boxspace = document.getElementById("boxspace");
     while (boxspace.children.length > 0){
         let child = boxspace.children[0];
         boxspace.removeChild(child);
     }
+    //  Now get workspaces owned by this user
     let response = await fetch('/getWorkspaceInfo', {
         method: 'POST',
         headers: {
@@ -192,16 +194,31 @@ async function displayAllWorkspaces(_userid){
         })
     });
     let json = await response.json();
-    let result = json.result;
-    if (result.length === 0){
+    let my_workspaces = json.result;   //  workspaces is collection of data from workspaces
+    for (let i in my_workspaces){
+        await displayWorkspace(my_workspaces[i].title, my_workspaces[i].image_url);
+    }
+    //  Display ones shared with me
+    let response2 = await fetch('/getSharedToUser', {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+            user:_userid
+        })
+    });
+    let json2 = await response2.json();
+    let workspaces_shared_with_me = json2.result;   //  workspaces is collection of data from workspaces
+    for (let i in workspaces_shared_with_me){
+        await displaySharedWorkspace(workspaces_shared_with_me[i].title, workspaces_shared_with_me[i].userid);
+    }
+    //  Display hint if there are no boxes in the boxspace
+    if (document.getElementById("boxspace").children.length === 0){
         document.getElementById("addHint").style.display = "block";
     }else{
-        document.getElementById("addHint").style.display = "none";
-        for (let i in result){
-            await displayWorkspace(result[i].title, result[i].image_url);
-        }
+        document.getElementById("addHint").style.display = "none";   
     }
-    //display ones shared with me
 }
 
 async function getProfPic(user){
@@ -256,8 +273,6 @@ function loggedIn(){
 }
 
 function logIn(username){
-    //  set local storage here (or have around where called)
-
     document.getElementById("loginBtn").innerHTML = "Welcome, " + username;
     document.getElementById("loginBtn").disabled = true;
     let newBtn = document.createElement("button");
@@ -272,6 +287,7 @@ function logIn(username){
     });
     document.getElementById("side").appendChild(newBtn);
 }
+
 
 
 let isOpen = true;
@@ -439,6 +455,59 @@ async function displayWorkspace(_title, image_url){
     addBox.appendChild(deleteBox);
     addBox.appendChild(boxName);
     addBox.appendChild(editBox);
+}
+
+async function displaySharedWorkspace(_title, owner){
+    console.log("displaying workspace" + _title);
+    let user = loggedIn();
+
+    const addBox = document.createElement("div");
+    addBox.className = "workspacebox-shared";
+    document.getElementById("boxspace").appendChild(addBox);
+
+    let boxName = document.createElement("span");
+    boxName.innerHTML = _title;
+    boxName.className = "workspaceNameText";
+    boxName.style.fontWeight = "bold";
+
+    let ownerName = document.createElement("span");
+    ownerName.innerHTML = "<br>Owner:<br>" + owner;
+    ownerName.className = "workspaceNameText";
+    ownerName.style.fontWeight = "bold";
+
+    let leaveBox = document.createElement("img");
+    leaveBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png";
+    leaveBox.className = "leaveButton";
+    leaveBox.addEventListener("click", async()=> {
+        document.getElementById("boxspace").removeChild(addBox);    //redundant?
+        //  Uninvite self
+        await fetch("/uninvite", {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                userid: owner,
+                title: boxName.innerHTML,
+                shared:user
+            })
+        });
+        displayAllWorkspaces(user);
+    });
+
+    let enterButton = document.createElement("img");
+    enterButton.className = "enter-button";
+    enterButton.src = "https://cdn2.iconfinder.com/data/icons/donkey/800/2-256.png";
+    enterButton.addEventListener("click", async()=>{
+        window.localStorage.setItem("workspace", boxName.innerHTML);    //Needs to be a GET
+        window.open("/workspace.html", "_self");
+    });
+    addBox.appendChild(enterButton);
+    //addBox.style.backgroundImage = image_url;
+    addBox.appendChild(leaveBox);
+    addBox.appendChild(boxName);
+    addBox.appendChild(ownerName);
+
 }
 
 function makeWorkspaceID() {

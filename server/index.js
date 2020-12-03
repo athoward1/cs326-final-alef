@@ -119,10 +119,11 @@ app.post("/getUserInfo", getUserInfo);
 
 
 //  WORKSPACEINFO table. Keeps track of which users are shared with which workspace: (owner, workspaceid, shared)
-app.post("/shared", getShared);
+app.post("/shared", getSharedFromUser);
 app.post("/addNewShare", share);
 app.post("/uninvite", uninvite);
 app.post("/uninviteAll", uninviteAll);
+app.post("/getSharedToUser", getSharedToUser);
 
 /**
  * Side note: There were (and are) much better ways to do this. For one, we don't need two seperate tables for the workspace information,
@@ -288,9 +289,15 @@ async function getUserInfo(req, res){
     res.send(JSON.stringify({result: entries}));
 }
 
-async function getShared(req, res){
+async function getSharedFromUser(req, res){
     console.log("Finding shared with users");
     let entries = await connectAndRun(db => db.any("SELECT * FROM workspaceinfo WHERE userid =($1) AND title = ($2);", [req.body.userid, req.body.title]));
+    res.send(JSON.stringify({result: entries}));
+}
+
+async function getSharedToUser(req, res){
+    console.log("Finding shared with users");
+    let entries = await connectAndRun(db => db.any("SELECT * FROM workspaceinfo WHERE shared =($1);", [req.body.user]));
     res.send(JSON.stringify({result: entries}));
 }
 
