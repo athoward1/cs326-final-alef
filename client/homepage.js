@@ -471,15 +471,16 @@ async function displaySharedWorkspace(_title, owner){
     boxName.style.fontWeight = "bold";
 
     let ownerName = document.createElement("span");
-    ownerName.innerHTML = owner;
-    ownerName.className = "workspaceNameText";
+    ownerName.innerHTML = "<br>Owner: " + owner;
+    ownerName.className = "workspaceNameText-shared";
     ownerName.style.fontWeight = "bold";
 
     let leaveBox = document.createElement("img");
     leaveBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png";
-    leaveBox.className = "deleteButton";  
+    leaveBox.className = "leaveButton";
     leaveBox.addEventListener("click", async()=> {
         document.getElementById("boxspace").removeChild(addBox);    //redundant?
+        //  Uninvite self
         await fetch("/uninvite", {
             method:'POST',
             headers: {
