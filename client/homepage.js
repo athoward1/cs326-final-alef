@@ -462,7 +462,7 @@ async function displaySharedWorkspace(_title, owner){
     let user = loggedIn();
 
     const addBox = document.createElement("div");
-    addBox.className = "workspacebox";
+    addBox.className = "workspacebox-shared";
     document.getElementById("boxspace").appendChild(addBox);
 
     let boxName = document.createElement("span");
@@ -472,7 +472,7 @@ async function displaySharedWorkspace(_title, owner){
 
     let ownerName = document.createElement("span");
     ownerName.innerHTML = "<br>Owner: " + owner;
-    ownerName.className = "workspaceNameText-shared";
+    ownerName.className = "workspaceNameText";
     ownerName.style.fontWeight = "bold";
 
     let leaveBox = document.createElement("img");
