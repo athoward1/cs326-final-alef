@@ -471,7 +471,7 @@ async function displaySharedWorkspace(_title, owner){
     boxName.style.fontWeight = "bold";
 
     let ownerName = document.createElement("span");
-    ownerName.innerHTML = "<br>Owner: " + owner;
+    ownerName.innerHTML = "<br>Owner:<br>" + owner;
     ownerName.className = "workspaceNameText";
     ownerName.style.fontWeight = "bold";
 
