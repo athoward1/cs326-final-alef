@@ -2,11 +2,6 @@
 
 
 window.addEventListener("load", async function() {
-    try{
-        console.log(process.env.port);
-    }catch{
-        console.log("couldn't find PORT");
-    }
 
     document.getElementById("closeLogin").addEventListener("click", () =>{
         $("#loginModal").modal('hide');
@@ -27,7 +22,7 @@ window.addEventListener("load", async function() {
     }else{
         console.log("User " + user + " is logged in.");
         let src = await getProfPic(user);
-        document.getElementById("profilePicture").src = "url(" + src + ")";    //  This line is very busted. I don't know why.
+        document.getElementById("profilePicture").src = src;    //  This line is very busted. I don't know why.
     }
 
     document.getElementById('addButton').addEventListener('click', async()=>{
@@ -409,7 +404,7 @@ async function displayWorkspace(_title, image_url){
         
         saveimage.addEventListener("click", async()=>{
             let new_image_url = newimage.value;
-            addBox.style.backgroundImage = new_image_url;
+            addBox.style.backgroundImage = "url(" + new_image_url + ")";
             addBox.removeChild(saveimage);
             addBox.removeChild(newimage);             
             await fetch("/updateWorkspaceImage", {
