@@ -25,7 +25,9 @@ window.addEventListener("load", async function() {
     await displaySticky(result[i].sheader, result[i].sbody, result[i].positions);
   }
   
-  document.getElementById("inviteDropDown").addEventListener("click", () =>{
+  document.getElementById("inviteDropDown").addEventListener("click", async() =>{
+    //  Needs to check if local user is the owner of the workspace
+
     if(document.getElementById("invitePopUp").style.display === "block"){
       document.getElementById("invitePopUp").style.display = "none";
     }else{
