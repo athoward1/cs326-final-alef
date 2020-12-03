@@ -227,8 +227,12 @@ window.addEventListener("load", async function() {
 
     async function dragElement(elmnt, positions, element_type) {
         console.log("Initialize drag element at position "+String(positions));  //  I thought next line would set position of sticky.g
-        let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
         
+        //let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
+        
+        let imagePosition = elmnt.getBoundingClientRect();
+        let position1 = imagePosition.top, position2 = imagePosition.right, position3 = imagePosition.bottom, position4 = imagePosition.left;
+
         if (document.getElementById(elmnt.id + "header1")) {
           // if present, the header is where you move the DIV from:
           document.getElementById(elmnt.id + "header1").onmousedown = dragMouseDown;
@@ -276,7 +280,7 @@ window.addEventListener("load", async function() {
           
           let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
           let _workspaceid = "New Box"; //  get workspaceid somehow
-          let _positions = [pos1, pos2, pos3, pos4];
+          let _positions = [position1, position2, position3, position4];
           _positions = '{' + String(_positions) + '}';
           let _header = elmnt.children[0].innerHTML, _body = elmnt.children[1].innerHTML;
           
@@ -307,7 +311,7 @@ window.addEventListener("load", async function() {
           //Request to update saved data
           let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspac
           let _workspaceid = "New Box"; //  get workspaceid somehow
-          let _positions = [pos1, pos2, pos3, pos4];
+          let _positions = [position1, position2, position3, position4];
           _positions = '{' + String(_positions) + '}';
           let _image_url = elmnt.style.backgroundImage;
           
