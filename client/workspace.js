@@ -327,18 +327,7 @@ window.addEventListener("load", async function() {
               console.error("Failed to update image");
           }
         }
-      }
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+      }   
 });
 
 //$('.alert').alert()
