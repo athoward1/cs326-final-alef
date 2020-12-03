@@ -14,7 +14,15 @@
               body: Object,
               positions: Object}
    
+<<<<<<< HEAD
    sendSticky{userid:String, workspaceid:String,header: Object,text: String,dateSent: String}
+=======
+   createSticky{userid:String,
+              workspaceid:String,
+              header: Object,
+              text: Object,
+              dateSent: Object}
+>>>>>>> 71e991febf69e15e80617a5ae68977452b30af93
               
     createImage{userid: String, workspaceid: String, image_url: String, positions: Object}
     

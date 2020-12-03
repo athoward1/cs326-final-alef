@@ -42,8 +42,23 @@ hr.linePosition {
     background-repeat: no-repeat;
     padding: 5px;
     margin: 20px;
+}
+
+.workspacebox-shared {
+    background-color: rgb(231, 225, 141);
+    width: 300px;
+    height: 250px;
+    font-family: verdana;
+    border-radius: 25px;
+    border: 3px solid rgb(110, 107, 64);
+    background-position: center;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    padding: 5px;
+    margin: 20px;
 
 }
+
 .accounticon {
     top: 8rem;
     position: absolute;
@@ -112,12 +127,28 @@ input[type=text], input[type=password] {
     margin: 8px 0;
 }
 
+.box-rel{
+    position: relative;
+    bottom:128%;
+    margin-top: 1rem;
+    align-content: center;
+}
+
 .deleteButton{
     width: 50px;
     height: 50px;
     cursor: pointer;
     position: relative;
     right: 17%;
+    bottom: 108%;
+}
+
+.leaveButton{
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    position: relative;
+    right: 0%;
     bottom: 108%;
 }
 

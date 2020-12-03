@@ -4,7 +4,7 @@ window.addEventListener("load", async function() {
     
     document.getElementById("img-button").addEventListener("click", async() => {
         let user = localStorage.getItem("userName");
-        let img = document.getElementById("profilePicture").value;
+        let img = document.getElementById("profileImage").value;
         const response = await fetch('/changeProfPic', {
             method: 'POST',
             headers: {
@@ -175,7 +175,7 @@ window.addEventListener("load", async function() {
         newNode.src = "url(" + result[i].image_url + ")";
         let titleNode = document.createElement("h4");
         titleNode.classList = "wp-title";
-        titleNode.innerText = result[i].workspaceid;
+        titleNode.innerText = result[i].title;
         newNode.appendChild(titleNode);
         
         //fetch this workspace's users, in order to append them to workspace node
@@ -191,20 +191,17 @@ window.addEventListener("load", async function() {
         });
         let json2 = await response2.json();
         let result2 = json2.result;
-
         if (result2.length === 0){  //  No users shared yet
             let noUsers = document.createElement("div");
             noUsers.innerText = "No CoLab-rators.";
             newNode.append(noUsers);
         }
-
         for (let j in result2){
-            let userLine = await userNode(_userid, result[i].workspaceid, result2[j].shared);
+            let userLine = await userNode(_userid, result[i].title, result2[j].shared);
             newNode.appendChild(userLine);
         }
         newNodes[i] = newNode;
     }
-
     for (let i in newNodes){
         document.getElementById("v-pills-workspace").appendChild(newNodes[i]);
         let breakNode = document.createElement("div");  //try hr
@@ -213,7 +210,7 @@ window.addEventListener("load", async function() {
     }
 });
 
-async function userNode(user, workspace, _shared){
+async function userNode(user, _title, _shared){
     let node = document.createElement("div");
     node.classList = "wp-user";
     let userNameNode = document.createElement("span");
@@ -255,7 +252,7 @@ async function userNode(user, workspace, _shared){
             },
             body: JSON.stringify({
                 userid: user,
-                title: workspace,
+                title: _title,
                 shared: _shared
             })
         });
