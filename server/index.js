@@ -123,7 +123,7 @@ app.post("/shared", getSharedFromUser);
 app.post("/addNewShare", share);
 app.post("/uninvite", uninvite);
 app.post("/uninviteAll", uninviteAll);
-app.post("/sharedToUser", getSharedToUser);
+app.post("/getSharedToUser", getSharedToUser);
 
 /**
  * Side note: There were (and are) much better ways to do this. For one, we don't need two seperate tables for the workspace information,
