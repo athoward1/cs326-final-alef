@@ -165,7 +165,7 @@ window.addEventListener("load", async function() {
   async function createSticky(_header, _body, _positions){
     await displaySticky(_header, _body, _positions);
     $("#newSticky").modal('hide');
-    let author = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
+    let author = localStorage.getItem("userName");   //  Really get the owner of workspaceid
     //get workspaceid
     let _workspaceid = "New Box";
     
@@ -195,15 +195,15 @@ window.addEventListener("load", async function() {
     });
 
     async function createImage(_image_url, _positions){
-      let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
-      let _workspaceid = "New Box";
+      let author = localStorage.getItem("userName");
+      let _workspaceid = localStorage.getItem("workspaceid");
       const response = await fetch('./createImage', {
         method:'POST',
         headers:{
             'Content-Type':'application/json'
         },
         body: JSON.stringify({
-                userid:_userid,
+                userid:author, //  author
                 workspaceid:_workspaceid,
                 image_url: _image_url,
                 positions: _positions
@@ -217,11 +217,8 @@ window.addEventListener("load", async function() {
       imageDiv.style.backgroundImage = _image_url;
       let deleteBox = document.createElement("img");
       deleteBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png";
-      deleteBox.className = "deleteBox";
-
-          
-      let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
-      let _workspaceid = "New Box";
+      deleteBox.className = "deleteBox"; 
+      let _workspaceid = localStorage.getItem("workspaceid");
       deleteBox.addEventListener("click", async()=>{
           row1.removeChild(imageDiv);
           await fetch("/deleteImage", {
@@ -230,7 +227,6 @@ window.addEventListener("load", async function() {
                 'Content-Type':'application/json'
             },
             body: JSON.stringify({
-                userid: _userid,
                 workspaceid: _workspaceid,
                 image_url: _image_url
             })
@@ -294,9 +290,8 @@ window.addEventListener("load", async function() {
           document.onmousemove = null;
           //Request to update saved data
           
-          let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
-          let _workspaceid = "New Box"; //  get workspaceid somehow
-          let _positions = [position1, position2, position3, position4];
+          let _workspaceid = localStorage.getItem("workspaceid"); //  get workspaceid somehow
+          let _positions = [pos1, pos2, pos3, pos4];
           _positions = '{' + String(_positions) + '}';
           let _header = elmnt.children[0].innerHTML, _body = elmnt.children[1].innerHTML;
           
@@ -306,7 +301,6 @@ window.addEventListener("load", async function() {
                 'Content-Type':'application/json'
             },
             body: JSON.stringify({
-                    userid:_userid,
                     workspaceid:_workspaceid,
                     header: _header,
                     body: _body,
@@ -325,9 +319,8 @@ window.addEventListener("load", async function() {
           document.onmouseup = null;
           document.onmousemove = null;
           //Request to update saved data
-          let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspac
-          let _workspaceid = "New Box"; //  get workspaceid somehow
-          let _positions = [position1, position2, position3, position4];
+          let _workspaceid = localStorage.getItem("workspaceid"); //  get workspaceid somehow
+          let _positions = [pos1, pos2, pos3, pos4];
           _positions = '{' + String(_positions) + '}';
           let _image_url = elmnt.style.backgroundImage;
           
@@ -337,7 +330,6 @@ window.addEventListener("load", async function() {
                 'Content-Type':'application/json'
             },
             body: JSON.stringify({
-                    userid:_userid,
                     workspaceid:_workspaceid,
                     image_url: _image_url,
                     positions: _positions
