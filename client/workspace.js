@@ -147,10 +147,9 @@ window.addEventListener("load", async function() {
     authorTextNode.className = "authorTextNode";
     stickyNote.addEventListener("mouseover", ()=>{
       authorTextNode.style.display = "block";
-
-      setTimeout(function() {
-        authorTextNode.style.display = "none";
-      }, 2500);
+    });
+    stickyNote.addEventListener("mouseout", ()=>{
+      authorTextNode.style.display = "none";
     });
     
     let _workspaceid = localStorage.getItem("workspaceid");
