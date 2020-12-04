@@ -230,7 +230,7 @@ window.addEventListener("load", async function() {
     async function dragElement(elmnt, positions, element_type) {
         console.log("Initialize drag element at position "+String(positions));  //  I thought next line would set position of sticky.g
         
-        //let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
+        let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
         
         let imagePosition = elmnt.getBoundingClientRect();
         let position1 = imagePosition.top, position2 = imagePosition.right, position3 = imagePosition.bottom, position4 = imagePosition.left;
