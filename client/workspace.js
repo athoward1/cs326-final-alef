@@ -14,8 +14,9 @@ window.addEventListener("load", async function() {
     })
   });
   let json = await response.json();
-  let owner = json.result[0].username;
-  let title = json.result[0].title;
+  console.log(result);
+  let owner = json.result.username;
+  let title = json.result.title;
   document.title = title;
   document.getElementById("title").innerText = title;
 
