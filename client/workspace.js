@@ -374,10 +374,18 @@ document.getElementById('confirmDate').addEventListener('click', async () => {
     //save this to memory stupid! 
     localStorage.setItem('deadline', pickedDate.toDateString());
     const timeline = document.getElementById('timeline');
+<<<<<<< Updated upstream
     console.log(pickedDate.getTime());
+    
+
+    if (currentDate > pickedDate || isNaN(pickedDate.getTime()) ) {
+        
+=======
 
 
     if (dateC > pickedDate || isNaN(pickedDate.getTime()) ) {
+
+>>>>>>> Stashed changes
         const alert = document.getElementById('timeLineChange');
         const p = document.createElement('div');
         const dis = document.createElement('button');
@@ -425,6 +433,9 @@ document.getElementById('confirmDate').addEventListener('click', async () => {
     
 
 });
+
+<<<<<<< Updated upstream
+=======
 function calcTimeL(pickedDate, dateC){
     
     pickedDate = new Date(pickedDate);
@@ -446,6 +457,7 @@ function calcTimeL(pickedDate, dateC){
     timeline.classList.add('bg-success');
     timeline.textContent = `${daysleft}`;
 }
+>>>>>>> Stashed changes
 document.getElementById("sendChat").addEventListener( 'click', async () => {
     const theDate = new Date();
     const text = document.getElementById('textEnter').value;
