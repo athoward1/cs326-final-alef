@@ -103,7 +103,7 @@ window.addEventListener("load", async function() {
         }else{
             if (json.result === "No such user"){    //  User created, update localStorage and hide modal
                 localStorage.setItem("userName", document.getElementById("newuserName").value);
-                localStorage.setItem("password", document.getElementById("newpassword").value);
+                //localStorage.setItem("password", document.getElementById("newpassword").value);
                 logIn(document.getElementById("newuserName").value);
                 $("#loginModal").modal('hide');
                 //Make new settings entry
@@ -162,7 +162,7 @@ window.addEventListener("load", async function() {
                 if (json.result === "Login successful"){
                     //Correct Password, logging in
                     localStorage.setItem("userName", userinput);
-                    localStorage.setItem("password", passinput);
+                    //localStorage.setItem("password", passinput);
                     logIn(userinput);
                     window.open("/index.html", "_self");    //  Just reload to clear current workspaces
                     $("#loginModal").modal('hide');
