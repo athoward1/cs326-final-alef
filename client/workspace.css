@@ -31,6 +31,9 @@ padding-bottom: 95%;
 }
 
 #workspace {
+  margin-left: 2rem;
+  border-radius: 25px;
+  border: 5px solid  rgba(9, 9, 82, 0.705); 
   max-width: auto;
 	margin-bottom: -9999px;
 	padding-bottom: 9999px;
