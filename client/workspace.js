@@ -4,6 +4,14 @@ window.addEventListener("load", async function() {
 
   let owner = localStorage.getItem("userName");  //should really be workspace owner, depenant on unique workspaceid
   let __workspaceid = localStorage.getItem("workspace");  // get the title of the workspace you clicked on
+    const stDate = localStorage.getItem('projectMade'); // date the workspace was created
+    const sdDate = localStorage.getItem('deadline'); // deadline of the project
+    const tDate = new Date(stDate);
+    const dDate = new Date(sdDate);
+    if(tDate === null){document.getElementById('timeLineDateMade').innerText +='';}
+    else {document.getElementById('timeLineDateMade').innerText = `Date Created: ${tDate.toDateString()}`;}
+    calcTimeL(dDate.toDateString(), tDate.toDateString());
+    
   document.title = __workspaceid;
   document.getElementById("title").innerText = __workspaceid;
 
@@ -332,6 +340,11 @@ window.addEventListener("load", async function() {
       }   
 });
 
+//reset the creation date of the timeline
+document.getElementById('resetDate').addEventListener('click', async () => {
+   localStorage.removeItem('projectMade');
+   document.getElementById('timeLineDateMade').innerText = " Please update timeline to set new creation date";
+});
 //$('.alert').alert()
 //timeline code 
 //get selected date from user and set the aria-valuemax of the timeline to the date
@@ -346,16 +359,33 @@ window.addEventListener("load", async function() {
 //When the user clicks the "confirm date" button 
 document.getElementById('confirmDate').addEventListener('click', async () => {
     //disable popover 
+    const storedD = localStorage.getItem('projectMade');
+    let dateC = new Date(storedD);
     const currentDate = new Date();
-    const oneDay = 1000 * 60 * 60 * 24;
-    //in milliseconds
+    if(storedD === null){
+        dateC = currentDate;
+        localStorage.setItem('projectMade' , currentDate.toDateString());
+        document.getElementById('timeLineDateMade').innerText = `Date Created: ${dateC.toDateString()}`;
+    }
+    
+    
+    
     const pickedDate = new Date(document.getElementById('timelineChange').value);
+    //save this to memory stupid! 
+    localStorage.setItem('deadline', pickedDate.toDateString());
     const timeline = document.getElementById('timeline');
+<<<<<<< Updated upstream
     console.log(pickedDate.getTime());
     
 
     if (currentDate > pickedDate || isNaN(pickedDate.getTime()) ) {
         
+=======
+
+
+    if (dateC > pickedDate || isNaN(pickedDate.getTime()) ) {
+
+>>>>>>> Stashed changes
         const alert = document.getElementById('timeLineChange');
         const p = document.createElement('div');
         const dis = document.createElement('button');
@@ -398,24 +428,36 @@ document.getElementById('confirmDate').addEventListener('click', async () => {
         p.appendChild(dis);
         alert.appendChild(p);
 
-        //make a total days and save value to memory
-        //get the difference between the total days and the days left totaldays -  daysleft
-        //this is done outside the 
-        const milsLeft = Math.round(pickedDate.getTime() - currentDate.getTime()) / oneDay;
-        const totalDays = milsLeft.toFixed(0);
-        const daysleft = milsLeft.toFixed(0);
-        const  diff = totalDays - daysleft;
-
-        timeline.setAttribute('aria-valuemax', `${totalDays}`);
-        timeline.setAttribute('aria-valuenow', `${diff}`);
-        timeline.setAttribute('style', `width: ${(diff/totalDays)*100}%`);
-        timeline.classList.add('bg-success');
-        timeline.textContent = `${daysleft}`;
+        calcTimeL(pickedDate.toDateString(), dateC.toDateString());
     }
     
 
 });
 
+<<<<<<< Updated upstream
+=======
+function calcTimeL(pickedDate, dateC){
+    
+    pickedDate = new Date(pickedDate);
+    dateC = new Date(dateC);
+    const timeline = document.getElementById('timeline');
+    //make a total days and save value to memory
+    //get the difference between the total days and the days left totaldays -  daysleft
+    //this is done outside the
+    const oneDay = 1000 * 60 * 60 * 24;
+    //in milliseconds
+    const milsLeft = Math.round(pickedDate.getTime() - dateC.getTime()) / oneDay;
+    const totalDays = milsLeft.toFixed(0);
+    const daysleft = milsLeft.toFixed(0);
+    const  diff = totalDays - daysleft;
+
+    timeline.setAttribute('aria-valuemax', `${totalDays}`);
+    timeline.setAttribute('aria-valuenow', `${diff}`);
+    timeline.setAttribute('style', `width: ${(diff/totalDays)*100}%`);
+    timeline.classList.add('bg-success');
+    timeline.textContent = `${daysleft}`;
+}
+>>>>>>> Stashed changes
 document.getElementById("sendChat").addEventListener( 'click', async () => {
     const theDate = new Date();
     const text = document.getElementById('textEnter').value;
