@@ -230,7 +230,7 @@ window.addEventListener("load", async function() {
     async function dragElement(elmnt, positions, element_type) {
         console.log("Initialize drag element at position "+String(positions));  //  I thought next line would set position of sticky.g
         
-        //let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
+        let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
         
         let imagePosition = elmnt.getBoundingClientRect();
         let position1 = imagePosition.top, position2 = imagePosition.right, position3 = imagePosition.bottom, position4 = imagePosition.left;
@@ -333,7 +333,8 @@ window.addEventListener("load", async function() {
               console.error("Failed to update image");
           }
         }
-      }   
+      }
+ 
 });
 
 //$('.alert').alert()
@@ -356,10 +357,10 @@ document.getElementById('confirmDate').addEventListener('click', async () => {
     const pickedDate = new Date(document.getElementById('timelineChange').value);
     const timeline = document.getElementById('timeline');
     console.log(pickedDate.getTime());
-    
+
 
     if (currentDate > pickedDate || isNaN(pickedDate.getTime()) ) {
-        
+
         const alert = document.getElementById('timeLineChange');
         const p = document.createElement('div');
         const dis = document.createElement('button');
@@ -416,10 +417,8 @@ document.getElementById('confirmDate').addEventListener('click', async () => {
         timeline.classList.add('bg-success');
         timeline.textContent = `${daysleft}`;
     }
-    
 
 });
-
 document.getElementById("sendChat").addEventListener( 'click', async () => {
     const theDate = new Date();
     const text = document.getElementById('textEnter').value;
@@ -726,11 +725,12 @@ $(document).on('click','#voteNotButt',async function(){
     }
 });
 
-async function addChat(_text, _sender, _dateSent){
+async function addChat(_text, _dateSent){
    
     let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
     //get workspaceid
     let _workspaceid = "New Box";
+    const _header = "Send chat to DB";
     
     const response = await fetch('./addChat', {
         method:'POST',
