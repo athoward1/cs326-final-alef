@@ -209,6 +209,7 @@ padding-bottom: 95%;
 .authorTextNode{
   display: none;
   position: absolute;
-  top: -30%;
-  left: 40%;
+  top: -40%;
+  left: 35%;
+  background-color: white;
 }
