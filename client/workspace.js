@@ -180,7 +180,7 @@ window.addEventListener("load", async function() {
     document.getElementById("saveImg").addEventListener("click", async() =>{
       $("#newImg").modal('hide');
       let image_url = "url("+ document.getElementById("imageForm").value+ ")";
-      await displayImage(image_url, [0,0,0,0])  
+      await displayImage(image_url, [0,0,0,0]);  
       await createImage(image_url, [0,0,0,0]);
     });
 
@@ -206,7 +206,7 @@ window.addEventListener("load", async function() {
       imageDiv.id = "image";
       imageDiv.style.backgroundImage = _image_url;
       let deleteBox = document.createElement("img");
-      deleteBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png"
+      deleteBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png";
       deleteBox.className = "deleteBox";
 
           
