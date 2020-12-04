@@ -60,10 +60,20 @@ window.addEventListener("load", async function() {
       alert("Must be owner of the workspace to share")
     }
     //  Should it just not show the button?
-    
-      document.getElementById("invitePopUp").style.display = "block";
+    /*
+    if(document.getElementById("invitePopUp").style.display === "block"){
+      document.getElementById("invitePopUp").style.display = "none";
+    }*/
+    document.getElementById("invitePopUp").style.display = "block";
     
     document.getElementById("inviteButton").addEventListener("click", async()=>{
+      let closeButton = document.createElement("button");
+      closeButton.textContent="x";
+      closeButton.class = "closeInvite";
+      document.getElementById("inviteDiv").appendChild(closeButton);
+      closeButton.addEventListener("click", () =>{
+        document.getElementById("invitePopUp").style.display = "none";
+      });
       let _invite = document.getElementById("newPersonName").value;
       if(document.getElementById("invitedText") !== "Invited!" && _invite !== "" && _invite !== owner){
         let solidLine = document.createElement("hr");
