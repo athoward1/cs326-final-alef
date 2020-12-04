@@ -89,7 +89,7 @@ window.addEventListener("load", async function() {
         document.getElementById("newPersonName").value = "";
         
         document.getElementById("invitedText").style.display = "block";
-        let _workspaceid = localStorage.getItem("workspace");
+        let _workspaceid = localStorage.getItem("workspaceid");
         let response = fetch("/addNewShare",{
           method: 'POST',
           headers:{
