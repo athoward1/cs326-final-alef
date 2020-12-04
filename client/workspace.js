@@ -97,7 +97,7 @@ window.addEventListener("load", async function() {
           },
           body: JSON.stringify({
               userid: owner,
-              title:_workspaceid,
+              title:title,
               invite:_invite
           })
         });
