@@ -456,7 +456,7 @@ async function displayWorkspace(_title, image_url){
         });        
         let json = await response.json();
         
-        window.localStorage.setItem("workspaceid", json.result[0]);   //  workspaceid in localstorage        
+        window.localStorage.setItem("workspaceid", json.result[0].workspaceid);   //  workspaceid in localstorage        
         //  Dynamically created button needs dynamically created html requests.
         //  await fetch("/workspace.html");
         window.open("/workspace.html", "_self");
