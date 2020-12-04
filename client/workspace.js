@@ -60,9 +60,10 @@ window.addEventListener("load", async function() {
       alert("Must be owner of the workspace to share")
     }
     //  Should it just not show the button?
+    /*
     if(document.getElementById("invitePopUp").style.display === "block"){
       document.getElementById("invitePopUp").style.display = "none";
-    }
+    }*/
     document.getElementById("invitePopUp").style.display = "block";
     
     document.getElementById("inviteButton").addEventListener("click", async()=>{
