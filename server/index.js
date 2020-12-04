@@ -115,7 +115,7 @@ app.post("/deleteImage", deleteImage);
 
 async function getWorkspaceID(req,res){
     console.log("getting workspaceid from title and user");
-    let workspaceid = await connectAndRun(db => db.any("SELECT workspaceid FROM workspaces WHERE username = ($1) AND title = ($2);", [req.body.userid, req.body.title]));
+    let workspaceid = await connectAndRun(db => db.any("SELECT workspaceid FROM workspaces WHERE username = ($1) AND title = ($2);", [req.body.username, req.body.title]));
     res.send(JSON.stringify({result: workspaceid}));
 }
 
