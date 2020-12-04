@@ -444,7 +444,19 @@ async function displayWorkspace(_title, image_url){
             alert("Please log in before entering a workspace!");
             return;
         }
-        window.localStorage.setItem("workspace", boxName.innerHTML);    //Needs to be a GET
+        let response = await fetch('/getWorkspaceID', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                username: owner,
+                title: boxName.innerHTML
+            })
+        });        
+        let json = await response.json();
+        
+        window.localStorage.setItem("workspaceid", json.result[0]);   //  workspaceid in localstorage        
         //  Dynamically created button needs dynamically created html requests.
         //  await fetch("/workspace.html");
         window.open("/workspace.html", "_self");
