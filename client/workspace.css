@@ -188,3 +188,7 @@ padding-bottom: 95%;
 .invitedText{
   display: none;
 }
+.closeInvite{
+  background-color: black;
+  position: relative;
+}
