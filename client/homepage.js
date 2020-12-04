@@ -523,7 +523,7 @@ async function displaySharedWorkspace(_title, owner){
             })
         });        
         let json = await response.json();
-        window.localStorage.setItem("workspaceid", json.result[0]);   //  workspaceid in localstorage
+        window.localStorage.setItem("workspaceid", json.result);   //  workspaceid in localstorage
         window.open("/workspace.html", "_self");
     });
     addBox.appendChild(enterButton);
