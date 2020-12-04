@@ -150,7 +150,7 @@ window.addEventListener("load", async function() {
 
       setTimeout(function() {
         authorTextNode.style.display = "none";
-      }, 5000);
+      }, 2500);
     });
     
     let _workspaceid = localStorage.getItem("workspaceid");
