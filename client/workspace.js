@@ -67,7 +67,7 @@ window.addEventListener("load", async function() {
     document.getElementById("invitePopUp").style.display = "block";
     let closeButton = document.createElement("span");
     closeButton.textContent="X";
-    closeButton.class = "closeInvite";
+    closeButton.className = "closeInvite";
     if(closeButtonShown){
       document.getElementById("invitedDiv").appendChild(closeButton);
     }
