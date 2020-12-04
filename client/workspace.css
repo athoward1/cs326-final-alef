@@ -211,7 +211,9 @@ padding-bottom: 95%;
   position: absolute;
   top: -45%;
   left: 0%;
-  padding-left: 5%;
+  padding-left: 2%;
+  padding-right: 2%;
+  border: 2%;
   text-align: center;
   background-color: #f1f1f1;
 }
