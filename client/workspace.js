@@ -53,7 +53,7 @@ window.addEventListener("load", async function() {
     console.log(`Displaying sticky. Header: ${result3[i].sheader}. Positions: ${result3[i].positions}`);
     await displaySticky(result3[i].sheader, result3[i].sbody, result3[i].positions);
   }
-
+  let closeButtonShown = true;
   document.getElementById("inviteDropDown").addEventListener("click", async() =>{
     //  Needs to check if local user is the owner of the workspace
     if (owner !== user){
@@ -65,10 +65,13 @@ window.addEventListener("load", async function() {
       document.getElementById("invitePopUp").style.display = "none";
     }
     document.getElementById("invitePopUp").style.display = "block";
-    let closeButton = document.createElement("button");
+    let closeButton = document.createElement("span");
     closeButton.textContent="X";
     closeButton.class = "closeInvite";
-    document.getElementById("inviteDiv").appendChild(closeButton);
+    if(closeButtonShown){
+      document.getElementById("invitedDiv").appendChild(closeButton);
+    }
+    closeButtonShown = false;
     closeButton.addEventListener("click", () =>{
       document.getElementById("invitePopUp").style.display = "none";
     });
