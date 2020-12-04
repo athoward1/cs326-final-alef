@@ -1,6 +1,7 @@
 
 "use strict";
 window.addEventListener("load", async function() {
+  console.log("This page is loaded twice");
   let user = localStorage.getItem("userName");
   let __workspaceid = localStorage.getItem("workspaceid");
   //First retrieve the owner and title from the workspaceid. This user may not be the owner
@@ -14,7 +15,6 @@ window.addEventListener("load", async function() {
     })
   });
   let json = await response.json();
-  console.log(json.result[0]);
   let owner = json.result[0].username;
   let title = json.result[0].title;
   document.title = title;
