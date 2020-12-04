@@ -51,7 +51,7 @@ window.addEventListener("load", async function() {
   let result3 = json3.result;
   for (let i in result3){
     console.log(`Displaying sticky. Header: ${result3[i].sheader}. Positions: ${result3[i].positions}`);
-    await displaySticky(result3[i].sheader, result3[i].sbody, result3[i].positions);
+    await displaySticky(result3[i].userid, result3[i].sheader, result3[i].sbody, result3[i].positions);
   }
   let closeButtonShown = true;
   document.getElementById("inviteDropDown").addEventListener("click", async() =>{
@@ -97,7 +97,7 @@ window.addEventListener("load", async function() {
           },
           body: JSON.stringify({
               userid: owner,
-              title:_workspaceid,
+              title:title,
               invite:_invite
           })
         });
@@ -122,7 +122,7 @@ window.addEventListener("load", async function() {
     await createSticky(header, body, [0,0,0,0]);      
   });
 
-  async function displaySticky(_header, _body, positions){
+  async function displaySticky(author, _header, _body, positions){
     
     let stickyNote = document.createElement("div");
     let stickyNoteheader = document.createElement("div");
@@ -141,6 +141,16 @@ window.addEventListener("load", async function() {
     stickyNote.appendChild(stickyNoteheader);
     stickyNote.appendChild(firstLine);
     stickyNote.appendChild(deleteBox);
+    let authorTextNode = document.createElement("span");
+    stickyNote.appendChild(authorTextNode);
+    authorTextNode.textContent = "Author: " + author;
+    authorTextNode.className = "authorTextNode";
+    stickyNote.addEventListener("mouseover", ()=>{
+      authorTextNode.style.display = "block";
+    });
+    stickyNote.addEventListener("mouseout", ()=>{
+      authorTextNode.style.display = "none";
+    });
     
     let _workspaceid = localStorage.getItem("workspaceid");
     deleteBox.addEventListener("click", async()=>{
@@ -163,9 +173,9 @@ window.addEventListener("load", async function() {
   }
 
   async function createSticky(_header, _body, _positions){
-    await displaySticky(_header, _body, _positions);
     $("#newSticky").modal('hide');
-    let author = localStorage.getItem("userName");   //  Really get the owner of workspaceid
+    let author = localStorage.getItem("userName");
+    await displaySticky(author, _header, _body, _positions);
     let _workspaceid = localStorage.getItem("workspaceid");
     
     const response = await fetch('./createSticky', {

@@ -108,11 +108,12 @@ padding-bottom: 95%;
   background-color: #f1f1f1;
   text-align: center;
   border: 1px solid #d3d3d3;
-  border-radius: 5%;
+  border-radius: 10px;
 }
 
 #stickyNoteheader {
-  border-radius: 5%;
+  border-radius: 12px;
+  margin:2px;
   padding: 10px;
   cursor: move;
   z-index: 10;
@@ -204,4 +205,16 @@ padding-bottom: 95%;
   top: .5%;
   left: 93%;
   cursor: pointer;
+}
+
+.authorTextNode{
+  display: none;
+  position: absolute;
+  top: -30px;
+  left: 30%;
+  padding-left: 2%;
+  padding-right: 2%;
+  border: 1px solid black;
+  text-align: center;
+  background-color: #f1f1f1;
 }
