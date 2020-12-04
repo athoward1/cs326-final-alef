@@ -229,8 +229,12 @@ window.addEventListener("load", async function() {
 
     async function dragElement(elmnt, positions, element_type) {
         console.log("Initialize drag element at position "+String(positions));  //  I thought next line would set position of sticky.g
-        let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
         
+        //let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
+        
+        let imagePosition = elmnt.getBoundingClientRect();
+        let position1 = imagePosition.top, position2 = imagePosition.right, position3 = imagePosition.bottom, position4 = imagePosition.left;
+
         if (document.getElementById(elmnt.id + "header1")) {
           // if present, the header is where you move the DIV from:
           document.getElementById(elmnt.id + "header1").onmousedown = dragMouseDown;
@@ -278,7 +282,7 @@ window.addEventListener("load", async function() {
           
           let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
           let _workspaceid = "New Box"; //  get workspaceid somehow
-          let _positions = [pos1, pos2, pos3, pos4];
+          let _positions = [position1, position2, position3, position4];
           _positions = '{' + String(_positions) + '}';
           let _header = elmnt.children[0].innerHTML, _body = elmnt.children[1].innerHTML;
           
@@ -309,7 +313,7 @@ window.addEventListener("load", async function() {
           //Request to update saved data
           let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspac
           let _workspaceid = "New Box"; //  get workspaceid somehow
-          let _positions = [pos1, pos2, pos3, pos4];
+          let _positions = [position1, position2, position3, position4];
           _positions = '{' + String(_positions) + '}';
           let _image_url = elmnt.style.backgroundImage;
           
@@ -329,10 +333,8 @@ window.addEventListener("load", async function() {
               console.error("Failed to update image");
           }
         }
-      }   
-});
-
-//$('.alert').alert()
+      }
+    //$('.alert').alert()
 //timeline code 
 //get selected date from user and set the aria-valuemax of the timeline to the date
 //get the current date and create days left(display with label) to set the timeline too via aria-valuenow 
@@ -344,76 +346,76 @@ window.addEventListener("load", async function() {
 //change bg-color of the progress bar based on percentage of days left 
 
 //When the user clicks the "confirm date" button 
-document.getElementById('confirmDate').addEventListener('click', async () => {
-    //disable popover 
-    const currentDate = new Date();
-    const oneDay = 1000 * 60 * 60 * 24;
-    //in milliseconds
-    const pickedDate = new Date(document.getElementById('timelineChange').value);
-    const timeline = document.getElementById('timeline');
-    console.log(pickedDate.getTime());
-    
+    document.getElementById('confirmDate').addEventListener('click', async () => {
+        //disable popover 
+        const currentDate = new Date();
+        const oneDay = 1000 * 60 * 60 * 24;
+        //in milliseconds
+        const pickedDate = new Date(document.getElementById('timelineChange').value);
+        const timeline = document.getElementById('timeline');
+        console.log(pickedDate.getTime());
 
-    if (currentDate > pickedDate || isNaN(pickedDate.getTime()) ) {
+
+        if (currentDate > pickedDate || isNaN(pickedDate.getTime()) ) {
+
+            const alert = document.getElementById('timeLineChange');
+            const p = document.createElement('div');
+            const dis = document.createElement('button');
+            const span = document.createElement('span');
+            p.classList.add('alert');
+            p.classList.add('alert-danger');
+            p.classList.add('alert-dismissable');
+            p.classList.add('fade');
+            p.classList.add('show');
+            p.setAttribute('role', 'alert')
+            p.innerHTML = 'Incorrect date, please try again';
+            dis.setAttribute('type', 'button');
+            dis.classList.add('close');
+            dis.setAttribute('data-dismiss', 'alert');
+            dis.setAttribute('aria-label', 'close');
+            span.setAttribute('aria-hidden', 'true')
+            timeline.classList.add('bg-danger');
+            span.textContent = 'x';
+            dis.appendChild(span);
+            p.appendChild(dis);
+            alert.appendChild(p);
+        } else {
+            const alert = document.getElementById('timeLineChange');
+            const dis = document.createElement('button');
+            const p = document.createElement('div');
+            const span = document.createElement('span');
+            p.classList.add('alert');
+            p.classList.add('alert-success');
+            p.classList.add('fade');
+            p.classList.add('show');
+            p.setAttribute('role', 'alert');
+            p.classList.add('alert-dismissable');
+            p.innerHTML = 'Wow much date!';
+            dis.classList.add('close');
+            dis.setAttribute('data-dismiss', 'alert');
+            dis.setAttribute('aria-label', 'close');
+            span.setAttribute('aria-hidden', 'true')
+            span.textContent = 'x';
+            dis.appendChild(span);
+            p.appendChild(dis);
+            alert.appendChild(p);
+
+            //make a total days and save value to memory
+            //get the difference between the total days and the days left totaldays -  daysleft
+            //this is done outside the 
+            const milsLeft = Math.round(pickedDate.getTime() - currentDate.getTime()) / oneDay;
+            const totalDays = milsLeft.toFixed(0);
+            const daysleft = milsLeft.toFixed(0);
+            const  diff = totalDays - daysleft;
+
+            timeline.setAttribute('aria-valuemax', `${totalDays}`);
+            timeline.setAttribute('aria-valuenow', `${diff}`);
+            timeline.setAttribute('style', `width: ${(diff/totalDays)*100}%`);
+            timeline.classList.add('bg-success');
+            timeline.textContent = `${daysleft}`;
+        }
         
-        const alert = document.getElementById('timeLineChange');
-        const p = document.createElement('div');
-        const dis = document.createElement('button');
-        const span = document.createElement('span');
-        p.classList.add('alert');
-        p.classList.add('alert-danger');
-        p.classList.add('alert-dismissable');
-        p.classList.add('fade');
-        p.classList.add('show');
-        p.setAttribute('role', 'alert')
-        p.innerHTML = 'Incorrect date, please try again';
-        dis.setAttribute('type', 'button');
-        dis.classList.add('close');
-        dis.setAttribute('data-dismiss', 'alert');
-        dis.setAttribute('aria-label', 'close');
-        span.setAttribute('aria-hidden', 'true')
-        timeline.classList.add('bg-danger');
-        span.textContent = 'x';
-        dis.appendChild(span);
-        p.appendChild(dis);
-        alert.appendChild(p);
-    } else {
-        const alert = document.getElementById('timeLineChange');
-        const dis = document.createElement('button');
-        const p = document.createElement('div');
-        const span = document.createElement('span');
-        p.classList.add('alert');
-        p.classList.add('alert-success');
-        p.classList.add('fade');
-        p.classList.add('show');
-        p.setAttribute('role', 'alert');
-        p.classList.add('alert-dismissable');
-        p.innerHTML = 'Wow much date!';
-        dis.classList.add('close');
-        dis.setAttribute('data-dismiss', 'alert');
-        dis.setAttribute('aria-label', 'close');
-        span.setAttribute('aria-hidden', 'true')
-        span.textContent = 'x';
-        dis.appendChild(span);
-        p.appendChild(dis);
-        alert.appendChild(p);
-
-        //make a total days and save value to memory
-        //get the difference between the total days and the days left totaldays -  daysleft
-        //this is done outside the 
-        const milsLeft = Math.round(pickedDate.getTime() - currentDate.getTime()) / oneDay;
-        const totalDays = milsLeft.toFixed(0);
-        const daysleft = milsLeft.toFixed(0);
-        const  diff = totalDays - daysleft;
-
-        timeline.setAttribute('aria-valuemax', `${totalDays}`);
-        timeline.setAttribute('aria-valuenow', `${diff}`);
-        timeline.setAttribute('style', `width: ${(diff/totalDays)*100}%`);
-        timeline.classList.add('bg-success');
-        timeline.textContent = `${daysleft}`;
-    }
-    
-
+    });
 });
 
 document.getElementById("sendChat").addEventListener( 'click', async () => {
