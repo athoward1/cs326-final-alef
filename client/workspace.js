@@ -139,7 +139,7 @@ window.addEventListener("load", async function() {
     stickyNote.appendChild(firstLine);
     stickyNote.appendChild(deleteBox);
     
-    let _workspaceid = "New Box";
+    let _workspaceid = localStorage.getItem("workspaceid");
     deleteBox.addEventListener("click", async()=>{
         row1.removeChild(stickyNote);
         await fetch("/deleteSticky", {
@@ -163,8 +163,7 @@ window.addEventListener("load", async function() {
     await displaySticky(_header, _body, _positions);
     $("#newSticky").modal('hide');
     let author = localStorage.getItem("userName");   //  Really get the owner of workspaceid
-    //get workspaceid
-    let _workspaceid = "New Box";
+    let _workspaceid = localStorage.getItem("workspaceid");
     
     const response = await fetch('./createSticky', {
       method:'POST',
@@ -287,7 +286,7 @@ window.addEventListener("load", async function() {
           document.onmousemove = null;
           //Request to update saved data
           
-          let _workspaceid = localStorage.getItem("workspaceid"); //  get workspaceid somehow
+          let _workspaceid = localStorage.getItem("workspaceid");
           let _positions = [pos1, pos2, pos3, pos4];
           _positions = '{' + String(_positions) + '}';
           let _header = elmnt.children[0].innerHTML, _body = elmnt.children[1].innerHTML;
@@ -316,7 +315,7 @@ window.addEventListener("load", async function() {
           document.onmouseup = null;
           document.onmousemove = null;
           //Request to update saved data
-          let _workspaceid = localStorage.getItem("workspaceid"); //  get workspaceid somehow
+          let _workspaceid = localStorage.getItem("workspaceid");
           let _positions = [pos1, pos2, pos3, pos4];
           _positions = '{' + String(_positions) + '}';
           let _image_url = elmnt.style.backgroundImage;
@@ -731,8 +730,7 @@ $(document).on('click','#voteNotButt',async function(){
 async function addChat(_text, _dateSent){
    
     let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
-    //get workspaceid
-    let _workspaceid = "New Box";
+    let _workspaceid = localStorage.getItem("workspaceid");
     const _header = "Send chat to DB";
     
     const response = await fetch('./addChat', {
