@@ -121,8 +121,8 @@ async function getWorkspaceID(req,res){
 
 async function getWorkspaceInfo(req,res){
     console.log("getting info by workspaceid");
-    let result = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE workspaceid = ($1);", [req.body.workspaceid]));
-    res.send(JSON.stringify({result: workspaceid}));
+    let info = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE workspaceid = ($1);", [req.body.workspaceid]));
+    res.send(JSON.stringify({result: info}));
 }
 
 async function share(req, res){
