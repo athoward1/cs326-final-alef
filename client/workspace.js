@@ -1,49 +1,76 @@
 
 "use strict";
 window.addEventListener("load", async function() {
+  let user = localStorage.getItem("userName");
+  let __workspaceid = localStorage.getItem("workspace");
+  //First retrieve the owner and title from the workspaceid. This user may not be the owner
+  let response = await fetch('/getWorkspaceInfo', {
+    method: 'POST',
+    headers: {
+        'Content-Type':'application/json'
+    },
+    body: JSON.stringify({
+        workspaceid: __workspaceid
+    })
+  });
+  let json = await response.json();
+  let owner = json.result[0].username;
+  let title = json.result[0].title;
+  document.title = title;
+  document.getElementById("title").innerText = title;
 
-  let owner = localStorage.getItem("userName");  //should really be workspace owner, depenant on unique workspaceid
-  let __workspaceid = localStorage.getItem("workspace");  // get the title of the workspace you clicked on
-  document.title = __workspaceid;
-  document.getElementById("title").innerText = __workspaceid;
+  //Display Images
+  let response2 = await fetch('/getImages', {
+    method: 'POST',
+    headers: {
+        'Content-Type':'application/json'
+    },
+    body: JSON.stringify({
+        workspaceid: __workspaceid
+    })
+  });
+  let json2 = await response2.json();
+  let result2 = json2.result;
+  for (let i in result2){
+    console.log(`Displaying image. Image: ${result2[i].image_url}. Positions: ${result2[i].positions}`);
+    await displayImage(result2[i].image_url, result2[i].positions);
+  }
 
   //Display Stickies
-  let response = await fetch('/getStickies', {
+  let response3 = await fetch('/getStickies', {
       method: 'POST',
       headers: {
           'Content-Type':'application/json'
       },
       body: JSON.stringify({
-          userid: owner,
           workspaceid: __workspaceid
       })
   });
-  let json = await response.json();
-  let result = json.result;
-  for (let i in result){
-    console.log(`Displaying sticky. Header: ${result[i].sheader}. Positions: ${result[i].positions}`);
-    await displaySticky(result[i].sheader, result[i].sbody, result[i].positions);
+  let json3 = await response3.json();
+  let result3 = json3.result;
+  for (let i in result3){
+    console.log(`Displaying sticky. Header: ${result3[i].sheader}. Positions: ${result3[i].positions}`);
+    await displaySticky(result3[i].sheader, result3[i].sbody, result3[i].positions);
   }
-  
+
   document.getElementById("inviteDropDown").addEventListener("click", async() =>{
     //  Needs to check if local user is the owner of the workspace
-
+    if (owner !== user){
+      alert("Must be owner of the workspace to share")
+    }
+    //  Should it just not show the button?
     if(document.getElementById("invitePopUp").style.display === "block"){
       document.getElementById("invitePopUp").style.display = "none";
     }else{
       document.getElementById("invitePopUp").style.display = "block";
       document.getElementById("invitedText").style.display = "none";
     }
-    
     document.getElementById("inviteButton").addEventListener("click", async()=>{
       let _invite = document.getElementById("newPersonName").value;
-      let owner = window.localStorage.getItem("userName");
-
       if(document.getElementById("invitedText") !== "Invited!" && _invite !== "" && _invite !== owner){
         let solidLine = document.createElement("hr");
         
         document.getElementById("invitePlaceholder").style.display = "none";
-
         let newPerson = document.createElement("p");
         newPerson.innerHTML = _invite;
         document.getElementById("invitedDiv").appendChild(newPerson);
@@ -64,30 +91,8 @@ window.addEventListener("load", async function() {
           })
         });
       }
-
-      
     });
-    
-    
   });
-  
-  //Display Images
-  let response2 = await fetch('/getImages', {
-    method: 'POST',
-    headers: {
-        'Content-Type':'application/json'
-    },
-    body: JSON.stringify({
-        userid: owner,
-        workspaceid: __workspaceid
-    })
-  });
-  let json2 = await response2.json();
-  let result2 = json2.result;
-  for (let i in result2){
-    console.log(`Displaying image. Image: ${result2[i].image_url}. Positions: ${result2[i].positions}`);
-    await displayImage(result2[i].image_url, result2[i].positions);
-  }
 
   document.getElementById("cancel").addEventListener("click", ()=>{
       $("#newSticky").modal('hide');
@@ -126,7 +131,6 @@ window.addEventListener("load", async function() {
     stickyNote.appendChild(firstLine);
     stickyNote.appendChild(deleteBox);
     
-    let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
     let _workspaceid = "New Box";
     deleteBox.addEventListener("click", async()=>{
         row1.removeChild(stickyNote);
@@ -136,7 +140,6 @@ window.addEventListener("load", async function() {
               'Content-Type':'application/json'
           },
           body: JSON.stringify({
-              userid: _userid,
               workspaceid: _workspaceid,
               header: _header,
               body: _body
@@ -151,7 +154,7 @@ window.addEventListener("load", async function() {
   async function createSticky(_header, _body, _positions){
     await displaySticky(_header, _body, _positions);
     $("#newSticky").modal('hide');
-    let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
+    let author = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
     //get workspaceid
     let _workspaceid = "New Box";
     
@@ -161,7 +164,7 @@ window.addEventListener("load", async function() {
           'Content-Type':'application/json'
       },
       body: JSON.stringify({
-              userid:_userid,
+              userid: author,
               workspaceid:_workspaceid,
               header: _header,
               body: _body,

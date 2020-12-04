@@ -156,7 +156,7 @@ window.addEventListener("load", async function() {
 
     let _userid = localStorage.getItem("userName");
 
-    let response = await fetch('/getWorkspaceInfo', {
+    let response = await fetch('/getWorkspaceUnderUser', {
         method: 'POST',
         headers: {
             'Content-Type':'application/json'

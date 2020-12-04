@@ -184,7 +184,7 @@ async function displayAllWorkspaces(_userid){
         boxspace.removeChild(child);
     }
     //  Now get workspaces owned by this user
-    let response = await fetch('/getWorkspaceInfo', {
+    let response = await fetch('/getWorkspaceUnderUser', {
         method: 'POST',
         headers: {
             'Content-Type':'application/json'
@@ -458,7 +458,7 @@ async function displayWorkspace(_title, image_url){
 }
 
 async function displaySharedWorkspace(_title, owner){
-    console.log("displaying workspace" + _title);
+    console.log("displaying workspace " + _title);
     let user = loggedIn();
 
     const addBox = document.createElement("div");
@@ -499,7 +499,19 @@ async function displaySharedWorkspace(_title, owner){
     enterButton.className = "enter-button";
     enterButton.src = "https://cdn2.iconfinder.com/data/icons/donkey/800/2-256.png";
     enterButton.addEventListener("click", async()=>{
-        window.localStorage.setItem("workspace", boxName.innerHTML);
+        //  first get workspaceid
+        let response = await fetch('/getWorkspaceID', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                username: owner,
+                title: boxName.innerHTML
+            })
+        });        
+        let json = await response.json();
+        window.localStorage.setItem("workspaceid", json.result[0]);   //  workspaceid in localstorage
         window.open("/workspace.html", "_self");
     });
     addBox.appendChild(enterButton);

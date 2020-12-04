@@ -92,14 +92,16 @@ app.post("/getSharedToUser", getSharedToUser);
 //  The information of each workspace called WORKSPACES that distinguishes by user when loading all, and by workspaceid when getting specific.
 // (username text, workspaceid text, chatid text, plannerid text, taskid text, timelineid text, title text, image_url text)
 app.post("/newWorkspace", newWorkspace);
-app.post("/getWorkspaceInfo", workspacesUnderUser);
+app.post("/getWorkspaceUnderUser", workspacesUnderUser);
 app.post("/deleteWorkspace", deleteWorkspace);
 app.post("/updateWorkspaceTitle", updateWorkspaceTitle);
 app.post("/updateWorkspaceImage", updateWorkspaceImage);
 app.post("/checkUniqueWorkspaceName", checkUnique);
+app.post("/getWorkspaceID", getWorkspaceID);
+app.post("/getWorkspaceInfo", getWorkspaceInfo);
 
 
-//  The sticky and image data under each workspaceid. STICKYDATA: (userid, workspaceid, sheader, sbody, positions)
+//  The sticky and image data under each workspaceid. The userid is the AUTHOR of the sticky. STICKYDATA: (userid, workspaceid, sheader, sbody, positions)
 app.post("/createSticky", createSticky);
 app.post("/updateStickyPosition", updateStickyPosition);
 app.post("/getStickies", getStickies);
@@ -111,11 +113,22 @@ app.post("/getImages", getImages);
 app.post("/updateImagePosition", updateImagePosition);
 app.post("/deleteImage", deleteImage);
 
+async function getWorkspaceID(req,res){
+    console.log("getting workspaceid from title and user");
+    let workspaceid = await connectAndRun(db => db.any("SELECT workspaceid FROM workspaces WHERE username = ($1) AND title = ($2);", [req.body.userid, req.body.title]));
+    res.send(JSON.stringify({result: workspaceid}));
+}
+
+async function getWorkspaceInfo(req,res){
+    console.log("getting info by workspaceid");
+    let result = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE workspaceid = ($1);", [req.body.workspaceid]));
+    res.send(JSON.stringify({result: workspaceid}));
+}
+
 async function share(req, res){
     await connectAndRun(db => db.none("INSERT INTO workspaceinfo VALUES ($1, $2, $3);", [req.body.userid, req.body.title, req.body.invite]));
     res.send(JSON.stringify({result: "success"}));
 }
-
 
 async function newWorkspace(req, res){
     await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1, $2, $3, $4, $5, $6, $7, $8);",
@@ -143,7 +156,7 @@ async function deleteSticky(req, res){
 
 async function createSticky(req, res){
     console.log("adding new sticky to db");
-    await connectAndRun(db => db.none("INSERT INTO stickydata VALUES ($1, $2, $3, $4, $5);", [req.body.userid, req.body.workspaceid, req.body.header, req.body.body, req.body.positions]));
+    await connectAndRun(db => db.none("INSERT INTO stickydata VALUES ($1, $2, $3, $4, $5);", [req.body.author, req.body.workspaceid, req.body.header, req.body.body, req.body.positions]));
     res.send(JSON.stringify({result: "success"}));
 }
 
@@ -165,6 +178,7 @@ async function getImages(req, res){
     let imgs = await connectAndRun(db => db.any("SELECT * FROM imagedata WHERE workspaceid=($1);", [req.body.workspaceid]));
     res.send(JSON.stringify({result: imgs}));
 }
+
 async function updateStickyPosition(req, res){
     console.log(`UPDATE stickydata SET positions=(${req.body.positions}) WHERE workspaceid=(${req.body.workspaceid}) AND sheader=(${req.body.header}) AND sbody=(${req.body.body});`);
     //Stickies with the same data are problematic...
