@@ -207,7 +207,8 @@ padding-bottom: 95%;
 }
 
 .authorTextNode{
+  display: none;
   position: absolute;
-  top: -10%;
+  top: -30%;
   left: 40%;
 }
