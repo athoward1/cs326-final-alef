@@ -725,11 +725,12 @@ $(document).on('click','#voteNotButt',async function(){
     }
 });
 
-async function addChat(_text, _sender, _dateSent){
+async function addChat(_text, _dateSent){
    
     let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
     //get workspaceid
     let _workspaceid = "New Box";
+    const _header = "Send chat to DB";
     
     const response = await fetch('./addChat', {
         method:'POST',
