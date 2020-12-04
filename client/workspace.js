@@ -196,11 +196,12 @@ window.addEventListener("load", async function() {
     document.getElementById("saveImg").addEventListener("click", async() =>{
       $("#newImg").modal('hide');
       let image_url = "url("+ document.getElementById("imageForm").value+ ")";
-      await displayImage(image_url, [0,0,0,0]);  
-      await createImage(image_url, [0,0,0,0]);
+      let _id = makeID();
+      await displayImage(image_url, [0,0,0,0], _id);  
+      await createImage(image_url, [0,0,0,0], _id);
     });
 
-    async function createImage(_image_url, _positions){
+    async function createImage(_image_url, _positions, _id){
       let author = localStorage.getItem("userName");
       let _workspaceid = localStorage.getItem("workspaceid");
       const response = await fetch('./createImage', {
@@ -209,15 +210,16 @@ window.addEventListener("load", async function() {
             'Content-Type':'application/json'
         },
         body: JSON.stringify({
-                userid:author, //  author
+                userid: author,
                 workspaceid:_workspaceid,
                 image_url: _image_url,
-                positions: _positions
+                positions: _positions,
+                id: _id
             })
       });
     }
 
-    async function displayImage(_image_url, positions){
+    async function displayImage(_image_url, positions, _id){
       let imageDiv = document.createElement("div");
       imageDiv.id = "image";
       imageDiv.style.backgroundImage = _image_url;
@@ -234,16 +236,16 @@ window.addEventListener("load", async function() {
             },
             body: JSON.stringify({
                 workspaceid: _workspaceid,
-                image_url: _image_url
+                id: _id
             })
           });
       });
       imageDiv.appendChild(deleteBox);
       document.getElementById("row1").appendChild(imageDiv);
-      await dragElement(imageDiv, positions, "image");
+      await dragElement(imageDiv, positions, "image", _id);
     }
 
-    async function dragElement(elmnt, positions, element_type) {
+    async function dragElement(elmnt, positions, element_type, _id) {
         console.log("Initialize drag element at position "+String(positions));  //  I thought next line would set position of sticky.g
         
         let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
@@ -328,7 +330,6 @@ window.addEventListener("load", async function() {
           let _workspaceid = localStorage.getItem("workspaceid");
           let _positions = [pos1, pos2, pos3, pos4];
           _positions = '{' + String(_positions) + '}';
-          let _image_url = elmnt.style.backgroundImage;
           
           const response = await fetch('./updateImagePosition', {
             method:'POST',
@@ -337,7 +338,7 @@ window.addEventListener("load", async function() {
             },
             body: JSON.stringify({
                     workspaceid:_workspaceid,
-                    image_url: _image_url,
+                    id: _id,
                     positions: _positions
                 })
           });
@@ -348,6 +349,16 @@ window.addEventListener("load", async function() {
       }
  
 });
+
+function makeID() {
+  let result           = '';
+  let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let length = 10;      //  So there is 1/(62^10) chance of duplicates
+  for ( var i = 0; i < length; i++ ) {
+     result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
 
 //$('.alert').alert()
 //timeline code 
