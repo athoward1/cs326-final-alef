@@ -189,9 +189,11 @@ window.addEventListener("load", async function() {
     document.getElementById("saveImg").addEventListener("click", async() =>{
       $("#newImg").modal('hide');
       let image_url = "url("+ document.getElementById("imageForm").value+ ")";
+
       let _id = makeID();
       await displayImage(image_url, [0,0,0,0], _id);  
       await createImage(image_url, [0,0,0,0], _id);
+
     });
 
     async function createImage(_image_url, _positions, _id){
@@ -218,8 +220,10 @@ window.addEventListener("load", async function() {
       imageDiv.style.backgroundImage = _image_url;
       let deleteBox = document.createElement("img");
       deleteBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png";
+
       deleteBox.className = "deleteBox"; 
       let _workspaceid = localStorage.getItem("workspaceid");
+
       deleteBox.addEventListener("click", async()=>{
           row1.removeChild(imageDiv);
           await fetch("/deleteImage", {

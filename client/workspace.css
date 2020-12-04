@@ -178,7 +178,7 @@ padding-bottom: 95%;
   z-index: 1000;
 }
 .invitePopUp{
-  display: none;
+  display: block;
   background-color: lightblue;
   width: fit-content;
   height: fit-content;
