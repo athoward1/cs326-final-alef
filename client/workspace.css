@@ -205,3 +205,15 @@ padding-bottom: 95%;
   left: 93%;
   cursor: pointer;
 }
+
+.authorTextNode{
+  display: none;
+  position: absolute;
+  top: -45%;
+  left: 0%;
+  padding-left: 2%;
+  padding-right: 2%;
+  border: 1px solid black;
+  text-align: center;
+  background-color: #f1f1f1;
+}

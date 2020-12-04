@@ -141,6 +141,16 @@ window.addEventListener("load", async function() {
     stickyNote.appendChild(stickyNoteheader);
     stickyNote.appendChild(firstLine);
     stickyNote.appendChild(deleteBox);
+    let authorTextNode = document.createElement("span");
+    stickyNote.appendChild(authorTextNode);
+    authorTextNode.textContent = "Author: " + user;
+    authorTextNode.className = "authorTextNode";
+    stickyNote.addEventListener("mouseover", ()=>{
+      authorTextNode.style.display = "block";
+    });
+    stickyNote.addEventListener("mouseout", ()=>{
+      authorTextNode.style.display = "none";
+    });
     
     let _workspaceid = localStorage.getItem("workspaceid");
     deleteBox.addEventListener("click", async()=>{
