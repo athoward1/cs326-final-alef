@@ -450,7 +450,7 @@ async function displayWorkspace(_title, image_url){
                 'Content-Type':'application/json'
             },
             body: JSON.stringify({
-                username: owner,
+                username: user,
                 title: boxName.innerHTML
             })
         });        
