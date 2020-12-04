@@ -2,7 +2,7 @@
 "use strict";
 window.addEventListener("load", async function() {
   let user = localStorage.getItem("userName");
-  let __workspaceid = localStorage.getItem("workspace");
+  let __workspaceid = localStorage.getItem("workspaceid");
   //First retrieve the owner and title from the workspaceid. This user may not be the owner
   let response = await fetch('/getWorkspaceInfo', {
     method: 'POST',
