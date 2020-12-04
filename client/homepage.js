@@ -479,7 +479,7 @@ async function displaySharedWorkspace(_title, owner){
     leaveBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png";
     leaveBox.className = "leaveButton";
     leaveBox.addEventListener("click", async()=> {
-        document.getElementById("boxspace").removeChild(addBox);    //redundant?
+        document.getElementById("boxspace").removeChild(addBox);
         //  Uninvite self
         await fetch("/uninvite", {
             method:'POST',
@@ -499,11 +499,10 @@ async function displaySharedWorkspace(_title, owner){
     enterButton.className = "enter-button";
     enterButton.src = "https://cdn2.iconfinder.com/data/icons/donkey/800/2-256.png";
     enterButton.addEventListener("click", async()=>{
-        window.localStorage.setItem("workspace", boxName.innerHTML);    //Needs to be a GET
+        window.localStorage.setItem("workspace", boxName.innerHTML);
         window.open("/workspace.html", "_self");
     });
     addBox.appendChild(enterButton);
-    //addBox.style.backgroundImage = image_url;
     addBox.appendChild(leaveBox);
     addBox.appendChild(boxName);
     addBox.appendChild(ownerName);

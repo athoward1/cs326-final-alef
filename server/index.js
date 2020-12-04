@@ -1,15 +1,9 @@
 "use strict";
 import * as _pgp from "pg-promise";
 import * as _express from "express";
-import * as _expressSession from "express-session";
-import * as _passport from "passport";
-import * as _localStrategy from "passport-local";
 import * as _crypto from "../miniCrypt.js";
 
 const miniCrypt = _crypto["default"];
-const passport = _passport["default"];
-const localStrategy = _localStrategy["default"].Strategy;   //What does this do?
-const expressSession = _expressSession["default"];
 const express = _express["default"];
 const pgp = _pgp["default"]({
     connect(client) {
@@ -21,49 +15,14 @@ const pgp = _pgp["default"]({
     }
 });
 
-//  Do we need dotenv module to get environment variables??
 
 const PORT = process.env.PORT || 8081;
-const HASH_KEY = process.env.HASH_KEY || 123456;
-
-// Session configuration
-
-const session = {
-    secret : process.env.HASH_KEY || '123456', // set this encryption key in Heroku config (never in GitHub)!
-    resave : false,
-    saveUninitialized: false
-};
 
 //Express Config
 const app = express();
 app.use(express.json());
-app.use(expressSession(session));
-/**
-passport.use(strategy);
-app.use(passport.initialize());
-app.use(passport.session());
-*/
+//app.use(expressSession(session));
 
-// Passport configuration
-/**
-const strategy = new LocalStrategy(
-    async (username, password, done) => {
-	if (!findUser(username)) {
-	    // no such user
-	    return done(null, false, { 'message' : 'Wrong username' });
-	}
-	if (!validatePassword(username, password)) {
-	    // invalid password
-	    // should disable logins after N messages
-	    // delay return to rate-limit brute-force attacks
-	    await new Promise((r) => setTimeout(r, 2000)); // two second delay
-	    return done(null, false, { 'message' : 'Wrong password' });
-	}
-	// success!
-	// should create a user object here, associated with a unique identifier
-	return done(null, username);
-});​
-*/
 //MiniCrypt Config
 const mc = new miniCrypt();
 
@@ -99,8 +58,7 @@ app.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}`)
 });
 
-//
-//app.get("/workspace.html", async (req, res) => {    res.sendFile('client/workspace.html', { 'root' : __dirname });  });
+
 
 //  In the table called LOGINS with (unique) username w/ salt and hash: (user, salt, hash)
 app.post("/changePassword", deleteAccount, createAccount);
