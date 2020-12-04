@@ -141,6 +141,13 @@ window.addEventListener("load", async function() {
     stickyNote.appendChild(stickyNoteheader);
     stickyNote.appendChild(firstLine);
     stickyNote.appendChild(deleteBox);
+    let authorTextNode = document.createElement("span");
+    stickyNote.appendChild(authorTextNode);
+    authorTextNode.textContent = "test name";
+    authorTextNode.className = "authorTextNode";
+    stickyNote.addEventListener("mouseover", ()=>{
+      authorTextNode.style.display = "block";
+    });
     
     let _workspaceid = localStorage.getItem("workspaceid");
     deleteBox.addEventListener("click", async()=>{

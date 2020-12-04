@@ -199,3 +199,9 @@ padding-bottom: 95%;
   left: 93%;
   cursor: pointer;
 }
+
+.authorTextNode{
+  position: absolute;
+  top: -10%;
+  left: 40%;
+}
