@@ -1,15 +1,9 @@
 "use strict";
 import * as _pgp from "pg-promise";
 import * as _express from "express";
-import * as _expressSession from "express-session";
-import * as _passport from "passport";
-import * as _localStrategy from "passport-local";
 import * as _crypto from "../miniCrypt.js";
 
 const miniCrypt = _crypto["default"];
-const passport = _passport["default"];
-const localStrategy = _localStrategy["default"].Strategy;   //What does this do?
-const expressSession = _expressSession["default"];
 const express = _express["default"];
 const pgp = _pgp["default"]({
     connect(client) {
@@ -21,49 +15,14 @@ const pgp = _pgp["default"]({
     }
 });
 
-//  Do we need dotenv module to get environment variables??
 
 const PORT = process.env.PORT || 8081;
-const HASH_KEY = process.env.HASH_KEY || 123456;
-
-// Session configuration
-
-const session = {
-    secret : process.env.HASH_KEY || '123456', // set this encryption key in Heroku config (never in GitHub)!
-    resave : false,
-    saveUninitialized: false
-};
 
 //Express Config
 const app = express();
 app.use(express.json());
-app.use(expressSession(session));
-/**
-passport.use(strategy);
-app.use(passport.initialize());
-app.use(passport.session());
-*/
+//app.use(expressSession(session));
 
-// Passport configuration
-/**
-const strategy = new LocalStrategy(
-    async (username, password, done) => {
-	if (!findUser(username)) {
-	    // no such user
-	    return done(null, false, { 'message' : 'Wrong username' });
-	}
-	if (!validatePassword(username, password)) {
-	    // invalid password
-	    // should disable logins after N messages
-	    // delay return to rate-limit brute-force attacks
-	    await new Promise((r) => setTimeout(r, 2000)); // two second delay
-	    return done(null, false, { 'message' : 'Wrong password' });
-	}
-	// success!
-	// should create a user object here, associated with a unique identifier
-	return done(null, username);
-});​
-*/
 //MiniCrypt Config
 const mc = new miniCrypt();
 
@@ -99,8 +58,7 @@ app.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}`)
 });
 
-//
-//app.get("/workspace.html", async (req, res) => {    res.sendFile('client/workspace.html', { 'root' : __dirname });  });
+
 
 //  In the table called LOGINS with (unique) username w/ salt and hash: (user, salt, hash)
 app.post("/changePassword", deleteAccount, createAccount);
@@ -134,14 +92,16 @@ app.post("/getSharedToUser", getSharedToUser);
 //  The information of each workspace called WORKSPACES that distinguishes by user when loading all, and by workspaceid when getting specific.
 // (username text, workspaceid text, chatid text, plannerid text, taskid text, timelineid text, title text, image_url text)
 app.post("/newWorkspace", newWorkspace);
-app.post("/getWorkspaceInfo", workspacesUnderUser);
+app.post("/getWorkspaceUnderUser", workspacesUnderUser);
 app.post("/deleteWorkspace", deleteWorkspace);
 app.post("/updateWorkspaceTitle", updateWorkspaceTitle);
 app.post("/updateWorkspaceImage", updateWorkspaceImage);
 app.post("/checkUniqueWorkspaceName", checkUnique);
+app.post("/getWorkspaceID", getWorkspaceID);
+app.post("/getWorkspaceInfo", getWorkspaceInfo);
 
 
-//  The sticky and image data under each workspaceid. STICKYDATA: (userid, workspaceid, sheader, sbody, positions)
+//  The sticky and image data under each workspaceid. The userid is the AUTHOR of the sticky. STICKYDATA: (userid, workspaceid, sheader, sbody, positions)
 app.post("/createSticky", createSticky);
 app.post("/updateStickyPosition", updateStickyPosition);
 app.post("/getStickies", getStickies);
@@ -153,11 +113,22 @@ app.post("/getImages", getImages);
 app.post("/updateImagePosition", updateImagePosition);
 app.post("/deleteImage", deleteImage);
 
+async function getWorkspaceID(req,res){
+    console.log("getting workspaceid from title and user");
+    let workspaceid = await connectAndRun(db => db.any("SELECT workspaceid FROM workspaces WHERE username = ($1) AND title = ($2);", [req.body.username, req.body.title]));
+    res.send(JSON.stringify({result: workspaceid}));
+}
+
+async function getWorkspaceInfo(req,res){
+    console.log("getting info by workspaceid: "+ req.body.workspaceid);
+    let info = await connectAndRun(db => db.any("SELECT * FROM workspaces WHERE workspaceid = ($1);", [req.body.workspaceid]));
+    res.send(JSON.stringify({result: info}));
+}
+
 async function share(req, res){
     await connectAndRun(db => db.none("INSERT INTO workspaceinfo VALUES ($1, $2, $3);", [req.body.userid, req.body.title, req.body.invite]));
     res.send(JSON.stringify({result: "success"}));
 }
-
 
 async function newWorkspace(req, res){
     await connectAndRun(db => db.none("INSERT INTO workspaces VALUES ($1, $2, $3, $4, $5, $6, $7, $8);",
@@ -167,13 +138,13 @@ async function newWorkspace(req, res){
 
 async function deleteImage(req, res){
     console.log("deleting image from db");
-    await connectAndRun(db => db.none("DELETE FROM imagedata WHERE workspaceid=($1) AND image_url=($2);", [req.body.workspaceid, req.body.image_url]));
+    await connectAndRun(db => db.none("DELETE FROM imagedata WHERE workspaceid=($1) AND id=($2);", [req.body.workspaceid, req.body.id]));
     res.send(JSON.stringify({result: "success"}));
 }
 
 async function updateImagePosition(req, res){
     console.log(`UPDATE image SET positions=(${req.body.positions}) WHERE workspaceid=(${req.body.workspaceid}) AND image_url=(${req.body.image_url})`);
-    await connectAndRun(db => db.none("UPDATE imagedata SET positions=($1) WHERE workspaceid=($2) AND image_url=($3);", [req.body.positions, req.body.workspaceid, req.body.image_url]));
+    await connectAndRun(db => db.none("UPDATE imagedata SET positions=($1) WHERE workspaceid=($2) AND id=($3);", [req.body.positions, req.body.workspaceid, req.body.id]));
     res.send(JSON.stringify({result: "success"}));
 }
 
@@ -197,7 +168,7 @@ async function addChat(req, res){
 
 async function createImage(req, res){
     console.log("adding new image to db");
-    await connectAndRun(db => db.none("INSERT INTO imagedata VALUES ($1, $2, $3, $4);", [req.body.userid, req.body.workspaceid, req.body.image_url, req.body.positions]));
+    await connectAndRun(db => db.none("INSERT INTO imagedata VALUES ($1, $2, $3, $4, $5);", [req.body.userid, req.body.workspaceid, req.body.image_url, req.body.positions, req.body.id]));
     res.send(JSON.stringify({result: "success"}));
 }
 
@@ -207,6 +178,7 @@ async function getImages(req, res){
     let imgs = await connectAndRun(db => db.any("SELECT * FROM imagedata WHERE workspaceid=($1);", [req.body.workspaceid]));
     res.send(JSON.stringify({result: imgs}));
 }
+
 async function updateStickyPosition(req, res){
     console.log(`UPDATE stickydata SET positions=(${req.body.positions}) WHERE workspaceid=(${req.body.workspaceid}) AND sheader=(${req.body.header}) AND sbody=(${req.body.body});`);
     //Stickies with the same data are problematic...

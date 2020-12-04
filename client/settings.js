@@ -36,7 +36,6 @@ window.addEventListener("load", async function() {
         });
         let json = await response.json();
         if (json.result === "Wrong Password"){
-            //Ye don't know your own password :(
             //Wrong Password
         }else if (json.result === "Login successful"){
             //Update old password
@@ -157,7 +156,7 @@ window.addEventListener("load", async function() {
 
     let _userid = localStorage.getItem("userName");
 
-    let response = await fetch('/getWorkspaceInfo', {
+    let response = await fetch('/getWorkspaceUnderUser', {
         method: 'POST',
         headers: {
             'Content-Type':'application/json'

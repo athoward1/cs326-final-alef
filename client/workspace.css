@@ -188,3 +188,14 @@ padding-bottom: 95%;
 .invitedText{
   display: none;
 }
+.closeInvite{
+  color: rgb(0, 0, 0);
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: large;
+  font-weight: bold;
+  text-align: center;
+  position: absolute;
+  top: .5%;
+  left: 93%;
+  cursor: pointer;
+}
