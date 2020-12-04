@@ -143,14 +143,14 @@ window.addEventListener("load", async function() {
     stickyNote.appendChild(deleteBox);
     let authorTextNode = document.createElement("span");
     stickyNote.appendChild(authorTextNode);
-    authorTextNode.textContent = "Author: ";
+    authorTextNode.textContent = "Author: " + localStorage.getItem("owner");
     authorTextNode.className = "authorTextNode";
     stickyNote.addEventListener("mouseover", ()=>{
       authorTextNode.style.display = "block";
 
       setTimeout(function() {
         authorTextNode.style.display = "none";
-      }, 500);
+      }, 10000);
     });
     
     let _workspaceid = localStorage.getItem("workspaceid");
