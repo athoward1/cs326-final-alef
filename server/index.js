@@ -138,13 +138,13 @@ async function newWorkspace(req, res){
 
 async function deleteImage(req, res){
     console.log("deleting image from db");
-    await connectAndRun(db => db.none("DELETE FROM imagedata WHERE workspaceid=($1) AND image_url=($2);", [req.body.workspaceid, req.body.image_url]));
+    await connectAndRun(db => db.none("DELETE FROM imagedata WHERE workspaceid=($1) AND id=($2);", [req.body.workspaceid, req.body.id]));
     res.send(JSON.stringify({result: "success"}));
 }
 
 async function updateImagePosition(req, res){
     console.log(`UPDATE image SET positions=(${req.body.positions}) WHERE workspaceid=(${req.body.workspaceid}) AND image_url=(${req.body.image_url})`);
-    await connectAndRun(db => db.none("UPDATE imagedata SET positions=($1) WHERE workspaceid=($2) AND image_url=($3);", [req.body.positions, req.body.workspaceid, req.body.image_url]));
+    await connectAndRun(db => db.none("UPDATE imagedata SET positions=($1) WHERE workspaceid=($2) AND id=($3);", [req.body.positions, req.body.workspaceid, req.body.id]));
     res.send(JSON.stringify({result: "success"}));
 }
 
@@ -156,7 +156,7 @@ async function deleteSticky(req, res){
 
 async function createSticky(req, res){
     console.log("adding new sticky to db");
-    await connectAndRun(db => db.none("INSERT INTO stickydata VALUES ($1, $2, $3, $4, $5);", [req.body.author, req.body.workspaceid, req.body.header, req.body.body, req.body.positions]));
+    await connectAndRun(db => db.none("INSERT INTO stickydata VALUES ($1, $2, $3, $4, $5);", [req.body.userid, req.body.workspaceid, req.body.header, req.body.body, req.body.positions]));
     res.send(JSON.stringify({result: "success"}));
 }
 
@@ -168,7 +168,7 @@ async function addChat(req, res){
 
 async function createImage(req, res){
     console.log("adding new image to db");
-    await connectAndRun(db => db.none("INSERT INTO imagedata VALUES ($1, $2, $3, $4);", [req.body.userid, req.body.workspaceid, req.body.image_url, req.body.positions]));
+    await connectAndRun(db => db.none("INSERT INTO imagedata VALUES ($1, $2, $3, $4, $5);", [req.body.userid, req.body.workspaceid, req.body.image_url, req.body.positions, req.body.id]));
     res.send(JSON.stringify({result: "success"}));
 }
 
