@@ -3,8 +3,8 @@
 window.addEventListener("load", async function() {   
     
     document.getElementById("img-button").addEventListener("click", async() => {
-        let user = localStorage.getItem("userName");
-        let img = document.getElementById("profileImage").value;
+        const user = localStorage.getItem("userName");
+        const img = document.getElementById("profileImage").value;
         const response = await fetch('/changeProfPic', {
             method: 'POST',
             headers: {
@@ -22,8 +22,8 @@ window.addEventListener("load", async function() {
 
     document.getElementById("change-password").addEventListener("click", async() => {
         //  Change password
-        let user = localStorage.getItem("userName");
-        let passinput = document.getElementById("currentPassword").value;
+        const user = localStorage.getItem("userName");
+        const passinput = document.getElementById("currentPassword").value;
         const response = await fetch('/login', {
             method: 'POST',
             headers: {
@@ -34,7 +34,7 @@ window.addEventListener("load", async function() {
                 password: passinput
             })
         });
-        let json = await response.json();
+        const json = await response.json();
         if (json.result === "Wrong Password"){
             //Wrong Password
         }else if (json.result === "Login successful"){
@@ -49,7 +49,7 @@ window.addEventListener("load", async function() {
                     password: document.getElementById("newPassword").value
                 })
             });
-            let json2 = await response2.json();
+            const json2 = await response2.json();
             if (json2.result === "No such user"){
                 console.log("PAssword changed for " + user); 
                 //Password Changed
@@ -64,7 +64,7 @@ window.addEventListener("load", async function() {
 
     //  Field to Settings
     document.getElementById("email-button").addEventListener("click", async()=>{
-        let new_email = document.getElementById("emailAddress").value;
+        const new_email = document.getElementById("emailAddress").value;
         const response = await fetch('/updateEmail', {
             method: 'POST',
             headers: {
@@ -75,7 +75,7 @@ window.addEventListener("load", async function() {
                 value: new_email
             })
         });
-        let json = await response.json();
+        const json = await response.json();
         if (json.result === "success"){
             console.log("Email Changed");
         }else{
@@ -88,7 +88,7 @@ window.addEventListener("load", async function() {
     });
 
     document.getElementById("personal-button").addEventListener("click", async()=>{
-        let firstName = document.getElementById("firstName").value;
+        const firstName = document.getElementById("firstName").value;
         const response = await fetch('/updateFirstName', {
             method: 'POST',
             headers: {
@@ -99,7 +99,7 @@ window.addEventListener("load", async function() {
                 value: firstName
             })
         });
-        let json = await response.json();
+        const json = await response.json();
         if (json.result === "success"){
             console.log("firstName Changed");
         }else{
@@ -108,7 +108,7 @@ window.addEventListener("load", async function() {
         if (!response.ok){
             console.log("something's wrong");
         }
-        let lastName = document.getElementById("lastName").value;
+        const lastName = document.getElementById("lastName").value;
         const response2 = await fetch('/updateLastName', {
             method: 'POST',
             headers: {
@@ -119,7 +119,7 @@ window.addEventListener("load", async function() {
                 value: lastName
             })
         });
-        let json2 = await response2.json();
+        const json2 = await response2.json();
         if (json2.result === "success"){
             console.log("lastName Changed");
         }else{
@@ -128,7 +128,7 @@ window.addEventListener("load", async function() {
         if (!response2.ok){
             console.log("something's wrong");
         }
-        let region = document.getElementById("region").value;
+        const region = document.getElementById("region").value;
         const response3 = await fetch('/updateRegion', {
             method: 'POST',
             headers: {
@@ -139,7 +139,7 @@ window.addEventListener("load", async function() {
                 value: region
             })
         });
-        let json3 = await response3.json();
+        const json3 = await response3.json();
         if (json3.result === "success"){
             console.log("region Changed");
         }else{
@@ -152,9 +152,9 @@ window.addEventListener("load", async function() {
     
     //  Your Workspaces. Fetch all workspaces under this username
 
-    let _userid = localStorage.getItem("userName");
+    const _userid = localStorage.getItem("userName");
 
-    let response = await fetch('/getWorkspaceUnderUser', {
+    const response = await fetch('/getWorkspaceUnderUser', {
         method: 'POST',
         headers: {
             'Content-Type':'application/json'
@@ -163,20 +163,20 @@ window.addEventListener("load", async function() {
             userid: _userid
         })
     });
-    let newNodes = [];
-    let json = await response.json();
-    let result = json.result;
-    for (let i in result){
-        let newNode = document.createElement("div");
+    const newNodes = [];
+    const json = await response.json();
+    const result = json.result;
+    for (const i in result){
+        const newNode = document.createElement("div");
         newNode.classList = "wp-img";
         newNode.src = "url(" + result[i].image_url + ")";
-        let titleNode = document.createElement("h4");
+        const titleNode = document.createElement("h4");
         titleNode.classList = "wp-title";
         titleNode.innerText = result[i].title;
         newNode.appendChild(titleNode);
         
         //fetch this workspace's users, in order to append them to workspace node
-        let response2 = await fetch("/shared", {
+        const response2 = await fetch("/shared", {
             method: 'POST',
             headers: {
                 'Content-Type':'application/json'
@@ -186,34 +186,34 @@ window.addEventListener("load", async function() {
                 title: result[i].workspaceid
             })
         });
-        let json2 = await response2.json();
-        let result2 = json2.result;
+        const json2 = await response2.json();
+        const result2 = json2.result;
         if (result2.length === 0){  //  No users shared yet
-            let noUsers = document.createElement("div");
+            const noUsers = document.createElement("div");
             noUsers.innerText = "No CoLab-rators.";
             newNode.append(noUsers);
         }
-        for (let j in result2){
-            let userLine = await userNode(_userid, result[i].title, result2[j].shared);
+        for (const j in result2){
+            const userLine = await userNode(_userid, result[i].title, result2[j].shared);
             newNode.appendChild(userLine);
         }
         newNodes[i] = newNode;
     }
-    for (let i in newNodes){
+    for (const i in newNodes){
         document.getElementById("v-pills-workspace").appendChild(newNodes[i]);
-        let breakNode = document.createElement("div");  //try hr
+        const breakNode = document.createElement("div");  //try hr
         breakNode.innerHTML = '<hr class ="solid">';    
         document.getElementById("v-pills-workspace").appendChild(breakNode);
     }
 });
 
 async function userNode(user, _title, _shared){
-    let node = document.createElement("div");
+    const node = document.createElement("div");
     node.classList = "wp-user";
-    let userNameNode = document.createElement("span");
+    const userNameNode = document.createElement("span");
     userNameNode.innerHTML = `<b>${_shared}</b>`;
     node.appendChild(userNameNode);
-    let response = await fetch("/getUserInfo", {
+    const response = await fetch("/getUserInfo", {
         method: 'POST',
         headers: {
             'Content-Type':'application/json'
@@ -222,22 +222,22 @@ async function userNode(user, _title, _shared){
             userid: _shared
         })
     });
-    let json = await response.json();
+    const json = await response.json();
     if (json.result === "No such userinfo"){
         console.log("This user was not found");
-        let moreUserInfoNode = document.createElement("span");
+        const moreUserInfoNode = document.createElement("span");
         moreUserInfoNode.innerText = "This username does not belong to anyone yet!";
         node.appendChild(moreUserInfoNode);
     }else{
         console.log("This user was found");
-        let userinfo = [json.result.email, json.result.firstname, json.result.lastname, json.result.country];   //  make result[0]?
+        const userinfo = [json.result.email, json.result.firstname, json.result.lastname, json.result.country];   //  make result[0]?
         userinfo.forEach((value) => {
-            let moreUserInfoNode = document.createElement("span");
+            const moreUserInfoNode = document.createElement("span");
             moreUserInfoNode.innerText = value;
             node.appendChild(moreUserInfoNode);
         });  
     }
-    let disinvite = document.createElement("button");
+    const disinvite = document.createElement("button");
     disinvite.classList = "btn btn-primary";
     disinvite.innerText = "Uninvite";
     disinvite.addEventListener("click", async()=>{

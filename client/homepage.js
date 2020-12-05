@@ -2,7 +2,7 @@
 
 
 window.addEventListener("load", async function() {
-    let user = localStorage.getItem("userName");
+    const user = localStorage.getItem("userName");
 
     document.getElementById("closeLogin").addEventListener("click", () =>{
         $("#loginModal").modal('hide');
@@ -12,7 +12,7 @@ window.addEventListener("load", async function() {
     }
 
     //Load Workspaces
-    let _userid = localStorage.getItem("userName");
+    const _userid = localStorage.getItem("userName");
     await displayAllWorkspaces(_userid);
     
 
@@ -22,13 +22,13 @@ window.addEventListener("load", async function() {
             return;
         }
         //  Add Workspace to table
-        let currentUser = loggedIn();   //  "guest" or username saved in localStorage
+        const currentUser = loggedIn();   //  "guest" or username saved in localStorage
         console.log("Adding workspace for " + currentUser);
 
         let title="New Box";
-        let workspaceid = makeWorkspaceID();
+        const workspaceid = makeWorkspaceID();
 
-        let response = await fetch("/checkUniqueWorkspaceName", {
+        const response = await fetch("/checkUniqueWorkspaceName", {
             method: 'POST',
             headers: {
                 'Content-Type':'application/json'
@@ -60,7 +60,7 @@ window.addEventListener("load", async function() {
             title = title + String(i);
         }
 
-        let chatidtobegotten=5,
+        const chatidtobegotten=5,
             planneridtobegotten=5,
             taskidtobegotten=5,
             timelineidtobegotten=5,
@@ -77,7 +77,7 @@ window.addEventListener("load", async function() {
     //  Create Account
 
     document.getElementById("createAccount").addEventListener("click", async() =>{
-        let userinput = document.getElementById("newuserName").value;
+        const userinput = document.getElementById("newuserName").value;
         const response = await fetch('/createAccount', {
             method: 'POST',
             headers: {
@@ -88,7 +88,7 @@ window.addEventListener("load", async function() {
                 password: document.getElementById("newpassword").value
             })
         });
-        let json = await response.json();
+        const json = await response.json();
         if (json.result === "duplicate"){
             alert("Username already in use");
         }else{
@@ -107,7 +107,7 @@ window.addEventListener("load", async function() {
                         username: userinput
                     })
                 });
-                let json2 = await response2.json();
+                const json2 = await response2.json();
                 if (json2.result === "success"){
                     //settings info added
                 }else{
@@ -125,8 +125,8 @@ window.addEventListener("load", async function() {
     //  Login
 
     document.getElementById("login").addEventListener("click", async()=>{
-        let userinput = document.getElementById("userName").value;
-        let passinput = document.getElementById("password").value;
+        const userinput = document.getElementById("userName").value;
+        const passinput = document.getElementById("password").value;
         const response = await fetch('/login', {
             method: 'POST',
             headers: {
@@ -138,7 +138,7 @@ window.addEventListener("load", async function() {
             })
         });
 
-        let json = await response.json();
+        const json = await response.json();
         if (json.result === "No such user"){
             //Send modal to Create Account Tab
             $("#loginModal").modal('hide');
@@ -169,13 +169,13 @@ window.addEventListener("load", async function() {
 
 async function displayAllWorkspaces(_userid){
     //  First clear all boxes.
-    let boxspace = document.getElementById("boxspace");
+    const boxspace = document.getElementById("boxspace");
     while (boxspace.children.length > 0){
-        let child = boxspace.children[0];
+        const child = boxspace.children[0];
         boxspace.removeChild(child);
     }
     //  Now get workspaces owned by this user
-    let response = await fetch('/getWorkspaceUnderUser', {
+    const response = await fetch('/getWorkspaceUnderUser', {
         method: 'POST',
         headers: {
             'Content-Type':'application/json'
@@ -184,13 +184,13 @@ async function displayAllWorkspaces(_userid){
             userid: _userid
         })
     });
-    let json = await response.json();
-    let my_workspaces = json.result;   //  workspaces is collection of data from workspaces
-    for (let i in my_workspaces){
+    const json = await response.json();
+    const my_workspaces = json.result;   //  workspaces is collection of data from workspaces
+    for (const i in my_workspaces){
         await displayWorkspace(my_workspaces[i].title, my_workspaces[i].image_url);
     }
     //  Display ones shared with me
-    let response2 = await fetch('/getSharedToUser', {
+    const response2 = await fetch('/getSharedToUser', {
         method:'POST',
         headers:{
             'Content-Type':'application/json'
@@ -199,9 +199,9 @@ async function displayAllWorkspaces(_userid){
             user:_userid
         })
     });
-    let json2 = await response2.json();
-    let workspaces_shared_with_me = json2.result;   //  workspaces is collection of data from workspaces
-    for (let i in workspaces_shared_with_me){
+    const json2 = await response2.json();
+    const workspaces_shared_with_me = json2.result;   //  workspaces is collection of data from workspaces
+    for (const i in workspaces_shared_with_me){
         await displaySharedWorkspace(workspaces_shared_with_me[i].title, workspaces_shared_with_me[i].userid);
     }
     //  Display hint if there are no boxes in the boxspace
@@ -213,7 +213,7 @@ async function displayAllWorkspaces(_userid){
 }
 
 async function getProfPic(user){
-    let response = await fetch("/getUserInfo", {
+    const response = await fetch("/getUserInfo", {
         method: 'POST',
         headers: {
             'Content-Type':'application/json'
@@ -222,8 +222,8 @@ async function getProfPic(user){
             userid: user
         })
     });
-    let json = await response.json();
-    let image_url = json.result.image_url;
+    const json = await response.json();
+    const image_url = json.result.image_url;
     return image_url;
 
 }
@@ -255,7 +255,7 @@ async function newWorkspace(_userid,_workspaceid,_chatid,_plannerid,_taskid,_tim
 }
 
 function loggedIn(){
-    let username = window.localStorage.getItem("userName");
+    const username = window.localStorage.getItem("userName");
     if (username){
         return username;
     }else{
@@ -266,7 +266,7 @@ function loggedIn(){
 function logIn(username){
     document.getElementById("loginBtn").innerHTML = "Welcome, " + username;
     document.getElementById("loginBtn").disabled = true;
-    let newBtn = document.createElement("button");
+    const newBtn = document.createElement("button");
     newBtn.className = "btn btn-secondary btn-lg signoutBtn";
     newBtn.innerHTML = "Sign out";
     newBtn.addEventListener("click", ()=>{
@@ -284,18 +284,18 @@ function logIn(username){
 let isOpen = true;
 async function displayWorkspace(_title, image_url){
     console.log("displaying workspace" + _title);
-    let user = loggedIn();
+    const user = loggedIn();
 
     const addBox = document.createElement("div");
     addBox.className = "workspacebox";
     document.getElementById("boxspace").appendChild(addBox);
 
-    let boxName = document.createElement("span");
+    const boxName = document.createElement("span");
     boxName.innerHTML = _title;
     boxName.className = "workspaceNameText";
     boxName.style.fontWeight = "bold";
 
-    let deleteBox = document.createElement("img");
+    const deleteBox = document.createElement("img");
     deleteBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png";
     deleteBox.className = "deleteButton";  
     deleteBox.addEventListener("click", async()=> {
@@ -323,17 +323,17 @@ async function displayWorkspace(_title, image_url){
         displayAllWorkspaces(user);
     });
 
-    let editBox = document.createElement("img");
+    const editBox = document.createElement("img");
     editBox.src = "https://image.flaticon.com/icons/png/512/84/84380.png";
     editBox.className = "editBox";
     editBox.addEventListener("click", async() =>{
         if(isOpen){
-            let saveName = document.createElement("button");
+            const saveName = document.createElement("button");
             saveName.className = "btn btn-primary box-rel";
             saveName.innerHTML = "Save Title";
 
-            let newName = document.createElement("input");
-            newName.className = "box-rel"
+            const newName = document.createElement("input");
+            newName.className = "box-rel";
             newName.placeholder = "Enter New Title";
 
             addBox.appendChild(newName);
@@ -345,7 +345,7 @@ async function displayWorkspace(_title, image_url){
                 addBox.appendChild(editBox);
                 isOpen = true;
                 //Check if the new title is unique 
-                let response = await fetch("/checkUniqueWorkspaceName", {
+                const response = await fetch("/checkUniqueWorkspaceName", {
                     method: 'POST',
                     headers: {
                         'Content-Type':'application/json'
@@ -394,15 +394,15 @@ async function displayWorkspace(_title, image_url){
         }
     });
     
-    let editPicture = document.createElement("img");
+    const editPicture = document.createElement("img");
     editPicture.src = "https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_31-512.png";
     editPicture.className = "editPicture";
     editPicture.addEventListener("click", async()=>{
 
-        let newimage = document.createElement("input");
+        const newimage = document.createElement("input");
         newimage.placeholder = "Enter Image Url";
 
-        let saveimage = document.createElement("button");
+        const saveimage = document.createElement("button");
         saveimage.className = "btn btn-primary";
         saveimage.innerHTML = "Save Image";
 
@@ -410,7 +410,7 @@ async function displayWorkspace(_title, image_url){
         addBox.appendChild(saveimage);
         
         saveimage.addEventListener("click", async()=>{
-            let new_image_url = newimage.value;
+            const new_image_url = newimage.value;
             addBox.style.backgroundImage = "url(" + new_image_url + ")";
             addBox.removeChild(saveimage);
             addBox.removeChild(newimage);             
@@ -427,7 +427,7 @@ async function displayWorkspace(_title, image_url){
             });     
         }); 
     });
-    let enterButton = document.createElement("img");
+    const enterButton = document.createElement("img");
     enterButton.className = "enter-button";
     enterButton.src = "https://cdn2.iconfinder.com/data/icons/donkey/800/2-256.png";
     enterButton.addEventListener("click", async()=>{
@@ -435,7 +435,7 @@ async function displayWorkspace(_title, image_url){
             alert("Please log in before entering a workspace!");
             return;
         }
-        let response = await fetch('/getWorkspaceID', {
+        const response = await fetch('/getWorkspaceID', {
             method: 'POST',
             headers: {
                 'Content-Type':'application/json'
@@ -445,7 +445,7 @@ async function displayWorkspace(_title, image_url){
                 title: boxName.innerHTML
             })
         });        
-        let json = await response.json();
+        const json = await response.json();
         
         window.localStorage.setItem("workspaceid", json.result[0].workspaceid);   //  workspaceid in localstorage        
         //  Dynamically created button needs dynamically created html requests.
@@ -462,23 +462,23 @@ async function displayWorkspace(_title, image_url){
 
 async function displaySharedWorkspace(_title, owner){
     console.log("displaying workspace " + _title);
-    let user = loggedIn();
+    const user = loggedIn();
 
     const addBox = document.createElement("div");
     addBox.className = "workspacebox-shared";
     document.getElementById("boxspace").appendChild(addBox);
 
-    let boxName = document.createElement("span");
+    const boxName = document.createElement("span");
     boxName.innerHTML = _title;
     boxName.className = "workspaceNameText";
     boxName.style.fontWeight = "bold";
 
-    let ownerName = document.createElement("span");
+    const ownerName = document.createElement("span");
     ownerName.innerHTML = "<br>Owner:<br>" + owner;
     ownerName.className = "workspaceNameText";
     ownerName.style.fontWeight = "bold";
 
-    let leaveBox = document.createElement("img");
+    const leaveBox = document.createElement("img");
     leaveBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png";
     leaveBox.className = "leaveButton";
     leaveBox.addEventListener("click", async()=> {
@@ -498,12 +498,12 @@ async function displaySharedWorkspace(_title, owner){
         displayAllWorkspaces(user);
     });
 
-    let enterButton = document.createElement("img");
+    const enterButton = document.createElement("img");
     enterButton.className = "enter-button";
     enterButton.src = "https://cdn2.iconfinder.com/data/icons/donkey/800/2-256.png";
     enterButton.addEventListener("click", async()=>{
         //  first get workspaceid
-        let response = await fetch('/getWorkspaceID', {
+        const response = await fetch('/getWorkspaceID', {
             method: 'POST',
             headers: {
                 'Content-Type':'application/json'
@@ -513,7 +513,7 @@ async function displaySharedWorkspace(_title, owner){
                 title: boxName.innerHTML
             })
         });        
-        let json = await response.json();
+        const json = await response.json();
         window.localStorage.setItem("workspaceid", json.result[0].workspaceid);   //  workspaceid in localstorage
         window.open("/workspace.html", "_self");
     });
@@ -526,9 +526,9 @@ async function displaySharedWorkspace(_title, owner){
 
 function makeWorkspaceID() {
     let result           = '';
-    let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let length = 10;      //  So there is 1/(62^10) chance of duplicates
-    for ( var i = 0; i < length; i++ ) {
+    const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const length = 10;      //  So there is 1/(62^10) chance of duplicates
+    for ( let i = 0; i < length; i++ ) {
        result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     return result;
