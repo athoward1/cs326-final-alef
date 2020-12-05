@@ -20,8 +20,6 @@ window.addEventListener("load", async function() {
   document.title = title;
   document.getElementById("title").innerText = title;
 
-  let owner = localStorage.getItem("userName");  //should really be workspace owner, depenant on unique workspaceid
-  let __workspaceid = localStorage.getItem("workspace");  // get the title of the workspace you clicked on
     const stDate = localStorage.getItem('projectMade'); // date the workspace was created
     const sdDate = localStorage.getItem('deadline'); // deadline of the project
     const tDate = new Date(stDate);
@@ -353,7 +351,8 @@ window.addEventListener("load", async function() {
           const response = await fetch('./updateImagePosition', {
             method:'POST',
             headers:{
-                'Content-Type':'application/json'
+                'Content-Type':'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify({
                     workspaceid:_workspaceid,
@@ -537,21 +536,19 @@ document.getElementById('IdeaTaskSelect').addEventListener('change', async => {
    for (let i = 1; i<=numTasks;i++){
        const theDiv = document.getElementById('selectedTasks');
        const theLabel = document.createElement('label');
-       const theSelect = document.createElement('select');
-       //will need a list of the tasks to forEach through but for now we can set the values to make 5 options
-       for(let t = 1; t<=5;t++){
-           const theOption = document.createElement('option');
-           theOption.innerText = `${t}`;
-           theSelect.appendChild(theOption);
-       }
-       theDiv.classList.add('form-group');
+       const theInput = document.createElement('input');
+       //give the user the options of up to 5 required tasks
+       
        theLabel.setAttribute('for',`task-${i}`);
        theLabel.innerHTML = `task-${i}`;
        theLabel.classList.add('reqTasks');
-       theSelect.classList.add('form-control');
-       theSelect.classList.add('reqTasks');
-       theSelect.setAttribute('id',`task-${i}`)
-       theLabel.appendChild(theSelect);
+       theInput.setAttribute('type', 'text');
+       theInput.classList.add('form-control');
+       theInput.classList.add('reqTasks');
+       theInput.setAttribute('id',`task-${i}`)
+       theInput.setAttribute('placeholder', 'What needs to be done?');
+       
+       theLabel.appendChild(theInput);
        theDiv.appendChild(theLabel);
        
    }
@@ -566,13 +563,7 @@ document.getElementById('confirmIdea').addEventListener('click', async => {
     const ideaNameEl = document.getElementById('ideaName');
     const ideaDescEl = document.getElementById('ideaDesc');
     
-    ideaDescEl.value = '';
-    ideaNameEl.value = '';
-    thisLabel.hidden = false;
-    thisElement.hidden = false;
-    document.querySelectorAll('.reqTasks').forEach(item => {
-            item.remove();
-    })
+    
     
     const theChat = document.getElementById('chat');
     const cardDiv = document.createElement('div');
@@ -602,6 +593,16 @@ document.getElementById('confirmIdea').addEventListener('click', async => {
     cardTitle.innerHTML = ideaName;
     cardDescr.classList.add('card-text');
     cardDescr.innerHTML = ideaDesc;
+    cardDescr.innerHTML += ".<br>";
+    cardDescr.innerHTML += 'To-Do list';
+    for(let i =1; i<6;i++) {
+        const task = $(`#task-${i}`).val();
+        console.log(task);
+        if (task) {
+            cardDescr.innerHTML += ".<br>";
+        cardDescr.innerHTML += `-${task}`;
+    }else{break;}
+    }
     cardBodyDiv.appendChild(cardTitle);
     cardBodyDiv.appendChild(cardDescr);
     cardDiv.appendChild(cardBodyDiv);
@@ -653,6 +654,13 @@ document.getElementById('confirmIdea').addEventListener('click', async => {
     theChat.appendChild(EnterLabel);
     theChat.appendChild(theEnter);
     theChat.appendChild(sendBut);
+    ideaDescEl.value = 'Describe your idea';
+    ideaNameEl.value = 'Idea Name';
+    thisLabel.hidden = false;
+    thisElement.hidden = false;
+    document.querySelectorAll('.reqTasks').forEach(item => {
+        item.remove();
+    })
 });
 
 //manage buttons
@@ -683,7 +691,7 @@ $(document).on('click','#voteForButt', async function(){
             p.classList.add('fade');
             p.classList.add('show');
             p.setAttribute('role', 'alert')
-            p.innerHTML = 'Idea was put on hold';
+            p.innerHTML = 'Idea has lost to democracy';
             dis.setAttribute('type', 'button');
             dis.classList.add('close');
             dis.setAttribute('data-dismiss', 'alert');
@@ -733,7 +741,7 @@ $(document).on('click','#voteNotButt',async function(){
     //make new sticky
         const ideaName = document.getElementById('ideaName').value;
         const ideaDesc = document.getElementById('ideaDesc').value;
-        await createSticky(ideaName, ideaDesc, [0,0,0,0]);
+         // make a new stcky (ideaName, ideaDesc, [0,0,0,0]);
     //wreck this card 
     //check for other cards?
     //announce result
@@ -748,7 +756,7 @@ $(document).on('click','#voteNotButt',async function(){
             p.classList.add('fade');
             p.classList.add('show');
             p.setAttribute('role', 'alert')
-            p.innerHTML = 'Idea was put on hold';
+            p.innerHTML = 'Idea has lost to democracy';
             dis.setAttribute('type', 'button');
             dis.classList.add('close');
             dis.setAttribute('data-dismiss', 'alert');
