@@ -2,6 +2,7 @@
 
 
 window.addEventListener("load", async function() {
+    let user = localStorage.getItem("userName");
 
     document.getElementById("closeLogin").addEventListener("click", () =>{
         $("#loginModal").modal('hide');
