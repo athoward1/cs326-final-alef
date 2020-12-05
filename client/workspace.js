@@ -382,8 +382,6 @@ function makeID() {
   }
   return result;
 }
-
-//$('.alert').alert()
 //timeline code 
 //get selected date from user and set the aria-valuemax of the timeline to the date
 //get the current date and create days left(display with label) to set the timeline too via aria-valuenow 
