@@ -263,10 +263,11 @@ window.addEventListener("load", async function() {
     async function dragElement(elmnt, positions, element_type, _id) {
         console.log("Initialize drag element at position "+String(positions));  //  I thought next line would set position of sticky.g
         
-        let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
+        elmnt.style.left = positions[0] + "px";
+        elmnt.style.top = positions[1] + "px";
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
         
         let imagePosition = elmnt.getBoundingClientRect();
-        let position1 = imagePosition.top, position2 = imagePosition.right, position3 = imagePosition.bottom, position4 = imagePosition.left;
 
         if (document.getElementById(elmnt.id + "header1")) {
           // if present, the header is where you move the DIV from:
@@ -314,7 +315,7 @@ window.addEventListener("load", async function() {
           //Request to update saved data
           
           let _workspaceid = localStorage.getItem("workspaceid");
-          let _positions = [pos1, pos2, pos3, pos4];
+          let _positions = [elmnt.offsetLeft, elmnt.offsetTop];
           _positions = '{' + String(_positions) + '}';
           let _header = elmnt.children[0].innerHTML, _body = elmnt.children[1].innerHTML;
           
@@ -343,7 +344,7 @@ window.addEventListener("load", async function() {
           document.onmousemove = null;
           //Request to update saved data
           let _workspaceid = localStorage.getItem("workspaceid");
-          let _positions = [pos1, pos2, pos3, pos4];
+          let _positions = [elmnt.offsetLeft, elmnt.offsetTop];
           _positions = '{' + String(_positions) + '}';
           
           const response = await fetch('./updateImagePosition', {
