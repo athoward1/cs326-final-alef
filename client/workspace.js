@@ -589,9 +589,11 @@ document.getElementById('confirmIdea').addEventListener('click', async => {
     cardDiv.setAttribute('id','newIdea');
     cardBodyDiv.classList.add('card-body');
     cardTitle.classList.add('card-title');
+    cardTitle.setAttribute('id','ideaName');
     //get value from submission form
     cardTitle.innerHTML = ideaName;
     cardDescr.classList.add('card-text');
+    cardDescr.setAttribute('id','ideaDesc');
     cardDescr.innerHTML = ideaDesc;
     cardDescr.innerHTML += ".<br>";
     cardDescr.innerHTML += 'To-Do list';
@@ -722,6 +724,9 @@ $(document).on('click','#voteForButt', async function(){
             dis.appendChild(span);
             p.appendChild(dis);
             theChat.append(p);
+            const stickyName = $(`#ideaName`).val();
+            const stickyBody = $(`#ideaDesc`).val();
+            await createSticky(stickyName, stickyBody, [900,400,0,0]);
         }
         const card = document.getElementById('newIdea');
         card.remove();
@@ -787,6 +792,9 @@ $(document).on('click','#voteNotButt',async function(){
             dis.appendChild(span);
             p.appendChild(dis);
             theChat.append(p);
+            const stickyName = $(`#ideaName`).val();
+            const stickyBody = $(`#ideaDesc`).val();
+            await createSticky(stickyName, stickyBody, [900,400,0,0]);
         }
         
     const card = document.getElementById('newIdea');
