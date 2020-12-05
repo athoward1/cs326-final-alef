@@ -372,6 +372,7 @@ document.getElementById('resetDate').addEventListener('click', async () => {
    localStorage.removeItem('projectMade');
    document.getElementById('timeLineDateMade').innerText = " Please update timeline to set new creation date";
 });
+
 function makeID() {
   let result           = '';
   let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
