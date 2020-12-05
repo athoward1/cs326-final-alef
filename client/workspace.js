@@ -127,7 +127,7 @@ window.addEventListener("load", async function() {
   document.getElementById("saveSticky").addEventListener("click", async()=>{
     let header = document.getElementById("stickyheader").value;
     let body = document.getElementById("stickybody").value;
-    await createSticky(header, body, [0,0,0,0]);      
+    await createSticky(header, body, [992,246]);      
   });
 
   async function displaySticky(author, _header, _body, positions){
@@ -209,8 +209,8 @@ window.addEventListener("load", async function() {
       let image_url = "url("+ document.getElementById("imageForm").value+ ")";
 
       let _id = makeID();
-      await displayImage(image_url, [0,0,0,0], _id);  
-      await createImage(image_url, [0,0,0,0], _id);
+      await displayImage(image_url, [1015,379], _id);  
+      await createImage(image_url, [1015,379], _id);
 
     });
 
