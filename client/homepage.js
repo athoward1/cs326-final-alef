@@ -97,6 +97,7 @@ window.addEventListener("load", async function() {
                 //localStorage.setItem("password", document.getElementById("newpassword").value);
                 logIn(document.getElementById("newuserName").value);
                 $("#loginModal").modal('hide');
+                displayAllWorkspaces(document.getElementById("newuserName").value);
                 //Make new settings entry
                 const response2 = await fetch('/createSettings', {
                     method: 'POST',
