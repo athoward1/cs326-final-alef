@@ -20,16 +20,14 @@ window.addEventListener("load", async function() {
   document.title = title;
   document.getElementById("title").innerText = title;
 
-    const stDate = localStorage.getItem('projectMade'); // date the workspace was created
-    const sdDate = localStorage.getItem('deadline'); // deadline of the project
-    const tDate = new Date(stDate);
-    const dDate = new Date(sdDate);
-    if(tDate === null){document.getElementById('timeLineDateMade').innerText +='';}
-    else {document.getElementById('timeLineDateMade').innerText = `Date Created: ${tDate.toDateString()}`;}
-    calcTimeL(dDate.toDateString(), tDate.toDateString());
+  const stDate = localStorage.getItem('projectMade'); // date the workspace was created
+  const sdDate = localStorage.getItem('deadline'); // deadline of the project
+  const tDate = new Date(stDate);
+  const dDate = new Date(sdDate);
+  if(tDate === null){document.getElementById('timeLineDateMade').innerText +='';}
+  else {document.getElementById('timeLineDateMade').innerText = `Date Created: ${tDate.toDateString()}`;}
+  calcTimeL(dDate.toDateString(), tDate.toDateString());
     
-  document.title = __workspaceid;
-  document.getElementById("title").innerText = __workspaceid;
   //Display Images
   let response2 = await fetch('/getImages', {
     method: 'POST',
