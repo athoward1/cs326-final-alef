@@ -455,8 +455,7 @@ document.getElementById('confirmDate').addEventListener('click', async () => {
 
         calcTimeL(pickedDate.toDateString(), dateC.toDateString());
     }
-
-});
+    
 
 function calcTimeL(pickedDate, dateC){
     
@@ -726,7 +725,7 @@ $(document).on('click','#voteForButt', async function(){
             theChat.append(p);
             const stickyName = $(`#ideaName`).val();
             const stickyBody = $(`#ideaDesc`).val();
-            await createSticky(stickyName, stickyBody, [900,400,0,0]);
+            await createSticky(stickyName, stickyBody, [0,0,0,0]);
         }
         const card = document.getElementById('newIdea');
         card.remove();
@@ -743,10 +742,6 @@ $(document).on('click','#voteNotButt',async function(){
     votesNotBar.setAttribute('aria-valuenow',`${parseInt(votesNotBar.getAttribute('aria-valuenow'))+1}`);
     votesNotBar.setAttribute('style',`width: ${(parseInt(votesNotBar.getAttribute('aria-valuenow'))/parseInt(votesNotBar.getAttribute('aria-valuemax')))*100}%`);
     if((parseInt(votesNotBar.getAttribute('aria-valuenow'))+parseInt(votesForBar.getAttribute('aria-valuenow'))) === parseInt(votesForBar.getAttribute('aria-valuemax'))){
-    //make new sticky
-        const ideaName = document.getElementById('ideaName').value;
-        const ideaDesc = document.getElementById('ideaDesc').value;
-         // make a new stcky (ideaName, ideaDesc, [0,0,0,0]);
     //wreck this card 
     //check for other cards?
     //announce result
@@ -794,6 +789,7 @@ $(document).on('click','#voteNotButt',async function(){
             theChat.append(p);
             const stickyName = $(`#ideaName`).val();
             const stickyBody = $(`#ideaDesc`).val();
+            //create new Sticky
             await createSticky(stickyName, stickyBody, [900,400,0,0]);
         }
         
@@ -826,4 +822,5 @@ async function addChat(_text, _dateSent){
         console.error(`Could not add message to database.`);
     }
 }
+});
 
