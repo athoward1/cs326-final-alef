@@ -14,16 +14,6 @@ window.addEventListener("load", async function() {
     let _userid = localStorage.getItem("userName");
     await displayAllWorkspaces(_userid);
     
-    //Set Profile Picture
-    let user = loggedIn();
-    if (user === "Guest"){  //  === GUESTID
-        console.log("Guest logged in");
-        document.getElementById("profilePicture").src = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
-    }else{
-        console.log("User " + user + " is logged in.");
-        let src = await getProfPic(user);
-        document.getElementById("profilePicture").src = src;    //  This line is very busted. I don't know why.
-    }
 
     document.getElementById('addButton').addEventListener('click', async()=>{
         if (loggedIn() === "Guest"){
@@ -462,7 +452,7 @@ async function displayWorkspace(_title, image_url){
         window.open("/workspace.html", "_self");
     });
     addBox.appendChild(enterButton);
-    addBox.style.backgroundImage = image_url;
+    addBox.style.backgroundImage = "url(" + image_url + ")";
     addBox.appendChild(editPicture);
     addBox.appendChild(deleteBox);
     addBox.appendChild(boxName);
