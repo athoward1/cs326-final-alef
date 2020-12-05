@@ -408,7 +408,6 @@ document.getElementById('confirmDate').addEventListener('click', async () => {
     }
     
     const pickedDate = new Date(document.getElementById('timelineChange').value);
-    //save this to memory stupid! 
     localStorage.setItem('deadline', pickedDate.toDateString());
     const timeline = document.getElementById('timeline');
     if (dateC > pickedDate || isNaN(pickedDate.getTime()) ) {
