@@ -103,7 +103,7 @@ window.addEventListener("load", async function() {
         }else{
             if (json.result === "No such user"){    //  User created, update localStorage and hide modal
                 localStorage.setItem("userName", document.getElementById("newuserName").value);
-                localStorage.setItem("password", document.getElementById("newpassword").value);
+                //localStorage.setItem("password", document.getElementById("newpassword").value);
                 logIn(document.getElementById("newuserName").value);
                 $("#loginModal").modal('hide');
                 //Make new settings entry
@@ -162,7 +162,7 @@ window.addEventListener("load", async function() {
                 if (json.result === "Login successful"){
                     //Correct Password, logging in
                     localStorage.setItem("userName", userinput);
-                    localStorage.setItem("password", passinput);
+                    //localStorage.setItem("password", passinput);
                     logIn(userinput);
                     window.open("/index.html", "_self");    //  Just reload to clear current workspaces
                     $("#loginModal").modal('hide');
@@ -184,7 +184,7 @@ async function displayAllWorkspaces(_userid){
         boxspace.removeChild(child);
     }
     //  Now get workspaces owned by this user
-    let response = await fetch('/getWorkspaceInfo', {
+    let response = await fetch('/getWorkspaceUnderUser', {
         method: 'POST',
         headers: {
             'Content-Type':'application/json'
@@ -444,7 +444,19 @@ async function displayWorkspace(_title, image_url){
             alert("Please log in before entering a workspace!");
             return;
         }
-        window.localStorage.setItem("workspace", boxName.innerHTML);    //Needs to be a GET
+        let response = await fetch('/getWorkspaceID', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                username: user,
+                title: boxName.innerHTML
+            })
+        });        
+        let json = await response.json();
+        
+        window.localStorage.setItem("workspaceid", json.result[0].workspaceid);   //  workspaceid in localstorage        
         //  Dynamically created button needs dynamically created html requests.
         //  await fetch("/workspace.html");
         window.open("/workspace.html", "_self");
@@ -458,7 +470,7 @@ async function displayWorkspace(_title, image_url){
 }
 
 async function displaySharedWorkspace(_title, owner){
-    console.log("displaying workspace" + _title);
+    console.log("displaying workspace " + _title);
     let user = loggedIn();
 
     const addBox = document.createElement("div");
@@ -479,7 +491,7 @@ async function displaySharedWorkspace(_title, owner){
     leaveBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png";
     leaveBox.className = "leaveButton";
     leaveBox.addEventListener("click", async()=> {
-        document.getElementById("boxspace").removeChild(addBox);    //redundant?
+        document.getElementById("boxspace").removeChild(addBox);
         //  Uninvite self
         await fetch("/uninvite", {
             method:'POST',
@@ -499,11 +511,22 @@ async function displaySharedWorkspace(_title, owner){
     enterButton.className = "enter-button";
     enterButton.src = "https://cdn2.iconfinder.com/data/icons/donkey/800/2-256.png";
     enterButton.addEventListener("click", async()=>{
-        window.localStorage.setItem("workspace", boxName.innerHTML);    //Needs to be a GET
+        //  first get workspaceid
+        let response = await fetch('/getWorkspaceID', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                username: owner,
+                title: boxName.innerHTML
+            })
+        });        
+        let json = await response.json();
+        window.localStorage.setItem("workspaceid", json.result[0].workspaceid);   //  workspaceid in localstorage
         window.open("/workspace.html", "_self");
     });
     addBox.appendChild(enterButton);
-    //addBox.style.backgroundImage = image_url;
     addBox.appendChild(leaveBox);
     addBox.appendChild(boxName);
     addBox.appendChild(ownerName);

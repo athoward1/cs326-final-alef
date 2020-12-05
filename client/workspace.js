@@ -1,6 +1,24 @@
 
 "use strict";
 window.addEventListener("load", async function() {
+  console.log("This page is loaded twice");
+  let user = localStorage.getItem("userName");
+  let __workspaceid = localStorage.getItem("workspaceid");
+  //First retrieve the owner and title from the workspaceid. This user may not be the owner
+  let response = await fetch('/getWorkspaceInfo', {
+    method: 'POST',
+    headers: {
+        'Content-Type':'application/json'
+    },
+    body: JSON.stringify({
+        workspaceid: __workspaceid
+    })
+  });
+  let json = await response.json();
+  let owner = json.result[0].username;
+  let title = json.result[0].title;
+  document.title = title;
+  document.getElementById("title").innerText = title;
 
   let owner = localStorage.getItem("userName");  //should really be workspace owner, depenant on unique workspaceid
   let __workspaceid = localStorage.getItem("workspace");  // get the title of the workspace you clicked on
@@ -14,71 +32,6 @@ window.addEventListener("load", async function() {
     
   document.title = __workspaceid;
   document.getElementById("title").innerText = __workspaceid;
-
-  //Display Stickies
-  let response = await fetch('/getStickies', {
-      method: 'POST',
-      headers: {
-          'Content-Type':'application/json'
-      },
-      body: JSON.stringify({
-          userid: owner,
-          workspaceid: __workspaceid
-      })
-  });
-  let json = await response.json();
-  let result = json.result;
-  for (let i in result){
-    console.log(`Displaying sticky. Header: ${result[i].sheader}. Positions: ${result[i].positions}`);
-    await displaySticky(result[i].sheader, result[i].sbody, result[i].positions);
-  }
-  
-  document.getElementById("inviteDropDown").addEventListener("click", async() =>{
-    //  Needs to check if local user is the owner of the workspace
-
-    if(document.getElementById("invitePopUp").style.display === "block"){
-      document.getElementById("invitePopUp").style.display = "none";
-    }else{
-      document.getElementById("invitePopUp").style.display = "block";
-      document.getElementById("invitedText").style.display = "none";
-    }
-    
-    document.getElementById("inviteButton").addEventListener("click", async()=>{
-      let _invite = document.getElementById("newPersonName").value;
-      let owner = window.localStorage.getItem("userName");
-
-      if(document.getElementById("invitedText") !== "Invited!" && _invite !== "" && _invite !== owner){
-        let solidLine = document.createElement("hr");
-        
-        document.getElementById("invitePlaceholder").style.display = "none";
-
-        let newPerson = document.createElement("p");
-        newPerson.innerHTML = _invite;
-        document.getElementById("invitedDiv").appendChild(newPerson);
-        document.getElementById("invitedDiv").appendChild(solidLine);
-        document.getElementById("newPersonName").value = "";
-        
-        document.getElementById("invitedText").style.display = "block";
-        let _workspaceid = localStorage.getItem("workspace");
-        let response = fetch("/addNewShare",{
-          method: 'POST',
-          headers:{
-          'Content-Type':'application/json'
-          },
-          body: JSON.stringify({
-              userid: owner,
-              title:_workspaceid,
-              invite:_invite
-          })
-        });
-      }
-
-      
-    });
-    
-    
-  });
-  
   //Display Images
   let response2 = await fetch('/getImages', {
     method: 'POST',
@@ -86,7 +39,6 @@ window.addEventListener("load", async function() {
         'Content-Type':'application/json'
     },
     body: JSON.stringify({
-        userid: owner,
         workspaceid: __workspaceid
     })
   });
@@ -96,6 +48,74 @@ window.addEventListener("load", async function() {
     console.log(`Displaying image. Image: ${result2[i].image_url}. Positions: ${result2[i].positions}`);
     await displayImage(result2[i].image_url, result2[i].positions);
   }
+
+  //Display Stickies
+  let response3 = await fetch('/getStickies', {
+      method: 'POST',
+      headers: {
+          'Content-Type':'application/json'
+      },
+      body: JSON.stringify({
+          workspaceid: __workspaceid
+      })
+  });
+  let json3 = await response3.json();
+  let result3 = json3.result;
+  for (let i in result3){
+    console.log(`Displaying sticky. Header: ${result3[i].sheader}. Positions: ${result3[i].positions}`);
+    await displaySticky(result3[i].userid, result3[i].sheader, result3[i].sbody, result3[i].positions);
+  }
+  let closeButtonShown = true;
+  document.getElementById("inviteDropDown").addEventListener("click", async() =>{
+    //  Needs to check if local user is the owner of the workspace
+    if (owner !== user){
+      alert("Must be owner of the workspace to share")
+    }
+    //  Should it just not show the button?
+    
+    if(document.getElementById("invitePopUp").style.display === "block"){
+      document.getElementById("invitePopUp").style.display = "none";
+    }
+    document.getElementById("invitePopUp").style.display = "block";
+    let closeButton = document.createElement("span");
+    closeButton.textContent="X";
+    closeButton.className = "closeInvite";
+    if(closeButtonShown){
+      document.getElementById("invitedDiv").appendChild(closeButton);
+    }
+    closeButtonShown = false;
+    closeButton.addEventListener("click", () =>{
+      document.getElementById("invitePopUp").style.display = "none";
+    });
+    document.getElementById("inviteButton").addEventListener("click", async()=>{
+      
+      let _invite = document.getElementById("newPersonName").value;
+      if(document.getElementById("invitedText") !== "Invited!" && _invite !== "" && _invite !== owner){
+        let solidLine = document.createElement("hr");
+        
+        document.getElementById("invitePlaceholder").style.display = "none";
+        let newPerson = document.createElement("p");
+        newPerson.innerHTML = _invite;
+        document.getElementById("invitedDiv").appendChild(newPerson);
+        document.getElementById("invitedDiv").appendChild(solidLine);
+        document.getElementById("newPersonName").value = "";
+        
+        document.getElementById("invitedText").style.display = "block";
+        let _workspaceid = localStorage.getItem("workspaceid");
+        let response = fetch("/addNewShare",{
+          method: 'POST',
+          headers:{
+          'Content-Type':'application/json'
+          },
+          body: JSON.stringify({
+              userid: owner,
+              title:title,
+              invite:_invite
+          })
+        });
+      }
+    });
+  });
 
   document.getElementById("cancel").addEventListener("click", ()=>{
       $("#newSticky").modal('hide');
@@ -114,7 +134,7 @@ window.addEventListener("load", async function() {
     await createSticky(header, body, [0,0,0,0]);      
   });
 
-  async function displaySticky(_header, _body, positions){
+  async function displaySticky(author, _header, _body, positions){
     
     let stickyNote = document.createElement("div");
     let stickyNoteheader = document.createElement("div");
@@ -133,9 +153,18 @@ window.addEventListener("load", async function() {
     stickyNote.appendChild(stickyNoteheader);
     stickyNote.appendChild(firstLine);
     stickyNote.appendChild(deleteBox);
+    let authorTextNode = document.createElement("span");
+    stickyNote.appendChild(authorTextNode);
+    authorTextNode.textContent = "Author: " + author;
+    authorTextNode.className = "authorTextNode";
+    stickyNote.addEventListener("mouseover", ()=>{
+      authorTextNode.style.display = "block";
+    });
+    stickyNote.addEventListener("mouseout", ()=>{
+      authorTextNode.style.display = "none";
+    });
     
-    let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
-    let _workspaceid = "New Box";
+    let _workspaceid = localStorage.getItem("workspaceid");
     deleteBox.addEventListener("click", async()=>{
         row1.removeChild(stickyNote);
         await fetch("/deleteSticky", {
@@ -144,7 +173,6 @@ window.addEventListener("load", async function() {
               'Content-Type':'application/json'
           },
           body: JSON.stringify({
-              userid: _userid,
               workspaceid: _workspaceid,
               header: _header,
               body: _body
@@ -157,11 +185,10 @@ window.addEventListener("load", async function() {
   }
 
   async function createSticky(_header, _body, _positions){
-    await displaySticky(_header, _body, _positions);
     $("#newSticky").modal('hide');
-    let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
-    //get workspaceid
-    let _workspaceid = "New Box";
+    let author = localStorage.getItem("userName");
+    await displaySticky(author, _header, _body, _positions);
+    let _workspaceid = localStorage.getItem("workspaceid");
     
     const response = await fetch('./createSticky', {
       method:'POST',
@@ -169,7 +196,7 @@ window.addEventListener("load", async function() {
           'Content-Type':'application/json'
       },
       body: JSON.stringify({
-              userid:_userid,
+              userid: author,
               workspaceid:_workspaceid,
               header: _header,
               body: _body,
@@ -184,38 +211,41 @@ window.addEventListener("load", async function() {
     document.getElementById("saveImg").addEventListener("click", async() =>{
       $("#newImg").modal('hide');
       let image_url = "url("+ document.getElementById("imageForm").value+ ")";
-      await displayImage(image_url, [0,0,0,0])  
-      await createImage(image_url, [0,0,0,0]);
+
+      let _id = makeID();
+      await displayImage(image_url, [0,0,0,0], _id);  
+      await createImage(image_url, [0,0,0,0], _id);
+
     });
 
-    async function createImage(_image_url, _positions){
-      let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
-      let _workspaceid = "New Box";
+    async function createImage(_image_url, _positions, _id){
+      let author = localStorage.getItem("userName");
+      let _workspaceid = localStorage.getItem("workspaceid");
       const response = await fetch('./createImage', {
         method:'POST',
         headers:{
             'Content-Type':'application/json'
         },
         body: JSON.stringify({
-                userid:_userid,
+                userid: author,
                 workspaceid:_workspaceid,
                 image_url: _image_url,
-                positions: _positions
+                positions: _positions,
+                id: _id
             })
       });
     }
 
-    async function displayImage(_image_url, positions){
+    async function displayImage(_image_url, positions, _id){
       let imageDiv = document.createElement("div");
       imageDiv.id = "image";
       imageDiv.style.backgroundImage = _image_url;
       let deleteBox = document.createElement("img");
-      deleteBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png"
-      deleteBox.className = "deleteBox";
+      deleteBox.src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/DeleteDustbin-512.png";
 
-          
-      let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
-      let _workspaceid = "New Box";
+      deleteBox.className = "deleteBox"; 
+      let _workspaceid = localStorage.getItem("workspaceid");
+
       deleteBox.addEventListener("click", async()=>{
           row1.removeChild(imageDiv);
           await fetch("/deleteImage", {
@@ -224,21 +254,24 @@ window.addEventListener("load", async function() {
                 'Content-Type':'application/json'
             },
             body: JSON.stringify({
-                userid: _userid,
                 workspaceid: _workspaceid,
-                image_url: _image_url
+                id: _id
             })
           });
       });
       imageDiv.appendChild(deleteBox);
       document.getElementById("row1").appendChild(imageDiv);
-      await dragElement(imageDiv, positions, "image");
+      await dragElement(imageDiv, positions, "image", _id);
     }
 
-    async function dragElement(elmnt, positions, element_type) {
+    async function dragElement(elmnt, positions, element_type, _id) {
         console.log("Initialize drag element at position "+String(positions));  //  I thought next line would set position of sticky.g
+        
         let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
         
+        let imagePosition = elmnt.getBoundingClientRect();
+        let position1 = imagePosition.top, position2 = imagePosition.right, position3 = imagePosition.bottom, position4 = imagePosition.left;
+
         if (document.getElementById(elmnt.id + "header1")) {
           // if present, the header is where you move the DIV from:
           document.getElementById(elmnt.id + "header1").onmousedown = dragMouseDown;
@@ -284,8 +317,7 @@ window.addEventListener("load", async function() {
           document.onmousemove = null;
           //Request to update saved data
           
-          let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
-          let _workspaceid = "New Box"; //  get workspaceid somehow
+          let _workspaceid = localStorage.getItem("workspaceid");
           let _positions = [pos1, pos2, pos3, pos4];
           _positions = '{' + String(_positions) + '}';
           let _header = elmnt.children[0].innerHTML, _body = elmnt.children[1].innerHTML;
@@ -296,7 +328,6 @@ window.addEventListener("load", async function() {
                 'Content-Type':'application/json'
             },
             body: JSON.stringify({
-                    userid:_userid,
                     workspaceid:_workspaceid,
                     header: _header,
                     body: _body,
@@ -315,11 +346,9 @@ window.addEventListener("load", async function() {
           document.onmouseup = null;
           document.onmousemove = null;
           //Request to update saved data
-          let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspac
-          let _workspaceid = "New Box"; //  get workspaceid somehow
+          let _workspaceid = localStorage.getItem("workspaceid");
           let _positions = [pos1, pos2, pos3, pos4];
           _positions = '{' + String(_positions) + '}';
-          let _image_url = elmnt.style.backgroundImage;
           
           const response = await fetch('./updateImagePosition', {
             method:'POST',
@@ -327,9 +356,8 @@ window.addEventListener("load", async function() {
                 'Content-Type':'application/json'
             },
             body: JSON.stringify({
-                    userid:_userid,
                     workspaceid:_workspaceid,
-                    image_url: _image_url,
+                    id: _id,
                     positions: _positions
                 })
           });
@@ -337,7 +365,8 @@ window.addEventListener("load", async function() {
               console.error("Failed to update image");
           }
         }
-      }   
+      }
+ 
 });
 
 //reset the creation date of the timeline
@@ -345,6 +374,16 @@ document.getElementById('resetDate').addEventListener('click', async () => {
    localStorage.removeItem('projectMade');
    document.getElementById('timeLineDateMade').innerText = " Please update timeline to set new creation date";
 });
+function makeID() {
+  let result           = '';
+  let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let length = 10;      //  So there is 1/(62^10) chance of duplicates
+  for ( var i = 0; i < length; i++ ) {
+     result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
 //$('.alert').alert()
 //timeline code 
 //get selected date from user and set the aria-valuemax of the timeline to the date
@@ -373,7 +412,7 @@ document.getElementById('confirmDate').addEventListener('click', async () => {
     localStorage.setItem('deadline', pickedDate.toDateString());
     const timeline = document.getElementById('timeline');
     if (dateC > pickedDate || isNaN(pickedDate.getTime()) ) {
-        
+       
         const alert = document.getElementById('timeLineChange');
         const p = document.createElement('div');
         const dis = document.createElement('button');
@@ -418,7 +457,6 @@ document.getElementById('confirmDate').addEventListener('click', async () => {
 
         calcTimeL(pickedDate.toDateString(), dateC.toDateString());
     }
-    
 
 });
 
@@ -749,11 +787,11 @@ $(document).on('click','#voteNotButt',async function(){
     }
 });
 
-async function addChat(_text, _sender, _dateSent){
+async function addChat(_text, _dateSent){
    
     let _userid = window.localStorage.getItem("userName");   //  Really get the owner of workspaceid
-    //get workspaceid
-    let _workspaceid = "New Box";
+    let _workspaceid = localStorage.getItem("workspaceid");
+    const _header = "Send chat to DB";
     
     const response = await fetch('./addChat', {
         method:'POST',

@@ -31,71 +31,75 @@ padding-bottom: 95%;
 }
 
 #workspace {
+  margin-left: 2rem;
+  border-radius: 25px;
+  border: 5px solid  rgba(9, 9, 82, 0.705); 
   max-width: auto;
 	margin-bottom: -9999px;
 	padding-bottom: 9999px;
 }
 
 #theTimeline{
-    min-height: 5%;
+  min-height: 5%;
   padding-bottom: 10px;
 }
 
 #task-button{
-    margin-left: -12.5px;
+  margin-left: -12.5px;
 }
 
 .body {
-    margin: 0 auto;
-    max-width: 800px;
-    padding: 0 20px;
-  }
+  background-color: rgb(106, 108, 192);
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 20px;
+}
   
-  .container {
-    border: 2px solid #dedede;
-    background-color: #f1f1f1;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px 0;
-  }
-  
-  .darker {
-    border-color: #ccc;
-    background-color: #ddd;
-  }
-  
-  .container::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-  
-  .container img {
-    float: left;
-    max-width: 60px;
-    width: 100%;
-    margin-right: 20px;
-    border-radius: 50%;
-  }
-  
-  .container img.right {
-    float: right;
-    margin-left: 20px;
-    margin-right:0;
-  }
-  
-  .time-right {
-    float: right;
-    color: #aaa;
-  }
-  
-  .time-left {
-    float: left;
-    color: #999;
-  }
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
 
-  .gradient{
-    background: radial-gradient(white, rgba(13, 13, 133, 0.705));
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.container img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+.time-left {
+  float: left;
+  color: #999;
+}
+
+.gradient{
+  background: radial-gradient(white, rgba(13, 13, 133, 0.705));
 }
 
 #stickyNote {
@@ -104,20 +108,23 @@ padding-bottom: 95%;
   background-color: #f1f1f1;
   text-align: center;
   border: 1px solid #d3d3d3;
-  border-radius: 5%;
+  border-radius: 10px;
 }
 
 #stickyNoteheader {
-  border-radius: 5%;
+  border-radius: 12px;
+  margin:2px;
   padding: 10px;
   cursor: move;
   z-index: 10;
   background-color: rgb(189, 189, 7); 
 }
 .workspaceTitle{
-  opacity: 50%;
+  opacity: 80%;
+  margin-top: 1rem;
   text-align: center;
   cursor: default;
+  font-size: 3rem;
 }
 
 .stickyTitle{
@@ -172,7 +179,7 @@ padding-bottom: 95%;
   z-index: 1000;
 }
 .invitePopUp{
-  display: none;
+  display: block;
   background-color: lightblue;
   width: fit-content;
   height: fit-content;
@@ -187,4 +194,27 @@ padding-bottom: 95%;
 
 .invitedText{
   display: none;
+}
+.closeInvite{
+  color: rgb(0, 0, 0);
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: large;
+  font-weight: bold;
+  text-align: center;
+  position: absolute;
+  top: .5%;
+  left: 93%;
+  cursor: pointer;
+}
+
+.authorTextNode{
+  display: none;
+  position: absolute;
+  top: -30px;
+  left: 30%;
+  padding-left: 2%;
+  padding-right: 2%;
+  border: 1px solid black;
+  text-align: center;
+  background-color: #f1f1f1;
 }
