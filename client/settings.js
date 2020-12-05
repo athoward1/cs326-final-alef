@@ -59,9 +59,7 @@ window.addEventListener("load", async function() {
             if (!response.ok){
                 console.log("I dont know what happened");
             }
-
         }
-
     });
 
     //  Field to Settings

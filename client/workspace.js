@@ -20,16 +20,14 @@ window.addEventListener("load", async function() {
   document.title = title;
   document.getElementById("title").innerText = title;
 
-    const stDate = localStorage.getItem('projectMade'); // date the workspace was created
-    const sdDate = localStorage.getItem('deadline'); // deadline of the project
-    const tDate = new Date(stDate);
-    const dDate = new Date(sdDate);
-    if(tDate === null){document.getElementById('timeLineDateMade').innerText +='';}
-    else {document.getElementById('timeLineDateMade').innerText = `Date Created: ${tDate.toDateString()}`;}
-    calcTimeL(dDate.toDateString(), tDate.toDateString());
+  const stDate = localStorage.getItem('projectMade'); // date the workspace was created
+  const sdDate = localStorage.getItem('deadline'); // deadline of the project
+  const tDate = new Date(stDate);
+  const dDate = new Date(sdDate);
+  if(tDate === null){document.getElementById('timeLineDateMade').innerText +='';}
+  else {document.getElementById('timeLineDateMade').innerText = `Date Created: ${tDate.toDateString()}`;}
+  calcTimeL(dDate.toDateString(), tDate.toDateString());
     
-  document.title = __workspaceid;
-  document.getElementById("title").innerText = __workspaceid;
   //Display Images
   let response2 = await fetch('/getImages', {
     method: 'POST',
@@ -129,7 +127,7 @@ window.addEventListener("load", async function() {
   document.getElementById("saveSticky").addEventListener("click", async()=>{
     let header = document.getElementById("stickyheader").value;
     let body = document.getElementById("stickybody").value;
-    await createSticky(header, body, [0,0,0,0]);      
+    await createSticky(header, body, [992,246]);      
   });
 
   async function displaySticky(author, _header, _body, positions){
@@ -211,8 +209,8 @@ window.addEventListener("load", async function() {
       let image_url = "url("+ document.getElementById("imageForm").value+ ")";
 
       let _id = makeID();
-      await displayImage(image_url, [0,0,0,0], _id);  
-      await createImage(image_url, [0,0,0,0], _id);
+      await displayImage(image_url, [1015,379], _id);  
+      await createImage(image_url, [1015,379], _id);
 
     });
 
@@ -265,10 +263,11 @@ window.addEventListener("load", async function() {
     async function dragElement(elmnt, positions, element_type, _id) {
         console.log("Initialize drag element at position "+String(positions));  //  I thought next line would set position of sticky.g
         
-        let pos1 = positions[0], pos2 = positions[1], pos3 = positions[2], pos4 = positions[3];
+        elmnt.style.left = positions[0] + "px";
+        elmnt.style.top = positions[1] + "px";
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
         
         let imagePosition = elmnt.getBoundingClientRect();
-        let position1 = imagePosition.top, position2 = imagePosition.right, position3 = imagePosition.bottom, position4 = imagePosition.left;
 
         if (document.getElementById(elmnt.id + "header1")) {
           // if present, the header is where you move the DIV from:
@@ -316,7 +315,7 @@ window.addEventListener("load", async function() {
           //Request to update saved data
           
           let _workspaceid = localStorage.getItem("workspaceid");
-          let _positions = [pos1, pos2, pos3, pos4];
+          let _positions = [elmnt.offsetLeft, elmnt.offsetTop];
           _positions = '{' + String(_positions) + '}';
           let _header = elmnt.children[0].innerHTML, _body = elmnt.children[1].innerHTML;
           
@@ -345,7 +344,7 @@ window.addEventListener("load", async function() {
           document.onmousemove = null;
           //Request to update saved data
           let _workspaceid = localStorage.getItem("workspaceid");
-          let _positions = [pos1, pos2, pos3, pos4];
+          let _positions = [elmnt.offsetLeft, elmnt.offsetTop];
           _positions = '{' + String(_positions) + '}';
           
           const response = await fetch('./updateImagePosition', {
@@ -373,6 +372,7 @@ document.getElementById('resetDate').addEventListener('click', async () => {
    localStorage.removeItem('projectMade');
    document.getElementById('timeLineDateMade').innerText = " Please update timeline to set new creation date";
 });
+
 function makeID() {
   let result           = '';
   let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
