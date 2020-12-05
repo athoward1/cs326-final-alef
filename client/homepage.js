@@ -452,7 +452,7 @@ async function displayWorkspace(_title, image_url){
         window.open("/workspace.html", "_self");
     });
     addBox.appendChild(enterButton);
-    addBox.style.backgroundImage = image_url;
+    addBox.style.backgroundImage = "url(" + image_url + ")";
     addBox.appendChild(editPicture);
     addBox.appendChild(deleteBox);
     addBox.appendChild(boxName);
